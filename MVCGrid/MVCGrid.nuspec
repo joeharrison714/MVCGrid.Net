@@ -15,4 +15,7 @@
       <dependency id="Microsoft.AspNet.Mvc" version="(,3.0]" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="bin\Release\MVCGrid.dll" target="lib\net45" />
+  </files>
 </package>
