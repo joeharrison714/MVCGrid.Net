@@ -1,2 +1,0 @@
-Show/hide fields
-row/cell style functions
