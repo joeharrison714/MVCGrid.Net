@@ -40,7 +40,7 @@ function updateQueryString(mvcGridName) {
     var pageNum = 1;
 
     if (pageIndex != '') {
-        pageNum = pageIndex + 1;
+        pageNum = Number(pageIndex) + 1;
     }
 
     var qs = "?page=" + pageNum;
