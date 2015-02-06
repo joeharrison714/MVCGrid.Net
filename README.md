@@ -25,6 +25,6 @@ MVCGridMappingTable.Add("TestMapping", grid);
 ```
 
 Add the following to your view to show the grid:
-'''
+```
 @(Html.MVCGrid("TestMapping"))
-'''
+```
