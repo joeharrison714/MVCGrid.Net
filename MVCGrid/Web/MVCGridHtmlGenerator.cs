@@ -9,6 +9,10 @@ using System.Web;
 
 namespace MVCGrid.Web
 {
+    //Feature Requests
+    //Show/hide fields
+    //row/cell style functions
+
     internal class MVCGridHtmlGenerator
     {
         const string ContainerCssClass = "MVCGridContainer";
