@@ -174,8 +174,14 @@ namespace MVCGrid.Web
             string recordText = String.Format("Showing {0} to {1} of {2} entries",
                 firstRecord, lastRecord, data.TotalRecords
                 );
-            sbHtml.AppendLine(recordText);
 
+            sbHtml.Append("<div class=\"row\">");
+            sbHtml.Append("<div class=\"col-xs-6\">");
+            sbHtml.AppendLine(recordText);
+            sbHtml.Append("</div>");
+
+
+            sbHtml.Append("<div class=\"col-xs-6\">");
             int currentPage = currentPageIndex + 1;
             int pageToStart = currentPage - 2;
             while (pageToStart < 1)
@@ -193,7 +199,7 @@ namespace MVCGrid.Web
                 pageToStart++;
             }
 
-            sbHtml.Append("<nav><ul class='pagination'>");
+            sbHtml.Append("<ul class='pagination pull-right' style='margin-top: 0;'>");
 
             sbHtml.Append("<li");
             if (pageToStart == currentPage)
@@ -212,7 +218,7 @@ namespace MVCGrid.Web
                 sbHtml.AppendFormat("onclick='{0}'", "return false;");
             }
             sbHtml.Append(">");
-            sbHtml.Append("<span aria-hidden='true'>&laquo;</span></a></li>");
+            sbHtml.Append("<span aria-hidden='true'>&laquo; Previous</span></a></li>");
 
             for (int i = pageToStart; i <= pageToEnd; i++)
             {
@@ -243,9 +249,11 @@ namespace MVCGrid.Web
                 sbHtml.AppendFormat("onclick='{0}'", "return false;");
             }
             sbHtml.Append(">");
-            sbHtml.Append("<span aria-hidden='true'>&raquo;</span></a></li>");
+            sbHtml.Append("<span aria-hidden='true'>Next &raquo;</span></a></li>");
 
-            sbHtml.Append("</ul></nav>");
+            sbHtml.Append("</ul>");
+            sbHtml.Append("</div>");
+            sbHtml.Append("</div>");
         }
 
         private static string MakeGotoPageLink(string gridName, int pageNum)
