@@ -1,0 +1,10 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Grid Test</h1>
+
+@(Html.MVCGrid("TestMapping"))
+
+<input type="button" value="Refresh" onclick="loadMVCGridData('TestMapping');" />

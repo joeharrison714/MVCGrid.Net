@@ -1,0 +1,7 @@
+MVCGridExample/bin/
+MVCGridExample/obj/
+MVCGrid/obj/
+MVCGrid/bin/
+*.suo
+*.user
+packages/
