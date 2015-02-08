@@ -13,14 +13,16 @@ namespace MVCGrid.Models
         public GridColumn()
         {
             EnableSorting = true;
+            HtmlEncode = true;
         }
 
         public string ColumnName { get; set; }
 
         public string HeaderText { get; set; }
 
-        public Func<T1, ControllerContext, string> ValueExpression { get; set; }
+        public Func<T1, GridContext, string> ValueExpression { get; set; }
 
         public bool EnableSorting { get; set; }
+        public bool HtmlEncode { get; set; }
     }
 }

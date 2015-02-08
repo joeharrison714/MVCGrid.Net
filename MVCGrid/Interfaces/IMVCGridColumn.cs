@@ -8,8 +8,9 @@ namespace MVCGrid.Interfaces
 {
     public interface IMVCGridColumn
     {
-        string HeaderText { get; set; }
-        string ColumnName { get; set; }
+        string HeaderText { get; }
+        string ColumnName { get; }
         bool EnableSorting { get; }
+        bool HtmlEncode { get; }
     }
 }

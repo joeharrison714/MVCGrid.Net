@@ -34,7 +34,13 @@ namespace MVCGrid.Models
             return this;
         }
 
-        public GridColumnBuilder<T1> WithValueExpression(Func<T1, ControllerContext, string> expression)
+        public GridColumnBuilder<T1> WithHtmlEncoding(bool htmlEncode)
+        {
+            GridColumn.HtmlEncode = htmlEncode;
+            return this;
+        }
+
+        public GridColumnBuilder<T1> WithValueExpression(Func<T1, GridContext, string> expression)
         {
             GridColumn.ValueExpression = expression;
             return this;

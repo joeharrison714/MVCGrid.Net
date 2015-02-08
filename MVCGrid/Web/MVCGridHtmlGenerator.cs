@@ -56,9 +56,7 @@ namespace MVCGrid.Web
             sbHtml.AppendFormat("<div id='{0}' class='{1}'>", GetContainerHtmlId(gridName), ContainerCssClass);
 
             sbHtml.AppendFormat("<input type='hidden' name='MVCGridName' value='{0}' />", gridName);
-            sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_PageIndex' value='0' />", gridName);
-            sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_SortColumn' value='' />", gridName);
-            sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_SortDirection' value='' />", gridName);
+            sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_Prefix' value='{1}' />", gridName, def.QueryStringPrefix);
 
             sbHtml.AppendFormat("<div id='{0}'>", GetTableHolderHtmlId(gridName));
             sbHtml.Append("</div>");
@@ -140,8 +138,7 @@ namespace MVCGrid.Web
                         val = item.Data[col.ColumnName];
                     }
 
-                    //if (col.HtmlEncode)
-                    if (true)
+                    if (col.HtmlEncode)
                     {
                         sbHtml.AppendLine(String.Format("    <td>{0}</td>", HttpUtility.HtmlEncode(val)));
                     }

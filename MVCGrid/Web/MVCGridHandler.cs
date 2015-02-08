@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace MVCGrid.Web
 {
@@ -42,48 +44,27 @@ namespace MVCGrid.Web
                 sbDebug.Append(" = ");
                 sbDebug.Append(context.Request.QueryString[key]);
                 sbDebug.Append("<br />");
-            }
+            }            
 
-            
 
-            var options = new QueryOptions();
-            options.ItemsPerPage = 20;
+            var grid = MVCGridMappingTable.GetMappingInterface(gridName);
 
-            options.PageIndex = 0;
-            if (context.Request.QueryString["page"] != null)
+            var options = QueryStringParser.ParseOptions(grid, context.Request);
+
+            var httpContext = new HttpContextWrapper(HttpContext.Current);
+            var urlHelper = new UrlHelper(new RequestContext(httpContext, new RouteData()));
+
+            var gridContext = new GridContext()
             {
-                int pageNum;
-                if (Int32.TryParse(context.Request.QueryString["page"], out pageNum))
-                {
-                    options.PageIndex = pageNum - 1;
-                    if (options.PageIndex < 0) options.PageIndex = 0;
-                }
-            }
+                CurrentHttpContext = context,
+                GridDefinition = grid,
+                QueryOptions = options,
+                UrlHelper = urlHelper
+            };
 
-            options.SortColumn = null;
-            if (context.Request.QueryString["sort"] != null)
-            {
-                options.SortColumn = context.Request.QueryString["sort"];
-            }
+            var results = grid.GetData(gridContext);
 
-            options.SortDirection = SortDirection.Asc;
-            if (context.Request.QueryString["dir"] != null)
-            {
-                string sortDir = context.Request.QueryString["dir"];
-                if (String.Compare(sortDir, "dsc", true) == 0)
-                {
-                    options.SortDirection = SortDirection.Dsc;
-                }
-            }
-            
-
-
-            var def = MVCGridMappingTable.GetMappingInterface(gridName);
-            var config = def.GridConfiguration;
-
-            var results = def.GetData(options);
-
-            var tableHtml = MVCGridHtmlGenerator.GenerateTable(gridName, def, results, options);
+            var tableHtml = MVCGridHtmlGenerator.GenerateTable(gridName, grid, results, options);
 
             context.Response.Write(sbDebug.ToString());
             context.Response.Write(tableHtml);

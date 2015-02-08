@@ -26,12 +26,13 @@ namespace MVCGrid.Models
             Columns = new List<GridColumn<T1>>();
         }
 
-        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, ControllerContext, string> valueExpression)
+        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression, bool htmlEncode=true)
         {
             var col = new GridColumn<T1>();
             col.ColumnName=name;
             col.HeaderText = headerText;
             col.ValueExpression = valueExpression;
+            col.HtmlEncode = htmlEncode;
             this.Columns.Add(col);
             return this;
         }
@@ -65,11 +66,11 @@ namespace MVCGrid.Models
 
         public Func<QueryOptions, QueryResult<T1>> RetrieveData { get; set; }
 
-        public GridData GetData(QueryOptions options)
+        public GridData GetData(GridContext context)
         {
             GridData result = new GridData();
 
-            var queryResult = RetrieveData(options);
+            var queryResult = RetrieveData(context.QueryOptions);
             result.TotalRecords = queryResult.TotalRecords;
 
             foreach (var item in queryResult.Items)
@@ -78,7 +79,7 @@ namespace MVCGrid.Models
 
                 foreach (var col in this.Columns)
                 {
-                    string val = col.ValueExpression(item, null);
+                    string val = col.ValueExpression(item, context);
                     Console.WriteLine(val);
 
                     thisRow.Data.Add(col.ColumnName, val);

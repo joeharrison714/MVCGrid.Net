@@ -17,7 +17,7 @@ namespace MVCGridExample
             var grid = new GridDefinition<TestItem>(globalConfig)
                 .WithColumn("Col1", "Col1", ((p, h) => p.Col1))
                 .WithColumn("Col2", "Col2", ((p, h) => p.Col2))
-                .WithColumn("Col3", "Col3", ((p, h) => p.Col3))
+                .WithColumn("Col3", "Col3", ((p, h) => String.Format("<a href='{1}'>{0}</a>", p.Col3, h.UrlHelper.Action("detail", "item", new { id="test" }))), false)
                 .WithRetrieveData(((options) =>
                 {
                     TestItemRepository repo = new TestItemRepository();
@@ -32,6 +32,13 @@ namespace MVCGridExample
                 }));
             grid.QueryStringPrefix = "grid1";
             MVCGridMappingTable.Add("TestMapping", grid);
+
+
+            var grid2 = new GridBuilder<TestItem>()
+                .AddColumn(col => col.WithColumnName("test").WithHeaderText("test"))
+                .AddColumn(col => col.WithColumnName("test2").WithHeaderText("test2"));
+
+            MVCGridMappingTable.Add("TestMapping2", grid2.GridDefinition);
         }
 
         private static GridConfiguration SetupGlobalConfiguration()

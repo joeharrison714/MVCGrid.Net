@@ -8,8 +8,10 @@ var MVCGrid = new function () {
 
             var mvcGridName = $("#" + this.id).find("input[name='MVCGridName']").val();
 
+            var qsPrefix = $('#' + 'MVCGrid_' + mvcGridName + '_Prefix').val();
+
             currentGrids.push(
-                { name: mvcGridName, type: "Douglas Adams" }
+                { name: mvcGridName, qsPrefix: qsPrefix }
             );
         });
 
@@ -19,6 +21,19 @@ var MVCGrid = new function () {
             MVCGrid.reloadGrid(obj.name);
         }
     }
+
+    var findGridDef = function (mvcGridName) {
+        var gridDef;
+        for (var i = 0; i < currentGrids.length; i++) {
+            var obj = currentGrids[i];
+
+            if (obj.name == mvcGridName) {
+                gridDef = obj;
+                break;
+            }
+        }
+        return gridDef;
+    };
 
     var updateURLParameter = function (url, param, paramVal) {
         var TheAnchor = null;
@@ -62,9 +77,11 @@ var MVCGrid = new function () {
 
     this.setSort = function (mvcGridName, sortColumn, sortDirection) {
 
+        var gridDef = findGridDef(mvcGridName);
+
         var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, 'sort', sortColumn);
-        newUrl = updateURLParameter(newUrl, 'dir', sortDirection);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'sort', sortColumn);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'dir', sortDirection);
 
         
         setURLAndReload(mvcGridName, newUrl);
@@ -72,8 +89,10 @@ var MVCGrid = new function () {
 
     this.setPage = function (mvcGridName, pageNumber) {
 
+        var gridDef = findGridDef(mvcGridName);
+
         var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, 'page', pageNumber);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'page', pageNumber);
         setURLAndReload(mvcGridName, newUrl);
 
     };
