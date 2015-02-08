@@ -26,13 +26,14 @@ namespace MVCGrid.Models
             Columns = new List<GridColumn<T1>>();
         }
 
-        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression, bool htmlEncode=true)
+        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression, bool enableSort = true, bool htmlEncode=true)
         {
             var col = new GridColumn<T1>();
             col.ColumnName=name;
             col.HeaderText = headerText;
             col.ValueExpression = valueExpression;
             col.HtmlEncode = htmlEncode;
+            col.EnableSorting = enableSort;
             this.Columns.Add(col);
             return this;
         }
