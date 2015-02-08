@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
     <Compile Include="Interfaces\IMVCGridColumn.cs" />
     <Compile Include="Interfaces\IMVCGridDefinition.cs" />

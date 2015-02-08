@@ -30,6 +30,7 @@ namespace MVCGridExample
                         TotalRecords = totalRecords
                     };
                 }));
+            grid.QueryStringPrefix = "grid1";
             MVCGridMappingTable.Add("TestMapping", grid);
         }
 

@@ -90,6 +90,11 @@ namespace MVCGrid.Models
             return result;
         }
 
+        /// <summary>
+        /// Prefix for query string names. Only needed if there is more than 1 grid on the same page.
+        /// </summary>
+        public string QueryStringPrefix { get; set; }
+
     }
 
 }

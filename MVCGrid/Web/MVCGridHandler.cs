@@ -34,33 +34,58 @@ namespace MVCGrid.Web
         private void HandleTable(HttpContext context)
         {
             string gridName = context.Request["Name"];
-            int pageIndex = int.Parse(context.Request["PageIndex"]);
-            string sortColumn = context.Request["SortColumn"];
-            string sortDirection = context.Request["SortDirection"];
+
+            StringBuilder sbDebug = new StringBuilder();
+            foreach (string key in context.Request.QueryString.AllKeys)
+            {
+                sbDebug.Append(key);
+                sbDebug.Append(" = ");
+                sbDebug.Append(context.Request.QueryString[key]);
+                sbDebug.Append("<br />");
+            }
+
+            
+
+            var options = new QueryOptions();
+            options.ItemsPerPage = 20;
+
+            options.PageIndex = 0;
+            if (context.Request.QueryString["page"] != null)
+            {
+                int pageNum;
+                if (Int32.TryParse(context.Request.QueryString["page"], out pageNum))
+                {
+                    options.PageIndex = pageNum - 1;
+                    if (options.PageIndex < 0) options.PageIndex = 0;
+                }
+            }
+
+            options.SortColumn = null;
+            if (context.Request.QueryString["sort"] != null)
+            {
+                options.SortColumn = context.Request.QueryString["sort"];
+            }
+
+            options.SortDirection = SortDirection.Asc;
+            if (context.Request.QueryString["dir"] != null)
+            {
+                string sortDir = context.Request.QueryString["dir"];
+                if (String.Compare(sortDir, "dsc", true) == 0)
+                {
+                    options.SortDirection = SortDirection.Dsc;
+                }
+            }
+            
 
 
             var def = MVCGridMappingTable.GetMappingInterface(gridName);
             var config = def.GridConfiguration;
 
-            var options = new QueryOptions();
-            options.PageIndex = pageIndex;
-            options.ItemsPerPage = config.ItemsPerPage;
-            options.SortColumn = sortColumn;
-            options.SortDirection = SortDirection.Unspecified;
-
-            if (String.Compare(sortDirection, "asc", true) == 0)
-            {
-                options.SortDirection = SortDirection.Asc;
-            }
-            else if (String.Compare(sortDirection, "dsc", true) == 0)
-            {
-                options.SortDirection = SortDirection.Dsc;
-            }
-
             var results = def.GetData(options);
 
             var tableHtml = MVCGridHtmlGenerator.GenerateTable(gridName, def, results, options);
 
+            context.Response.Write(sbDebug.ToString());
             context.Response.Write(tableHtml);
         }
 

@@ -262,12 +262,12 @@ namespace MVCGrid.Web
 
         private static string MakeGotoPageLink(string gridName, int pageNum)
         {
-            return String.Format("mvcGridGotoPage(\"{0}\", {1}); return false;", gridName, pageNum);
+            return String.Format("MVCGrid.setPage(\"{0}\", {1}); return false;", gridName, pageNum);
         }
 
         private static string MakeSortLink(string gridName, string columnName, SortDirection direction)
         {
-            return String.Format("mvcGridSort(\"{0}\", \"{1}\", \"{2}\"); return false;", gridName, columnName, direction.ToString());
+            return String.Format("MVCGrid.setSort(\"{0}\", \"{1}\", \"{2}\"); return false;", gridName, columnName, direction.ToString());
         }
     }
 }
