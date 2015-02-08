@@ -1,14 +1,11 @@
-# MVCGrid
+# MVCGrid.Net
 
 ## Features
 * Uses your existing model objects
 * Server-side sorting and paging using AJAX
 * updates query string to support maintaining grid state when navigating back
 * gracefully degrades on older browsers
-<!---
-* enable filtering with minimal code
-* Built-in exporting to csv
--->
+
 
 ## Usage
 
