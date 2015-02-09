@@ -15,7 +15,10 @@ namespace MVCGridExample
             GridConfiguration globalConfig = SetupGlobalConfiguration();
 
             var grid = new GridDefinition<TestItem>(globalConfig)
-                .WithColumn("Col1", "Col1", ((p, h) => p.Col1))
+                .WithColumn("Col1", "Col1", ((p, h) => p.Col1),
+                    cellCssClassExpression: ((p, c) => {
+                        if (p.Col1 == "Row3") { return "success"; } return null;
+                    }))
                 .WithColumn("Col2", "Col2", ((p, h) => p.Col2))
                 .WithColumn(
                     name: "Col3",
@@ -37,6 +40,14 @@ namespace MVCGridExample
                     };
                 }));
             grid.QueryStringPrefix = "grid1";
+            grid.RowCssClassExpression = (p, h) =>
+            {
+                if (p.Col1 == "Row1")
+                {
+                    return "success";
+                }
+                return null;
+            };
             MVCGridMappingTable.Add("TestMapping", grid);
 
 

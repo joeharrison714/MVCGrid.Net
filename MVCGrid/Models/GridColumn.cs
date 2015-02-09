@@ -30,6 +30,8 @@ namespace MVCGrid.Models
         /// </summary>
         public Func<T1, GridContext, string> PlainTextValueExpression { get; set; }
 
+        public Func<T1, GridContext, string> CellCssClassExpression { get; set; }
+
         public bool EnableSorting { get; set; }
         public bool HtmlEncode { get; set; }
     }

@@ -26,7 +26,9 @@ namespace MVCGrid.Models
             Columns = new List<GridColumn<T1>>();
         }
 
-        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression, bool enableSort = true, bool htmlEncode = true, Func<T1, GridContext, string> plainTextValueExpression = null)
+        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression,
+            bool enableSort = true, bool htmlEncode = true, Func<T1, GridContext, string> plainTextValueExpression = null,
+            Func<T1, GridContext, string> cellCssClassExpression = null)
         {
             var col = new GridColumn<T1>();
             col.ColumnName=name;
@@ -35,6 +37,7 @@ namespace MVCGrid.Models
             col.HtmlEncode = htmlEncode;
             col.EnableSorting = enableSort;
             col.PlainTextValueExpression = plainTextValueExpression;
+            col.CellCssClassExpression = cellCssClassExpression;
             this.Columns.Add(col);
             return this;
         }
@@ -48,6 +51,12 @@ namespace MVCGrid.Models
         public GridDefinition<T1> WithRetrieveData(Func<QueryOptions, QueryResult<T1>> retrieveData)
         {
             this.RetrieveData = retrieveData;
+            return this;
+        }
+
+        public GridDefinition<T1> WithRowCssClassExpression(Func<T1, GridContext, string> rowCssClassExpression)
+        {
+            this.RowCssClassExpression = rowCssClassExpression;
             return this;
         }
 
@@ -67,6 +76,7 @@ namespace MVCGrid.Models
         public List<GridColumn<T1>> Columns { get; set; }
 
         public Func<QueryOptions, QueryResult<T1>> RetrieveData { get; set; }
+        public Func<T1, GridContext, string> RowCssClassExpression { get; set; }
 
         public GridData GetData(GridContext context)
         {
@@ -78,6 +88,15 @@ namespace MVCGrid.Models
             foreach (var item in queryResult.Items)
             {
                 GridRow thisRow = new GridRow();
+
+                if (RowCssClassExpression != null)
+                {
+                    string rowCss = RowCssClassExpression(item, context);
+                    if (!String.IsNullOrWhiteSpace(rowCss))
+                    {
+                        thisRow.RowCssClass = rowCss;
+                    }
+                }
 
                 foreach (var col in this.Columns)
                 {
@@ -91,6 +110,15 @@ namespace MVCGrid.Models
 
                     thisRow.Values.Add(col.ColumnName, val);
                     thisRow.PlainTextValues.Add(col.ColumnName, plainVal);
+
+                    if (col.CellCssClassExpression != null)
+                    {
+                        string cellCss = col.CellCssClassExpression(item, context);
+                        if (!String.IsNullOrWhiteSpace(cellCss))
+                        {
+                            thisRow.CellCssClasses.Add(col.ColumnName, cellCss);
+                        }
+                    }
                 }
 
                 result.Rows.Add(thisRow);

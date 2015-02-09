@@ -55,7 +55,13 @@ namespace MVCGrid.Rendering
 
             foreach (var item in data.Rows)
             {
-                sbHtml.AppendLine("  <tr>");
+                sbHtml.Append("  <tr");
+                if (!String.IsNullOrWhiteSpace(item.RowCssClass))
+                {
+                    sbHtml.Append(HtmlUtility.MakeCssClassAttributeStirng(item.RowCssClass));
+                }
+                sbHtml.AppendLine(">");
+
                 foreach (var col in gridContext.GridDefinition.GetColumns())
                 {
                     string val = "";
@@ -65,14 +71,26 @@ namespace MVCGrid.Rendering
                         val = item.Values[col.ColumnName];
                     }
 
+                    sbHtml.Append("<td");
+                    if (item.CellCssClasses.ContainsKey(col.ColumnName))
+                    {
+                        string cellCss = item.CellCssClasses[col.ColumnName];
+                        if (!String.IsNullOrWhiteSpace(cellCss))
+                        {
+                            sbHtml.Append(HtmlUtility.MakeCssClassAttributeStirng(cellCss));
+                        }
+                    }
+                    sbHtml.AppendLine(">");
+
                     if (col.HtmlEncode)
                     {
-                        sbHtml.AppendLine(String.Format("    <td>{0}</td>", HttpUtility.HtmlEncode(val)));
+                        sbHtml.Append(HttpUtility.HtmlEncode(val));
                     }
                     else
                     {
-                        sbHtml.AppendLine(String.Format("    <td>{0}</td>", val));
+                        sbHtml.Append(val);
                     }
+                    sbHtml.AppendLine("</td>");
                 }
                 sbHtml.AppendLine("  </tr>");
             }
