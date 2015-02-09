@@ -81,6 +81,20 @@ var MVCGrid = new function () {
         return baseURL + "?" + newAdditionalURL + rows_txt;
     };
 
+    this.setFilters = function (mvcGridName, filters) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = window.location.href;
+
+        for (var i = 0; i < filters.length; i++) {
+            var obj = filters[i];
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + obj.columnName, obj.value);
+        }
+
+        setURLAndReload(mvcGridName, newUrl);
+    }
+
     this.setSort = function (mvcGridName, sortColumn, sortDirection) {
 
         var gridDef = findGridDef(mvcGridName);

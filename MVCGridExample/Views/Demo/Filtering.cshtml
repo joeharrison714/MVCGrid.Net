@@ -1,0 +1,55 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Filtering";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#btnFilter').click(function(){
+            MVCGrid.setFilters('Filtering',
+                [
+                    { "columnName": "FirstName", "value": $('#FirstName').val() },
+                    { "columnName": "LastName", "value": $('#LastName').val() },
+                    { "columnName": "Status", "value": $('#Status').val() }
+                ])
+        });
+    </script>
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="well">
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-5 control-label" for="LastName">Last Name</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="LastName" name="LastName" type="text" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-5 control-label" for="FirstName">First Name</label>
+            <div class="col-sm-3">
+                <input class="form-control" id="FirstName" name="FirstName" type="text" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-5 control-label" for="Status">Status</label>
+            <div class="col-sm-2">
+                <select class="form-control" id="Status" name="Status">
+                    <option value=""></option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-7 col-sm-1">
+                <button type="button" id="btnFilter" class="btn btn-default">Filter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.MVCGrid("Filtering")

@@ -110,5 +110,10 @@ namespace MVCGrid.Models
             return this;
         }
 
+        public MVCGridBuilder<T1> WithFiltering(bool filtering)
+        {
+            GridDefinition.Filtering = filtering;
+            return this;
+        }
     }
 }

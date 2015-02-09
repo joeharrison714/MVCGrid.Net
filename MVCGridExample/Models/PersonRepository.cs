@@ -9,14 +9,28 @@ namespace MVCGrid.Web.Models
     public interface IPersonRepository
     {
         IEnumerable<Person> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
+        IEnumerable<Person> GetData(out int totalRecords, string filterFirstName, string filterLastName, bool? filterActive, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
     }
     public class PersonRepository : IPersonRepository
     {
-        public IEnumerable<Person> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        public IEnumerable<Person> GetData(out int totalRecords, string filterFirstName, string filterLastName, bool? filterActive, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
             using (var db = new SampleDatabaseEntities())
             {
                 var query = db.People.AsQueryable();
+
+                if (!String.IsNullOrWhiteSpace(filterFirstName))
+                {
+                    query = query.Where(p => p.FirstName.Contains(filterFirstName));
+                }
+                if (!String.IsNullOrWhiteSpace(filterLastName))
+                {
+                    query = query.Where(p => p.LastName.Contains(filterLastName));
+                }
+                if (filterActive.HasValue)
+                {
+                    query = query.Where(p => p.Active == filterActive.Value);
+                }
 
                 totalRecords = query.Count();
 
@@ -39,6 +53,7 @@ namespace MVCGrid.Web.Models
                     }
                 }
 
+
                 if (limitOffset.HasValue)
                 {
                     query = query.Skip(limitOffset.Value).Take(limitRowCount.Value);
@@ -46,6 +61,11 @@ namespace MVCGrid.Web.Models
 
                 return query.ToList();
             }
+        }
+
+        public IEnumerable<Person> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        {
+            return GetData(out totalRecords, null, null, null, limitOffset, limitRowCount, orderBy, desc);
         }
     }
 }

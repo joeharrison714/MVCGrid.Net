@@ -68,5 +68,11 @@ namespace MVCGrid.Models
             GridColumn.CellCssClassExpression = expression;
             return this;
         }
+
+        public GridColumnBuilder<T1> WithFiltering(bool enableFiltering)
+        {
+            GridColumn.EnableFiltering = enableFiltering;
+            return this;
+        }
     }
 }

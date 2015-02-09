@@ -7,6 +7,11 @@ namespace MVCGrid.Models
 {
     public class QueryOptions
     {
+        public QueryOptions()
+        {
+            Filters = new Dictionary<string, string>();
+        }
+
         public SortDirection SortDirection { get; set; }
         public string SortColumn { get; set; }
 
@@ -28,6 +33,21 @@ namespace MVCGrid.Models
         public int? GetLimitRowcount()
         {
             return ItemsPerPage;
+        }
+
+        public Dictionary<string, string> Filters { get; set; }
+
+        public string GetFilterString(string columnName)
+        {
+            if (!Filters.ContainsKey(columnName))
+            {
+                return null;
+            }
+            if (String.IsNullOrWhiteSpace(Filters[columnName]))
+            {
+                return null;
+            }
+            return Filters[columnName];
         }
     }
 }

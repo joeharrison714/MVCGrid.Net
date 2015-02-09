@@ -45,6 +45,30 @@ namespace MVCGrid.Web
                 }
             }
 
+            if (!grid.Filtering)
+            {
+                //options.Filters
+            }
+            else
+            {
+                var filterableColumns = grid.GetColumns().Where(p => p.EnableFiltering);
+
+                foreach (var col in filterableColumns)
+                {
+                    string qsKey = grid.QueryStringPrefix + col.ColumnName;
+
+                    if (httpRequest.QueryString[qsKey] != null)
+                    {
+                        string filterValue = httpRequest.QueryString[qsKey];
+
+                        if (!String.IsNullOrWhiteSpace(filterValue))
+                        {
+                            options.Filters.Add(col.ColumnName, filterValue);
+                        }
+                    }
+                }
+            }
+
             if (!grid.Sorting)
             {
                 options.SortColumn = null;

@@ -136,6 +136,7 @@ namespace MVCGrid.Models
         public int ItemsPerPage { get; set; }
         public bool Sorting { get; set; }
         public string DefaultSortColumn { get; set; }
+        public bool Filtering { get; set; }
         public string NoResultsMessage { get; set; }
 
         public string ClientSideLoadingMessageFunctionName { get; set; }

@@ -14,6 +14,7 @@ namespace MVCGrid.Models
         {
             EnableSorting = true;
             HtmlEncode = true;
+            EnableFiltering = false;
         }
 
         public string ColumnName { get; set; }
@@ -47,5 +48,6 @@ namespace MVCGrid.Models
 
         public bool EnableSorting { get; set; }
         public bool HtmlEncode { get; set; }
+        public bool EnableFiltering { get; set; }
     }
 }

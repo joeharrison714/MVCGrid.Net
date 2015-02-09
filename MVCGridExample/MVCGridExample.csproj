@@ -231,6 +231,7 @@
     <Content Include="Views\Demo\Styling.cshtml" />
     <Content Include="Views\Demo\Preloading.cshtml" />
     <Content Include="Views\Demo\LoadingMessage.cshtml" />
+    <Content Include="Views\Demo\Filtering.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

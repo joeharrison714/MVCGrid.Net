@@ -11,5 +11,6 @@ namespace MVCGrid.Interfaces
         string ColumnName { get; }
         bool EnableSorting { get; }
         bool HtmlEncode { get; }
+        bool EnableFiltering { get; }
     }
 }

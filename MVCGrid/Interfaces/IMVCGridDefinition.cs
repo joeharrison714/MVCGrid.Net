@@ -20,5 +20,6 @@ namespace MVCGrid.Interfaces
         string NoResultsMessage { get; set; }
         string ClientSideLoadingMessageFunctionName { get; set; }
         string ClientSideLoadingCompleteFunctionName { get; set; }
+        bool Filtering { get; set; }
     }
 }

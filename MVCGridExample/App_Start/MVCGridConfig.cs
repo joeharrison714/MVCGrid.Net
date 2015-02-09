@@ -395,6 +395,64 @@ namespace MVCGridExample
                     };
                 })
             );
+
+            MVCGridMappingTable.Add("Filtering", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName)
+                        .WithFiltering(true);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName)
+                        .WithFiltering(true);
+                    cols.Add().WithColumnName("Status")
+                        .WithHeaderText("Status")
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
+                        .WithFiltering(true);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithFiltering(true)
+                .WithRetrieveDataMethod((options) =>
+                {
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    bool? active = null;
+                    string fa=options.GetFilterString("Status");
+                    if (!String.IsNullOrWhiteSpace(fa))
+                    {
+                        if (String.Compare(fa, "active", true) == 0)
+                        {
+                            active = true;
+                        }
+                        else
+                        {
+                            active = false;
+                        }
+                    }
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetFilterString("FirstName"),
+                        options.GetFilterString("LastName"),
+                        active,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
         }
 
         private static GridConfiguration SetupGlobalConfiguration()
