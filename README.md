@@ -5,6 +5,7 @@
 * Server-side sorting and paging using AJAX
 * updates query string to support maintaining grid state when navigating back
 * gracefully degrades on older browsers
+* Built-in exporting to csv
 
 
 ## Usage
