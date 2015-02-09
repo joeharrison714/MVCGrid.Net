@@ -18,5 +18,7 @@ namespace MVCGrid.Interfaces
         bool Sorting { get; set; }
         string DefaultSortColumn { get; set; }
         string NoResultsMessage { get; set; }
+        string ClientSideLoadingMessageFunctionName { get; set; }
+        string ClientSideLoadingCompleteFunctionName { get; set; }
     }
 }

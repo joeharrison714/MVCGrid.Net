@@ -1,0 +1,21 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Custom Loading Message";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.MVCGrid("CustomLoading")
+
+@section Scripts{
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+
+    <script type="text/javascript">
+        function showLoading() {
+            $.blockUI();
+        }
+        function hideLoading() {
+            $.unblockUI();
+        }
+    </script>
+}

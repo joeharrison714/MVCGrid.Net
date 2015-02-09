@@ -357,6 +357,44 @@ namespace MVCGridExample
                     };
                 })
             );
+
+            MVCGridMappingTable.Add("CustomLoading", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithClientSideLoadingMessageFunctionName("showLoading")
+                .WithClientSideLoadingCompleteFunctionName("hideLoading")
+                .WithRetrieveDataMethod((options) =>
+                {
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    // pause to test loading message
+                    System.Threading.Thread.Sleep(1000);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
         }
 
         private static GridConfiguration SetupGlobalConfiguration()

@@ -9,13 +9,14 @@ var MVCGrid = new function () {
 
             var mvcGridName = $("#" + this.id).find("input[name='MVCGridName']").val();
 
-            var qsPrefix = $('#' + 'MVCGrid_' + mvcGridName + '_Prefix').val();
+            //var qsPrefix = $('#' + 'MVCGrid_' + mvcGridName + '_Prefix').val();
 
-            var preload = $('#' + 'MVCGrid_' + mvcGridName + '_Preload').val() === 'true';
+            //var preload = $('#' + 'MVCGrid_' + mvcGridName + '_Preload').val() === 'true';
+            var jsonData = $('#' + 'MVCGrid_' + mvcGridName + '_JsonData').val();
 
             currentGrids.push(
-                { name: mvcGridName, qsPrefix: qsPrefix, preloaded: preload }
-            );;
+                JSON.parse(jsonData)
+            );
         });
 
         for (var i = 0; i < currentGrids.length; i++) {
@@ -118,13 +119,20 @@ var MVCGrid = new function () {
         var tableHolderHtmlId = 'MVCGridTableHolder_' + mvcGridName;
         var loadingHtmlId = 'MVCGrid_Loading_' + mvcGridName;
 
+        var gridDef = findGridDef(mvcGridName);;
+
         $.ajax({
             type: "GET",
             url: handlerPath + location.search,
             data: { 'Name': mvcGridName },
             cache: false,
-            beforeSend: function(){
-                $('#' + loadingHtmlId).show();
+            beforeSend: function () {
+                if (gridDef.clientLoading != '') {
+                    window[gridDef.clientLoading]();
+                }
+                else {
+                    $('#' + loadingHtmlId).show();
+                }
             },
             success: function (result) {
                 $('#' + tableHolderHtmlId).html(result);
@@ -134,7 +142,12 @@ var MVCGrid = new function () {
                 $('#' + tableHolderHtmlId).html(errorhtml);
             },
             complete: function() {
-                $('#' + loadingHtmlId).hide();
+                if (gridDef.clientLoadingComplete != '') {
+                    window[gridDef.clientLoadingComplete]();
+                }
+                else {
+                    $('#' + loadingHtmlId).hide();
+                }
             }
         });
     }

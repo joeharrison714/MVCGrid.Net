@@ -15,6 +15,7 @@
             <li>@Html.ActionLink("Custom Data Formatting", "Formatting")</li>
             <li>@Html.ActionLink("Custom Row/Cell Styling", "Styling")</li>
             <li>@Html.ActionLink("Preloading Data", "Preloading")</li>
+            <li>@Html.ActionLink("Custom Client-side Loading Message", "LoadingMessage")</li>
 
 
         </ul>
@@ -23,3 +24,6 @@
         @RenderBody()
     </div>
 </div>
+@section Scripts{
+@RenderSection("scripts", required: false)
+}

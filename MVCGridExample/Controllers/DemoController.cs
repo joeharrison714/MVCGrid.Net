@@ -43,5 +43,10 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult LoadingMessage()
+        {
+            return View();
+        }
     }
 }

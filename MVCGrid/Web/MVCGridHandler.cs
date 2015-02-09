@@ -39,6 +39,8 @@ namespace MVCGrid.Web
                         _cachedBinaryResources.Add("sort.png", GetBinaryResource("sort.png"));
                         _cachedBinaryResources.Add("sortdown.png", GetBinaryResource("sortdown.png"));
                         _cachedBinaryResources.Add("sortup.png", GetBinaryResource("sortup.png"));
+
+                        _init = true;
                     }
                 }
             }

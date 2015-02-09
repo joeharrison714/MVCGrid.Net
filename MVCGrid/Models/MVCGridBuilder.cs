@@ -97,5 +97,18 @@ namespace MVCGrid.Models
             GridDefinition.NoResultsMessage = noResultsMessage;
             return this;
         }
+
+        public MVCGridBuilder<T1> WithClientSideLoadingMessageFunctionName(string name)
+        {
+            GridDefinition.ClientSideLoadingMessageFunctionName = name;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithClientSideLoadingCompleteFunctionName(string name)
+        {
+            GridDefinition.ClientSideLoadingCompleteFunctionName = name;
+            return this;
+        }
+
     }
 }

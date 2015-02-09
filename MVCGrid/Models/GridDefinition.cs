@@ -10,6 +10,8 @@ namespace MVCGrid.Models
 {
     public class GridDefinition<T1> : IMVCGridDefinition
     {
+        const string DefaultNoResultsMessage = "No results.";
+
         public GridDefinition() : this(null)
         {
             
@@ -23,7 +25,7 @@ namespace MVCGrid.Models
             }
 
             Columns = new List<GridColumn<T1>>();
-            NoResultsMessage = "No results.";
+            NoResultsMessage = DefaultNoResultsMessage;
         }
 
         public GridConfiguration GridConfiguration { get; set; }
@@ -135,6 +137,10 @@ namespace MVCGrid.Models
         public bool Sorting { get; set; }
         public string DefaultSortColumn { get; set; }
         public string NoResultsMessage { get; set; }
+
+        public string ClientSideLoadingMessageFunctionName { get; set; }
+        public string ClientSideLoadingCompleteFunctionName { get; set; }
+
     }
 
 }

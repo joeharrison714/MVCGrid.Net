@@ -198,6 +198,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -229,6 +230,7 @@
     <Content Include="Views\Demo\Formatting.cshtml" />
     <Content Include="Views\Demo\Styling.cshtml" />
     <Content Include="Views\Demo\Preloading.cshtml" />
+    <Content Include="Views\Demo\LoadingMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />
