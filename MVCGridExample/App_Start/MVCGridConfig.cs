@@ -17,7 +17,11 @@ namespace MVCGridExample
             var grid = new GridDefinition<TestItem>(globalConfig)
                 .WithColumn("Col1", "Col1", ((p, h) => p.Col1),
                     cellCssClassExpression: ((p, c) => {
-                        if (p.Col1 == "Row3") { return "success"; } return null;
+                        if (p.Col1 == "Row3")
+                        {
+                            return "success";
+                        }
+                        return null;
                     }))
                 .WithColumn("Col2", "Col2", ((p, h) => p.Col2))
                 .WithColumn(
@@ -48,6 +52,7 @@ namespace MVCGridExample
                 }
                 return null;
             };
+            grid.PreloadData = true;
             MVCGridMappingTable.Add("TestMapping", grid);
 
 

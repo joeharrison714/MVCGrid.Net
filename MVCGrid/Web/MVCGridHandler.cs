@@ -1,6 +1,7 @@
 ﻿using MVCGrid.Interfaces;
 using MVCGrid.Models;
 using MVCGrid.Rendering;
+using MVCGrid.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,17 +55,7 @@ namespace MVCGrid.Web
 
             var options = QueryStringParser.ParseOptions(grid, context.Request);
 
-            var httpContext = new HttpContextWrapper(HttpContext.Current);
-            var urlHelper = new UrlHelper(new RequestContext(httpContext, new RouteData()));
-
-            var gridContext = new GridContext()
-            {
-                GridName = gridName,
-                CurrentHttpContext = context,
-                GridDefinition = grid,
-                QueryOptions = options,
-                UrlHelper = urlHelper
-            };
+            var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
             IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context);
 
@@ -80,7 +71,8 @@ namespace MVCGrid.Web
 
             var results = grid.GetData(gridContext);
 
-            renderingEngine.Render(results, gridContext, context.Response);
+            renderingEngine.PrepareResponse(context.Response);
+            renderingEngine.Render(results, gridContext, context.Response.OutputStream);
         }
 
         private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context)

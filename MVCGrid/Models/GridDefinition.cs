@@ -132,6 +132,8 @@ namespace MVCGrid.Models
         /// </summary>
         public string QueryStringPrefix { get; set; }
 
+        public bool PreloadData { get; set; }
+
     }
 
 }

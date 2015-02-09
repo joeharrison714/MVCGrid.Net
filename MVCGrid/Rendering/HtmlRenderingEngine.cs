@@ -3,6 +3,7 @@ using MVCGrid.Models;
 using MVCGrid.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +27,16 @@ namespace MVCGrid.Rendering
             HtmlImageSort = "<img src='/content/icon_sort_arrow.png' class='pull-right' />";
         }
 
+        public void PrepareResponse(HttpResponse response)
+        {
+        }
+
         public bool AllowsPaging
         {
             get { return true; }
         }
 
-        public void Render(GridData data, GridContext gridContext, HttpResponse httpResponse)
+        public void Render(GridData data, GridContext gridContext, Stream outputStream)//HttpResponse httpResponse
         {
             StringBuilder sbHtml = new StringBuilder();
 
@@ -46,7 +51,10 @@ namespace MVCGrid.Rendering
 
             MakePaging(data, gridContext, sbHtml);
 
-            httpResponse.Write(sbHtml.ToString());
+            using (StreamWriter sw = new StreamWriter(outputStream))
+            {
+                sw.Write(sbHtml.ToString());
+            }
         }
 
         private void RenderBody(GridData data, GridContext gridContext, StringBuilder sbHtml)
@@ -249,5 +257,8 @@ namespace MVCGrid.Rendering
             sbHtml.Append("</div>");
             sbHtml.Append("</div>");
         }
+
+
+
     }
 }

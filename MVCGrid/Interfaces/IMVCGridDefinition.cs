@@ -13,5 +13,6 @@ namespace MVCGrid.Interfaces
         GridData GetData(GridContext context);
         GridConfiguration GridConfiguration { get; }
         string QueryStringPrefix { get; }
+        bool PreloadData { get; }
     }
 }

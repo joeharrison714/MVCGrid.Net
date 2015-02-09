@@ -76,6 +76,7 @@
     <Compile Include="Models\GridContext.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
     <Compile Include="Rendering\HtmlRenderingEngine.cs" />
+    <Compile Include="Utility\GridContextUtility.cs" />
     <Compile Include="Utility\HtmlUtility.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
     <Compile Include="Interfaces\IMVCGridColumn.cs" />

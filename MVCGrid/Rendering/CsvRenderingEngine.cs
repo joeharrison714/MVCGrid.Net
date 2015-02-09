@@ -1,6 +1,7 @@
 ﻿using MVCGrid.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,45 +15,52 @@ namespace MVCGrid.Rendering
             get { return false; }
         }
 
-        public void Render(Models.GridData data, Models.GridContext gridContext, System.Web.HttpResponse httpResponse)
+        public void PrepareResponse(System.Web.HttpResponse httpResponse)
         {
             httpResponse.Clear();
             httpResponse.ContentType = "text/csv";
             httpResponse.AddHeader("content-disposition", "attachment; filename=\"" + "export" + ".csv\"");
+        }
 
-            StringBuilder sbHeaderRow = new StringBuilder();
-            foreach (var col in gridContext.GridDefinition.GetColumns())
-            {
-                if (sbHeaderRow.Length != 0)
-                {
-                    sbHeaderRow.Append(",");
-                }
-                sbHeaderRow.Append(CsvEncode(col.ColumnName));
-            }
-            sbHeaderRow.AppendLine();
-            httpResponse.Write(sbHeaderRow.ToString());
+        public void Render(Models.GridData data, Models.GridContext gridContext, Stream outputStream)
+        {
 
-            foreach (var item in data.Rows)
+            using (StreamWriter sw = new StreamWriter(outputStream))
             {
-                StringBuilder sbRow = new StringBuilder();
+                StringBuilder sbHeaderRow = new StringBuilder();
                 foreach (var col in gridContext.GridDefinition.GetColumns())
                 {
-                    if (sbRow.Length != 0)
+                    if (sbHeaderRow.Length != 0)
                     {
-                        sbRow.Append(",");
+                        sbHeaderRow.Append(",");
                     }
-
-                    string val = "";
-
-                    if (item.PlainTextValues.ContainsKey(col.ColumnName))
-                    {
-                        val = item.PlainTextValues[col.ColumnName];
-                    }
-
-                    sbRow.Append(CsvEncode(val));
+                    sbHeaderRow.Append(CsvEncode(col.ColumnName));
                 }
-                sbRow.AppendLine();
-                httpResponse.Write(sbRow.ToString());
+                sbHeaderRow.AppendLine();
+                sw.Write(sbHeaderRow.ToString());
+
+                foreach (var item in data.Rows)
+                {
+                    StringBuilder sbRow = new StringBuilder();
+                    foreach (var col in gridContext.GridDefinition.GetColumns())
+                    {
+                        if (sbRow.Length != 0)
+                        {
+                            sbRow.Append(",");
+                        }
+
+                        string val = "";
+
+                        if (item.PlainTextValues.ContainsKey(col.ColumnName))
+                        {
+                            val = item.PlainTextValues[col.ColumnName];
+                        }
+
+                        sbRow.Append(CsvEncode(val));
+                    }
+                    sbRow.AppendLine();
+                    sw.Write(sbRow.ToString());
+                }
             }
         }
 

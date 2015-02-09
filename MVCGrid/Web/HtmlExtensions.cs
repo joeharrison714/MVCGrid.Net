@@ -1,6 +1,9 @@
 ﻿using MVCGrid.Interfaces;
+using MVCGrid.Rendering;
+using MVCGrid.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +25,29 @@ namespace MVCGrid.Web
         {
             string gridName = name;
 
-            var currentMapping = MVCGridMappingTable.GetMappingInterface(name);
+            string html = MVCGridHtmlGenerator.GenerateBasePageHtml(name, grid);
 
-            string html = MVCGridHtmlGenerator.GenerateBasePageHtml(name, currentMapping);
+            string preload = "";
+
+            if (grid.PreloadData)
+            {
+                var options = QueryStringParser.ParseOptions(grid, System.Web.HttpContext.Current.Request);
+
+                var gridContext = GridContextUtility.Create(HttpContext.Current, gridName, grid, options);
+
+                IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine();
+
+                var results = grid.GetData(gridContext);
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    renderingEngine.Render(results, gridContext, ms);
+
+                    preload = Encoding.ASCII.GetString(ms.ToArray());
+                }
+            }
+
+            html=html.Replace("%%PRELOAD%%", preload);
 
             return MvcHtmlString.Create(html);
         }

@@ -10,15 +10,19 @@ var MVCGrid = new function () {
 
             var qsPrefix = $('#' + 'MVCGrid_' + mvcGridName + '_Prefix').val();
 
+            var preload = $('#' + 'MVCGrid_' + mvcGridName + '_Preload').val() === 'true';
+
             currentGrids.push(
-                { name: mvcGridName, qsPrefix: qsPrefix }
+                { name: mvcGridName, qsPrefix: qsPrefix, preloaded: preload }
             );
         });
 
         for (var i = 0; i < currentGrids.length; i++) {
             var obj = currentGrids[i];
 
-            MVCGrid.reloadGrid(obj.name);
+            if (!obj.preloaded) {
+                MVCGrid.reloadGrid(obj.name);
+            }
         }
     }
 

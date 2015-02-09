@@ -26,8 +26,10 @@ namespace MVCGrid.Web
 
             sbHtml.AppendFormat("<input type='hidden' name='MVCGridName' value='{0}' />", gridName);
             sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_Prefix' value='{1}' />", gridName, def.QueryStringPrefix);
+            sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_Preload' value='{1}' />", gridName, def.PreloadData.ToString().ToLower());
 
             sbHtml.AppendFormat("<div id='{0}'>", HtmlUtility.GetTableHolderHtmlId(gridName));
+            sbHtml.Append("%%PRELOAD%%");
             sbHtml.Append("</div>");
 
 
