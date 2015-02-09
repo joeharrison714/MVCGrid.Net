@@ -12,7 +12,10 @@ namespace MVCGrid.Web
 {
     //Feature Requests
     //Show/hide fields
-    //row/cell style functions
+    //turn off paging (maybe ajax)
+    // ajax loading function
+    // ajax error handling
+    // filtering
 
     internal class MVCGridHtmlGenerator
     {
