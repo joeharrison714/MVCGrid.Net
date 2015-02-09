@@ -1,6 +1,7 @@
 ﻿
 var MVCGrid = new function () {
 
+    var handlerPath = '/MVCGridHandler.axd';
     var currentGrids = [];
 
     this.init = function () {
@@ -14,7 +15,7 @@ var MVCGrid = new function () {
 
             currentGrids.push(
                 { name: mvcGridName, qsPrefix: qsPrefix, preloaded: preload }
-            );
+            );;
         });
 
         for (var i = 0; i < currentGrids.length; i++) {
@@ -115,21 +116,25 @@ var MVCGrid = new function () {
 
     this.reloadGrid = function(mvcGridName){
         var tableHolderHtmlId = 'MVCGridTableHolder_' + mvcGridName;
+        var loadingHtmlId = 'MVCGrid_Loading_' + mvcGridName;
 
         $.ajax({
             type: "GET",
-            url: "/MVCGridHandler.axd" + location.search,
+            url: handlerPath + location.search,
             data: { 'Name': mvcGridName },
             cache: false,
             beforeSend: function(){
-                //alert('about to ajax');
+                $('#' + loadingHtmlId).show();
             },
             success: function (result) {
                 $('#' + tableHolderHtmlId).html(result);
             },
             error: function (request, status, error) {
-                alert('There was a problem loading the grid.');
-                $('#' + tableHolderHtmlId).html(request.responseText);
+                var errorhtml = '<p class="bg-danger">There was a problem loading the grid.</p>'
+                $('#' + tableHolderHtmlId).html(errorhtml);
+            },
+            complete: function() {
+                $('#' + loadingHtmlId).hide();
             }
         });
     }

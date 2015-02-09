@@ -22,9 +22,9 @@ namespace MVCGrid.Rendering
         {
             CssTable = "table table-striped table-bordered";
 
-            HtmlImageSortAsc = "<img src='/content/icon_up_sort_arrow.png' class='pull-right' />";
-            HtmlImageSortDsc = "<img src='/content/icon_down_sort_arrow.png' class='pull-right' />";
-            HtmlImageSort = "<img src='/content/icon_sort_arrow.png' class='pull-right' />";
+            HtmlImageSortAsc = String.Format("<img src='{0}/sortup.png' class='pull-right' />", HtmlUtility.GetHandlerPath());
+            HtmlImageSortDsc = String.Format("<img src='{0}/sortdown.png' class='pull-right' />", HtmlUtility.GetHandlerPath());
+            HtmlImageSort = String.Format("<img src='{0}/sort.png' class='pull-right' />", HtmlUtility.GetHandlerPath());
         }
 
         public void PrepareResponse(HttpResponse response)
