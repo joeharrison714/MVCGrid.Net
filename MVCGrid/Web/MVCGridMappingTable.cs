@@ -14,16 +14,33 @@ namespace MVCGrid.Web
 
         private static object _lock = new object();
 
+        public static void Add<T1>(string name, MVCGridBuilder<T1> builder)
+        {
+            Add(name, builder.GridDefinition);
+        }
+
         public static void Add<T1>(string name, GridDefinition<T1> mapping)
         {
             if (!_table.ContainsKey(name))
             {
                 lock (_lock)
                 {
-                    if (!_table.ContainsKey(name))
+                    if (_table.ContainsKey(name))
                     {
-                        _table.Add(name, mapping);
+                        throw new ArgumentException(
+                            String.Format("There is already a grid definition with the name '{0}'.", name),
+                            "name");
                     }
+
+                    if (mapping.RetrieveData == null)
+                    {
+                        throw new ArgumentException(
+                            String.Format("There is no RetrieveData expression defined for grid '{0}'.", name),
+                            "name");
+                    }
+                    
+                    _table.Add(name, mapping);
+                    
                 }
             }
         }

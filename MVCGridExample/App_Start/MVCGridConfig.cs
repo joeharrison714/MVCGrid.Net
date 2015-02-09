@@ -14,24 +14,25 @@ namespace MVCGridExample
         {
             GridConfiguration globalConfig = SetupGlobalConfiguration();
 
-            var grid = new GridDefinition<TestItem>(globalConfig)
-                .WithColumn("Col1", "Col1", ((p, h) => p.Col1),
-                    cellCssClassExpression: ((p, c) => {
+            var grid = new MVCGridBuilder<TestItem>()
+                .AddColumn("Col1", "Col1", ((p, h) => p.Col1),
+                    cellCssClassExpression: ((p, c) =>
+                    {
                         if (p.Col1 == "Row3")
                         {
                             return "success";
                         }
                         return null;
                     }))
-                .WithColumn("Col2", "Col2", ((p, h) => p.Col2))
-                .WithColumn(
+                .AddColumn("Col2", "Col2", ((p, h) => p.Col2))
+                .AddColumn(
                     name: "Col3",
                     headerText: "Column3",
                     valueExpression: ((p, h) => String.Format("<a href='{1}'>{0}</a>", p.Col3, h.UrlHelper.Action("detail", "item", new { id = "test" }))),
                     enableSort: false,
                     htmlEncode: false,
                     plainTextValueExpression: ((p, c) => p.Col3))
-                .WithRetrieveData(((options) =>
+                .WithRetrieveDataMethod(((options) =>
                 {
                     TestItemRepository repo = new TestItemRepository();
                     int totalRecords;
@@ -42,25 +43,39 @@ namespace MVCGridExample
                         Items = items,
                         TotalRecords = totalRecords
                     };
-                }));
-            grid.QueryStringPrefix = "grid1";
-            grid.RowCssClassExpression = (p, h) =>
-            {
-                if (p.Col1 == "Row1")
-                {
-                    return "success";
-                }
-                return null;
-            };
-            grid.PreloadData = true;
+                }))
+                .WithPreloadData(true)
+                .WithRowCssClassExpression((p, h) =>
+                    {
+                        if (p.Col1 == "Row1")
+                        {
+                            return "success";
+                        }
+                        return null;
+                    });
             MVCGridMappingTable.Add("TestMapping", grid);
 
 
-            var grid2 = new GridBuilder<TestItem>()
-                .AddColumn(col => col.WithColumnName("test").WithHeaderText("test"))
-                .AddColumn(col => col.WithColumnName("test2").WithHeaderText("test2"));
+            var grid2 = new MVCGridBuilder<TestItem>();
+            //    .AddColumn(col => col.WithColumnName("test").WithHeaderText("test"))
+            //    .AddColumn(col => col.WithColumnName("test2").WithHeaderText("test2"));
 
-            MVCGridMappingTable.Add("TestMapping2", grid2.GridDefinition);
+            GridColumnListBuilder<TestItem> columns = new GridColumnListBuilder<TestItem>();
+            columns.Add().WithColumnName("test").WithHeaderText("test header");
+
+            grid2.AddColumns(cols =>
+            {
+                cols.Add()
+                    .WithColumnName("Col1")
+                    .WithHeaderText("blah")
+                    .WithValueExpression(((i,c) => i.Col1));
+                cols.Add()
+                    .WithColumnName("Col2")
+                    .WithHeaderText("Col2")
+                    .WithValueExpression(((i, c) => i.Col2)); ;
+            });
+
+            MVCGridMappingTable.Add("TestMapping", grid2);
         }
 
         private static GridConfiguration SetupGlobalConfiguration()

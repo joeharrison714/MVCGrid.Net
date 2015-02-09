@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IMVCGridRenderingEngine.cs" />
-    <Compile Include="Models\GridBuilder.cs" />
+    <Compile Include="Models\MVCGridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />

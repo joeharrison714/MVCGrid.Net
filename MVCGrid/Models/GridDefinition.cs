@@ -26,41 +26,6 @@ namespace MVCGrid.Models
             Columns = new List<GridColumn<T1>>();
         }
 
-        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression,
-            bool enableSort = true, bool htmlEncode = true, Func<T1, GridContext, string> plainTextValueExpression = null,
-            Func<T1, GridContext, string> cellCssClassExpression = null)
-        {
-            var col = new GridColumn<T1>();
-            col.ColumnName=name;
-            col.HeaderText = headerText;
-            col.ValueExpression = valueExpression;
-            col.HtmlEncode = htmlEncode;
-            col.EnableSorting = enableSort;
-            col.PlainTextValueExpression = plainTextValueExpression;
-            col.CellCssClassExpression = cellCssClassExpression;
-            this.Columns.Add(col);
-            return this;
-        }
-
-        public GridDefinition<T1> WithColumn(GridColumn<T1> column)
-        {
-            this.Columns.Add(column);
-            return this;
-        }
-
-        public GridDefinition<T1> WithRetrieveData(Func<QueryOptions, QueryResult<T1>> retrieveData)
-        {
-            this.RetrieveData = retrieveData;
-            return this;
-        }
-
-        public GridDefinition<T1> WithRowCssClassExpression(Func<T1, GridContext, string> rowCssClassExpression)
-        {
-            this.RowCssClassExpression = rowCssClassExpression;
-            return this;
-        }
-
-
         public GridConfiguration GridConfiguration { get; set; }
 
         public IEnumerable<IMVCGridColumn> GetColumns()
@@ -73,7 +38,33 @@ namespace MVCGrid.Models
             return interfaceList;
         }
 
-        public List<GridColumn<T1>> Columns { get; set; }
+        public void AddColumn(GridColumn<T1> column)
+        {
+            string thisName = column.ColumnName;
+            if (String.IsNullOrWhiteSpace(thisName))
+            {
+                throw new ArgumentException("Please specify a unique column name for each column", "column.ColumnName");
+            }
+            column.ColumnName = column.ColumnName.Trim();
+
+            if (Columns.Any(p => p.ColumnName.ToLower() == column.ColumnName.ToLower()))
+            {
+                throw new ArgumentException(
+                    String.Format("There is already a column added with the name '{0}'", column.ColumnName),
+                    "column.ColumnName");
+            }
+
+            if (column.ValueExpression == null)
+            {
+                throw new ArgumentException(
+                    String.Format("Column '{0}' is missing a value expression.", column.ColumnName), 
+                    "column.ValueExpression");
+            }
+
+            Columns.Add(column);
+        }
+
+        private List<GridColumn<T1>> Columns { get; set; }
 
         public Func<QueryOptions, QueryResult<T1>> RetrieveData { get; set; }
         public Func<T1, GridContext, string> RowCssClassExpression { get; set; }

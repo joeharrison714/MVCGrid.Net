@@ -7,6 +7,25 @@ using System.Web.Mvc;
 
 namespace MVCGrid.Models
 {
+    public class GridColumnListBuilder<T1>
+    {
+        public GridColumnListBuilder()
+        {
+            ColumnBuilders = new List<GridColumnBuilder<T1>>();
+        }
+
+        public List<GridColumnBuilder<T1>> ColumnBuilders { get; set; }
+
+        public GridColumnBuilder<T1> Add()
+        {
+            GridColumnBuilder<T1> col = new GridColumnBuilder<T1>();
+
+            ColumnBuilders.Add(col);
+
+            return col;
+        }
+    }
+
     public class GridColumnBuilder<T1>
     {
         public GridColumnBuilder()
