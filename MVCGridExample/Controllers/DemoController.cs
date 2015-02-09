@@ -13,5 +13,15 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Sorting()
+        {
+            return View();
+        }
+
+        public ActionResult Paging()
+        {
+            return View();
+        }
     }
 }

@@ -75,6 +75,11 @@ namespace MVCGrid.Models
             var queryResult = RetrieveData(context.QueryOptions);
             result.TotalRecords = queryResult.TotalRecords;
 
+            if (context.GridDefinition.Paging && !result.TotalRecords.HasValue)
+            {
+                throw new Exception("When paging is enabled, QueryResult must contacin the TotalRecords");
+            }
+
             foreach (var item in queryResult.Items)
             {
                 GridRow thisRow = new GridRow();
@@ -123,6 +128,11 @@ namespace MVCGrid.Models
         public string QueryStringPrefix { get; set; }
 
         public bool PreloadData { get; set; }
+
+        public bool Paging { get; set; }
+        public int ItemsPerPage { get; set; }
+        public bool Sorting { get; set; }
+        public string DefaultSortColumn { get; set; }
 
     }
 

@@ -18,23 +18,52 @@ namespace MVCGrid.Web
             string qsKeyDirection = grid.QueryStringPrefix + "dir";
 
             var options = new QueryOptions();
-            options.ItemsPerPage = 20;
 
-            options.PageIndex = 0;
-            if (httpRequest.QueryString[qsKeyPage] != null)
+            if (!grid.Paging)
             {
-                int pageNum;
-                if (Int32.TryParse(httpRequest.QueryString[qsKeyPage], out pageNum))
+                options.ItemsPerPage = null;
+                options.PageIndex = null;
+            }
+            else
+            {
+                options.ItemsPerPage = grid.ItemsPerPage;
+
+                if (options.ItemsPerPage <= 0)
                 {
-                    options.PageIndex = pageNum - 1;
-                    if (options.PageIndex < 0) options.PageIndex = 0;
+                    options.ItemsPerPage = 20;
+                }
+
+                options.PageIndex = 0;
+                if (httpRequest.QueryString[qsKeyPage] != null)
+                {
+                    int pageNum;
+                    if (Int32.TryParse(httpRequest.QueryString[qsKeyPage], out pageNum))
+                    {
+                        options.PageIndex = pageNum - 1;
+                        if (options.PageIndex < 0) options.PageIndex = 0;
+                    }
                 }
             }
 
-            options.SortColumn = null;
-            if (httpRequest.QueryString[qsKeySort] != null)
+            if (!grid.Sorting)
             {
-                string sortColName = httpRequest.QueryString[qsKeySort];
+                options.SortColumn = null;
+                options.SortDirection = SortDirection.Asc;
+            }
+            else
+            {
+                options.SortColumn = null;
+
+                string sortColName = null;
+                if (httpRequest.QueryString[qsKeySort] != null)
+                {
+                    sortColName = httpRequest.QueryString[qsKeySort];
+                }
+
+                if (String.IsNullOrWhiteSpace(sortColName))
+                {
+                    sortColName = grid.DefaultSortColumn;
+                }
 
                 // validate SortColumn
                 var colDef = grid.GetColumns().SingleOrDefault(p => p.ColumnName == sortColName);
@@ -52,15 +81,16 @@ namespace MVCGrid.Web
                 }
 
                 options.SortColumn = sortColName;
-            }
+                
 
-            options.SortDirection = SortDirection.Asc;
-            if (httpRequest.QueryString[qsKeyDirection] != null)
-            {
-                string sortDir = httpRequest.QueryString[qsKeyDirection];
-                if (String.Compare(sortDir, "dsc", true) == 0)
+                options.SortDirection = SortDirection.Asc;
+                if (httpRequest.QueryString[qsKeyDirection] != null)
                 {
-                    options.SortDirection = SortDirection.Dsc;
+                    string sortDir = httpRequest.QueryString[qsKeyDirection];
+                    if (String.Compare(sortDir, "dsc", true) == 0)
+                    {
+                        options.SortDirection = SortDirection.Dsc;
+                    }
                 }
             }
 

@@ -12,7 +12,7 @@ namespace MVCGrid.Models
             Rows = new List<GridRow>();
         }
 
-        public int TotalRecords { get; set; }
+        public int? TotalRecords { get; set; }
         public List<GridRow> Rows { get; set; }
     }
 }

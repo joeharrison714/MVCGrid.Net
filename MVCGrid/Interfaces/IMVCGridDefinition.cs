@@ -13,5 +13,9 @@ namespace MVCGrid.Interfaces
         GridConfiguration GridConfiguration { get; }
         string QueryStringPrefix { get; }
         bool PreloadData { get; }
+        bool Paging { get; set; }
+        int ItemsPerPage { get; set; }
+        bool Sorting { get; set; }
+        string DefaultSortColumn { get; set; }
     }
 }

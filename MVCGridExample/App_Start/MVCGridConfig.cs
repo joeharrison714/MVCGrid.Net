@@ -1,5 +1,6 @@
 ﻿using MVCGrid.Models;
 using MVCGrid.Web;
+using MVCGrid.Web.Data;
 using MVCGridExample.Models;
 using System;
 using System.Collections.Generic;
@@ -56,20 +57,138 @@ namespace MVCGridExample
             MVCGridMappingTable.Add("TestMapping", grid);
 
 
-            //var grid2 = new MVCGridBuilder<TestItem>();
-            //grid2.AddColumns(cols =>
-            //{
-            //    cols.Add()
-            //        .WithColumnName("Col1")
-            //        .WithHeaderText("blah")
-            //        .WithValueExpression(((i,c) => i.Col1));
-            //    cols.Add()
-            //        .WithColumnName("Col2")
-            //        .WithHeaderText("Col2")
-            //        .WithValueExpression(((i, c) => i.Col2));
-            //});
+            MVCGridMappingTable.Add("EmployeeGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithRetrieveDataMethod((options) =>
+                {
+                    var result = new QueryResult<Person>();
 
-            //MVCGridMappingTable.Add("TestMapping2", grid2);
+                    using (var db = new SampleDatabaseEntities())
+                    {
+                        result.Items = db.People.Where(p => p.Employee).ToList();
+                    }
+
+                    return result;
+                })
+            );
+
+            MVCGridMappingTable.Add("SortableGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithRetrieveDataMethod((options) =>
+                {
+                    var result = new QueryResult<Person>();
+
+                    using (var db = new SampleDatabaseEntities())
+                    {
+                        var query = db.People.Where(p => p.Employee);
+
+                        if (!String.IsNullOrWhiteSpace(options.SortColumn))
+                        {
+                            switch (options.SortColumn.ToLower())
+                            {
+                                case "firstname":
+                                    if (options.SortDirection == SortDirection.Asc)
+                                        query = query.OrderBy(p => p.FirstName);
+                                    else
+                                        query = query.OrderByDescending(p => p.FirstName);
+                                    break;
+                                case "lastname":
+                                    if (options.SortDirection == SortDirection.Asc)
+                                        query = query.OrderBy(p => p.LastName);
+                                    else
+                                        query = query.OrderByDescending(p => p.LastName);
+                                    break;
+                            }
+                        }
+
+                        result.Items = query.ToList();
+                    }
+
+                    return result;
+                })
+            );
+
+            MVCGridMappingTable.Add("PagingGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithRetrieveDataMethod((options) =>
+                {
+                    var result = new QueryResult<Person>();
+
+                    using (var db = new SampleDatabaseEntities())
+                    {
+                        var query = db.People.AsQueryable();
+
+                        result.TotalRecords = query.Count();
+
+                        if (!String.IsNullOrWhiteSpace(options.SortColumn))
+                        {
+                            switch (options.SortColumn.ToLower())
+                            {
+                                case "firstname":
+                                    if (options.SortDirection == SortDirection.Asc)
+                                        query = query.OrderBy(p => p.FirstName);
+                                    else
+                                        query = query.OrderByDescending(p => p.FirstName);
+                                    break;
+                                case "lastname":
+                                    if (options.SortDirection == SortDirection.Asc)
+                                        query = query.OrderBy(p => p.LastName);
+                                    else
+                                        query = query.OrderByDescending(p => p.LastName);
+                                    break;
+                            }
+                        }
+
+                        if (options.GetLimitOffset().HasValue)
+                        {
+                            query = query.Skip(options.GetLimitOffset().Value).Take(options.GetLimitRowcount().Value);
+                        }
+
+                        result.Items = query.ToList();
+                    }
+
+                    return result;
+                })
+            );
+
         }
 
         private static GridConfiguration SetupGlobalConfiguration()

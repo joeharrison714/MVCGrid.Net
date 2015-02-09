@@ -7,7 +7,7 @@ namespace MVCGrid.Models
 {
     public class QueryResult<T1>
     {
-        public int TotalRecords { get; set; }
+        public int? TotalRecords { get; set; }
         public IEnumerable<T1> Items { get; set; }
     }
 }

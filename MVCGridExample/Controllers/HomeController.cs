@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVCGrid.Web.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,14 @@ namespace MVCGridExample.Controllers
     {
         public ActionResult Index()
         {
+            using (var db = new SampleDatabaseEntities())
+            {
+                foreach (var person in db.People)
+                {
+                    Console.WriteLine(person.FirstName);
+                }
+            }
+
             return View();
         }
 

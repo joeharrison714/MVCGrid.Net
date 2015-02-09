@@ -49,7 +49,10 @@ namespace MVCGrid.Rendering
             RenderBody(data, gridContext, sbHtml);
             sbHtml.AppendLine("</table>");
 
-            MakePaging(data, gridContext, sbHtml);
+            if (gridContext.GridDefinition.Paging)
+            {
+                MakePaging(data, gridContext, sbHtml);
+            }
 
             using (StreamWriter sw = new StreamWriter(outputStream))
             {
@@ -114,7 +117,7 @@ namespace MVCGrid.Rendering
             {
                 sbHtml.Append("<th");
 
-                if (col.EnableSorting)
+                if (gridContext.GridDefinition.Sorting && col.EnableSorting)
                 {
                     SortDirection direction = SortDirection.Asc;
                     if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Asc)
@@ -129,19 +132,19 @@ namespace MVCGrid.Rendering
 
                 sbHtml.Append(HttpUtility.HtmlEncode(col.HeaderText));
 
-                if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Asc)
+                if (gridContext.GridDefinition.Sorting && col.EnableSorting)
                 {
-                    sbHtml.Append(" ");
-                    sbHtml.Append(HtmlImageSortAsc);
-                }
-                else if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Dsc)
-                {
-                    sbHtml.Append(" ");
-                    sbHtml.Append(HtmlImageSortDsc);
-                }
-                else
-                {
-                    if (col.EnableSorting)
+                    if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Asc)
+                    {
+                        sbHtml.Append(" ");
+                        sbHtml.Append(HtmlImageSortAsc);
+                    }
+                    else if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Dsc)
+                    {
+                        sbHtml.Append(" ");
+                        sbHtml.Append(HtmlImageSortDsc);
+                    }
+                    else
                     {
                         sbHtml.Append(" ");
                         sbHtml.Append(HtmlImageSort);
@@ -162,7 +165,7 @@ namespace MVCGrid.Rendering
                 return;
             }
 
-            var numberOfPagesD = (data.TotalRecords + 0.0) / (gridContext.QueryOptions.ItemsPerPage.Value + 0.0);
+            var numberOfPagesD = (data.TotalRecords.Value + 0.0) / (gridContext.QueryOptions.ItemsPerPage.Value + 0.0);
             int numberOfPages = (int)Math.Ceiling(numberOfPagesD);
             int currentPageIndex = gridContext.QueryOptions.PageIndex.Value;
 
@@ -170,7 +173,7 @@ namespace MVCGrid.Rendering
             int lastRecord = (firstRecord + gridContext.QueryOptions.ItemsPerPage.Value) - 1;
             if (lastRecord > data.TotalRecords)
             {
-                lastRecord = data.TotalRecords;
+                lastRecord = data.TotalRecords.Value;
             }
 
             string recordText = String.Format("Showing {0} to {1} of {2} entries",

@@ -7,7 +7,11 @@
 
 <div class="row">
     <div class="col-md-3" role="complementary">
-        Sidebar
+        <ul>
+            <li>@Html.ActionLink("Basic Grid","index")</li>
+            <li>@Html.ActionLink("Sorting", "sorting")</li>
+            <li>@Html.ActionLink("Paging", "paging")</li>
+        </ul>
     </div>
     <div class="col-md-9" role="main">
         @RenderBody()

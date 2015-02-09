@@ -57,10 +57,10 @@ namespace MVCGrid.Web
 
             IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context);
 
-            if (renderingEngine is HtmlRenderingEngine)
-            {
-                context.Response.Write(sbDebug.ToString());
-            }
+            //if (renderingEngine is HtmlRenderingEngine)
+            //{
+            //    context.Response.Write(sbDebug.ToString());
+            //}
 
             if (!renderingEngine.AllowsPaging)
             {

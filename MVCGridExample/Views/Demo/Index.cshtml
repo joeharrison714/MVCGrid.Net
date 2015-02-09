@@ -1,7 +1,8 @@
-﻿
+﻿@using MVCGrid.Web
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Basic Grid";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
+@Html.MVCGrid("EmployeeGrid")

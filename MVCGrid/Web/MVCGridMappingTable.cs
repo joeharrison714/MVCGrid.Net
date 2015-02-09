@@ -34,6 +34,12 @@ namespace MVCGrid.Web
                     "RetrieveData");
             }
 
+            if (mapping.Sorting && String.IsNullOrWhiteSpace(mapping.DefaultSortColumn))
+            {
+                throw new Exception(
+                    String.Format("Grid '{0}': When sorting is enabled, a default sort column must be specified", name));
+            }
+
             _table.Add(name, mapping);
 
         }

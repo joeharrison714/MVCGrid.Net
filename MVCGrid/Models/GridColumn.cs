@@ -8,6 +8,8 @@ namespace MVCGrid.Models
 {
     public class GridColumn<T1> : IMVCGridColumn
     {
+        private string _headerText = null;
+
         public GridColumn()
         {
             EnableSorting = true;
@@ -16,7 +18,20 @@ namespace MVCGrid.Models
 
         public string ColumnName { get; set; }
 
-        public string HeaderText { get; set; }
+        public string HeaderText
+        {
+            get
+            {
+                if (_headerText == null)
+                    return ColumnName;
+                else
+                    return _headerText;
+            }
+            set
+            {
+                _headerText = value;
+            }
+        }
 
         /// <summary>
         /// The expression for returning the cell value

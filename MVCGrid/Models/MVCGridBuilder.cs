@@ -67,5 +67,31 @@ namespace MVCGrid.Models
             GridDefinition.PreloadData = preload;
             return this;
         }
+
+        public MVCGridBuilder<T1> WithPaging(bool paging)
+        {
+            GridDefinition.Paging = paging;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithItemsPerPage(int itemsPerPage)
+        {
+            GridDefinition.ItemsPerPage = itemsPerPage;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithSorting(bool sorting)
+        {
+            GridDefinition.Sorting = sorting;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithDefaultSortColumn(string defaultSortColumn)
+        {
+            GridDefinition.DefaultSortColumn = defaultSortColumn;
+            return this;
+        }
+
+        
     }
 }

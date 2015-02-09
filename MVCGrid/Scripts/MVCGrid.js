@@ -122,10 +122,14 @@ var MVCGrid = new function () {
             data: { 'Name': mvcGridName },
             cache: false,
             beforeSend: function(){
-                alert('about to ajax');
+                //alert('about to ajax');
             },
             success: function (result) {
                 $('#' + tableHolderHtmlId).html(result);
+            },
+            error: function (request, status, error) {
+                alert('There was a problem loading the grid.');
+                $('#' + tableHolderHtmlId).html(request.responseText);
             }
         });
     }
