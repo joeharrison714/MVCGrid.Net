@@ -31,7 +31,7 @@ namespace MVCGrid.Web
             {
                 throw new ArgumentException(
                     String.Format("There is no RetrieveData expression defined for grid '{0}'.", name),
-                    "name");
+                    "RetrieveData");
             }
 
             _table.Add(name, mapping);
@@ -41,13 +41,17 @@ namespace MVCGrid.Web
         public static GridDefinition<T1> GetMapping<T1>(string name)
         {
 
-            return (GridDefinition<T1>)_table[name];
+            return (GridDefinition<T1>)GetMappingInterface(name);
 
         }
 
         internal static IMVCGridDefinition GetMappingInterface(string name)
         {
-
+            if (!_table.ContainsKey(name))
+            {
+                throw new Exception(
+                    String.Format("There is no grid defined with the name '{0}'", name));
+            }
             return (IMVCGridDefinition)_table[name];
 
         }

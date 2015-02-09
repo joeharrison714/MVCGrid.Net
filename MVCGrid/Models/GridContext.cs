@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
 namespace MVCGrid.Models
 {
@@ -14,7 +12,7 @@ namespace MVCGrid.Models
         internal IMVCGridDefinition GridDefinition { get; set; }
         public HttpContext CurrentHttpContext { get; set; }
         public QueryOptions QueryOptions { get; set; }
-        public UrlHelper UrlHelper { get; set; }
+        public System.Web.Mvc.UrlHelper UrlHelper { get; set; }
         public string GridName { get; set; }
     }
 }

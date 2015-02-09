@@ -56,20 +56,20 @@ namespace MVCGridExample
             MVCGridMappingTable.Add("TestMapping", grid);
 
 
-            var grid2 = new MVCGridBuilder<TestItem>();
-            grid2.AddColumns(cols =>
-            {
-                cols.Add()
-                    .WithColumnName("Col1")
-                    .WithHeaderText("blah")
-                    .WithValueExpression(((i,c) => i.Col1));
-                cols.Add()
-                    .WithColumnName("Col2")
-                    .WithHeaderText("Col2")
-                    .WithValueExpression(((i, c) => i.Col2));
-            });
+            //var grid2 = new MVCGridBuilder<TestItem>();
+            //grid2.AddColumns(cols =>
+            //{
+            //    cols.Add()
+            //        .WithColumnName("Col1")
+            //        .WithHeaderText("blah")
+            //        .WithValueExpression(((i,c) => i.Col1));
+            //    cols.Add()
+            //        .WithColumnName("Col2")
+            //        .WithHeaderText("Col2")
+            //        .WithValueExpression(((i, c) => i.Col2));
+            //});
 
-            MVCGridMappingTable.Add("TestMapping2", grid2);
+            //MVCGridMappingTable.Add("TestMapping2", grid2);
         }
 
         private static GridConfiguration SetupGlobalConfiguration()

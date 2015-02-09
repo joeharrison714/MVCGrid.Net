@@ -47,7 +47,7 @@ namespace MVCGrid.Web
                 }
             }
 
-            html=html.Replace("%%PRELOAD%%", preload);
+            html = html.Replace("%%PRELOAD%%", preload);
 
             return MvcHtmlString.Create(html);
         }
