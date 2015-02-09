@@ -23,5 +23,25 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult DependencyInjection()
+        {
+            return View();
+        }
+
+        public ActionResult Formatting()
+        {
+            return View();
+        }
+
+        public ActionResult Styling()
+        {
+            return View();
+        }
+
+        public ActionResult Preloading()
+        {
+            return View();
+        }
     }
 }

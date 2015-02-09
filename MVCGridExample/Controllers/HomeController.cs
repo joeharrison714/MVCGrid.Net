@@ -11,13 +11,19 @@ namespace MVCGridExample.Controllers
     {
         public ActionResult Index()
         {
-            using (var db = new SampleDatabaseEntities())
-            {
-                foreach (var person in db.People)
-                {
-                    Console.WriteLine(person.FirstName);
-                }
-            }
+            //using (var db = new SampleDatabaseEntities())
+            //{
+            //    DateTime dt = DateTime.Now;
+            //    foreach (var person in db.People.ToList().OrderBy(p=>Guid.NewGuid()))
+            //    {
+            //        if (!person.StartDate.HasValue)
+            //        {
+            //            person.StartDate = dt;
+            //            dt = dt.Subtract(new TimeSpan(30, 55, 0));
+            //        }
+            //    }
+            //    db.SaveChanges();
+            //}
 
             return View();
         }

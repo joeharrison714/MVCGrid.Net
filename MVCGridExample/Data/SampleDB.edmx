@@ -16,6 +16,7 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Employee" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
         </EntityType>
         <EntityContainer Name="SampleDatabaseModelStoreContainer">
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
@@ -35,6 +36,7 @@
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="Employee" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="SampleDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="People" EntityType="Self.Person" />
@@ -48,6 +50,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="SampleDatabaseModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Employee" ColumnName="Employee" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />

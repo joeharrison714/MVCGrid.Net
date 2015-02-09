@@ -62,5 +62,11 @@ namespace MVCGrid.Models
             GridColumn.ValueExpression = expression;
             return this;
         }
+
+        public GridColumnBuilder<T1> WithCellCssClassExpression(Func<T1, GridContext, string> expression)
+        {
+            GridColumn.CellCssClassExpression = expression;
+            return this;
+        }
     }
 }

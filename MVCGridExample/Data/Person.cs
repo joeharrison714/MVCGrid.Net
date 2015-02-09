@@ -21,5 +21,6 @@ namespace MVCGrid.Web.Data
         public string Gender { get; set; }
         public bool Active { get; set; }
         public bool Employee { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
     }
 }
