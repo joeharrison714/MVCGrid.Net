@@ -92,6 +92,10 @@ namespace MVCGrid.Models
             return this;
         }
 
-        
+        public MVCGridBuilder<T1> WithNoResultsMessage(string noResultsMessage)
+        {
+            GridDefinition.NoResultsMessage = noResultsMessage;
+            return this;
+        }
     }
 }

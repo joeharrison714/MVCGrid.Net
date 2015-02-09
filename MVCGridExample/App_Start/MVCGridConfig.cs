@@ -41,6 +41,9 @@ namespace MVCGridExample
                     int totalRecords;
                     var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), options.SortColumn, options.SortDirection == SortDirection.Dsc);
 
+                    items = new List<TestItem>();
+                    totalRecords = 0;
+
                     return new QueryResult<TestItem>()
                     {
                         Items = items,

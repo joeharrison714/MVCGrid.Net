@@ -23,6 +23,7 @@ namespace MVCGrid.Models
             }
 
             Columns = new List<GridColumn<T1>>();
+            NoResultsMessage = "No results.";
         }
 
         public GridConfiguration GridConfiguration { get; set; }
@@ -133,7 +134,7 @@ namespace MVCGrid.Models
         public int ItemsPerPage { get; set; }
         public bool Sorting { get; set; }
         public string DefaultSortColumn { get; set; }
-
+        public string NoResultsMessage { get; set; }
     }
 
 }

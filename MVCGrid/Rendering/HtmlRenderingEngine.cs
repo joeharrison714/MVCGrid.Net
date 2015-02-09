@@ -46,7 +46,21 @@ namespace MVCGrid.Rendering
 
 
             RenderHeader(gridContext, sbHtml);
-            RenderBody(data, gridContext, sbHtml);
+
+            if (data.Rows.Count > 0)
+            {
+                RenderBody(data, gridContext, sbHtml);
+            }
+            else
+            {
+                sbHtml.Append("<tbody>");
+                sbHtml.Append("<tr>");
+                sbHtml.AppendFormat("<td colspan='{0}'>", gridContext.GridDefinition.GetColumns().Count());
+                sbHtml.Append(gridContext.GridDefinition.NoResultsMessage);
+                sbHtml.Append("</td>");
+                sbHtml.Append("</tr>");
+                sbHtml.Append("</tbody>");
+            }
             sbHtml.AppendLine("</table>");
 
             if (gridContext.GridDefinition.Paging)

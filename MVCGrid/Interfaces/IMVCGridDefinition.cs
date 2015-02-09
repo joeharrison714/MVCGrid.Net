@@ -17,5 +17,6 @@ namespace MVCGrid.Interfaces
         int ItemsPerPage { get; set; }
         bool Sorting { get; set; }
         string DefaultSortColumn { get; set; }
+        string NoResultsMessage { get; set; }
     }
 }
