@@ -57,12 +57,6 @@ namespace MVCGridExample
 
 
             var grid2 = new MVCGridBuilder<TestItem>();
-            //    .AddColumn(col => col.WithColumnName("test").WithHeaderText("test"))
-            //    .AddColumn(col => col.WithColumnName("test2").WithHeaderText("test2"));
-
-            GridColumnListBuilder<TestItem> columns = new GridColumnListBuilder<TestItem>();
-            columns.Add().WithColumnName("test").WithHeaderText("test header");
-
             grid2.AddColumns(cols =>
             {
                 cols.Add()
@@ -72,10 +66,10 @@ namespace MVCGridExample
                 cols.Add()
                     .WithColumnName("Col2")
                     .WithHeaderText("Col2")
-                    .WithValueExpression(((i, c) => i.Col2)); ;
+                    .WithValueExpression(((i, c) => i.Col2));
             });
 
-            MVCGridMappingTable.Add("TestMapping", grid2);
+            MVCGridMappingTable.Add("TestMapping2", grid2);
         }
 
         private static GridConfiguration SetupGlobalConfiguration()
