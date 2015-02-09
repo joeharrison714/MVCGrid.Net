@@ -11,15 +11,22 @@ namespace MVCGrid.Models
         public SortDirection SortDirection { get; set; }
         public string SortColumn { get; set; }
 
-        public int PageIndex { get; set; }
-        public int ItemsPerPage { get; set; }
+        public int? PageIndex { get; set; }
+        public int? ItemsPerPage { get; set; }
 
-        public int GetLimitOffset()
+        public int? GetLimitOffset()
         {
+            if (!ItemsPerPage.HasValue) return null;
+
+            if (!PageIndex.HasValue)
+            {
+                PageIndex = 0;
+            }
+
             return PageIndex * ItemsPerPage;
         }
 
-        public int GetLimitRowcount()
+        public int? GetLimitRowcount()
         {
             return ItemsPerPage;
         }

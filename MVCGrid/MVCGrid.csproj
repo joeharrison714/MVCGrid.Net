@@ -70,9 +70,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IMVCGridRenderingEngine.cs" />
     <Compile Include="Models\GridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />
+    <Compile Include="Rendering\CsvRenderingEngine.cs" />
+    <Compile Include="Rendering\HtmlRenderingEngine.cs" />
+    <Compile Include="Utility\HtmlUtility.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
     <Compile Include="Interfaces\IMVCGridColumn.cs" />
     <Compile Include="Interfaces\IMVCGridDefinition.cs" />

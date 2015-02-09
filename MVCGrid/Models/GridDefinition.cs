@@ -26,7 +26,7 @@ namespace MVCGrid.Models
             Columns = new List<GridColumn<T1>>();
         }
 
-        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression, bool enableSort = true, bool htmlEncode=true)
+        public GridDefinition<T1> WithColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression, bool enableSort = true, bool htmlEncode = true, Func<T1, GridContext, string> plainTextValueExpression = null)
         {
             var col = new GridColumn<T1>();
             col.ColumnName=name;
@@ -34,6 +34,7 @@ namespace MVCGrid.Models
             col.ValueExpression = valueExpression;
             col.HtmlEncode = htmlEncode;
             col.EnableSorting = enableSort;
+            col.PlainTextValueExpression = plainTextValueExpression;
             this.Columns.Add(col);
             return this;
         }
@@ -81,9 +82,15 @@ namespace MVCGrid.Models
                 foreach (var col in this.Columns)
                 {
                     string val = col.ValueExpression(item, context);
-                    Console.WriteLine(val);
 
-                    thisRow.Data.Add(col.ColumnName, val);
+                    string plainVal = val;
+                    if (col.PlainTextValueExpression != null)
+                    {
+                        plainVal = col.PlainTextValueExpression(item, context);
+                    }
+
+                    thisRow.Values.Add(col.ColumnName, val);
+                    thisRow.PlainTextValues.Add(col.ColumnName, plainVal);
                 }
 
                 result.Rows.Add(thisRow);

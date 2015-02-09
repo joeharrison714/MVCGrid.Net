@@ -20,7 +20,15 @@ namespace MVCGrid.Models
 
         public string HeaderText { get; set; }
 
+        /// <summary>
+        /// The expression for returning the cell value
+        /// </summary>
         public Func<T1, GridContext, string> ValueExpression { get; set; }
+
+        /// <summary>
+        /// Optional. Only needed if different from ValueExpression
+        /// </summary>
+        public Func<T1, GridContext, string> PlainTextValueExpression { get; set; }
 
         public bool EnableSorting { get; set; }
         public bool HtmlEncode { get; set; }

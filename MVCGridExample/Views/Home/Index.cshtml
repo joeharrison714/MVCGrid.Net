@@ -7,4 +7,5 @@
 
 @(Html.MVCGrid("TestMapping"))
 
-<input type="button" value="Refresh" onclick="loadMVCGridData('TestMapping');" />
+<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />
+<input type="button" value="Export" onclick="location.href = MVCGrid.getExportUrl('TestMapping');" />

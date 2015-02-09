@@ -17,7 +17,13 @@ namespace MVCGridExample
             var grid = new GridDefinition<TestItem>(globalConfig)
                 .WithColumn("Col1", "Col1", ((p, h) => p.Col1))
                 .WithColumn("Col2", "Col2", ((p, h) => p.Col2))
-                .WithColumn("Col3", "Col3", ((p, h) => String.Format("<a href='{1}'>{0}</a>", p.Col3, h.UrlHelper.Action("detail", "item", new { id="test" }))), false, false)
+                .WithColumn(
+                    name: "Col3",
+                    headerText: "Column3",
+                    valueExpression: ((p, h) => String.Format("<a href='{1}'>{0}</a>", p.Col3, h.UrlHelper.Action("detail", "item", new { id = "test" }))),
+                    enableSort: false,
+                    htmlEncode: false,
+                    plainTextValueExpression: ((p, c) => p.Col3))
                 .WithRetrieveData(((options) =>
                 {
                     TestItemRepository repo = new TestItemRepository();

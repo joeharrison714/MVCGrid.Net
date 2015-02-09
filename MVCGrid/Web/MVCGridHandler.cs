@@ -1,4 +1,6 @@
-﻿using MVCGrid.Models;
+﻿using MVCGrid.Interfaces;
+using MVCGrid.Models;
+using MVCGrid.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +46,8 @@ namespace MVCGrid.Web
                 sbDebug.Append(" = ");
                 sbDebug.Append(context.Request.QueryString[key]);
                 sbDebug.Append("<br />");
-            }            
+            }
+            
 
 
             var grid = MVCGridMappingTable.GetMappingInterface(gridName);
@@ -56,18 +59,49 @@ namespace MVCGrid.Web
 
             var gridContext = new GridContext()
             {
+                GridName = gridName,
                 CurrentHttpContext = context,
                 GridDefinition = grid,
                 QueryOptions = options,
                 UrlHelper = urlHelper
             };
 
+            IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context);
+
+            if (renderingEngine is HtmlRenderingEngine)
+            {
+                context.Response.Write(sbDebug.ToString());
+            }
+
+            if (!renderingEngine.AllowsPaging)
+            {
+                gridContext.QueryOptions.ItemsPerPage = null;
+            }
+
             var results = grid.GetData(gridContext);
 
-            var tableHtml = MVCGridHtmlGenerator.GenerateTable(gridName, grid, results, options);
+            renderingEngine.Render(results, gridContext, context.Response);
+        }
 
-            context.Response.Write(sbDebug.ToString());
-            context.Response.Write(tableHtml);
+        private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context)
+        {
+            IMVCGridRenderingEngine engine = null;
+
+            if (context.Request.QueryString["engine"] != null)
+            {
+                string re = context.Request.QueryString["engine"];
+                if (String.Compare(re, "export", true) == 0)
+                {
+                    engine = new CsvRenderingEngine();
+                }
+            }
+
+            if (engine == null)
+            {
+                 engine = new HtmlRenderingEngine();
+            }
+
+            return engine;
         }
 
         private static Lazy<string> javascriptContents = new Lazy<string>(() =>

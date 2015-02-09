@@ -15,5 +15,6 @@ namespace MVCGrid.Models
         public HttpContext CurrentHttpContext { get; set; }
         public QueryOptions QueryOptions { get; set; }
         public UrlHelper UrlHelper { get; set; }
+        public string GridName { get; set; }
     }
 }

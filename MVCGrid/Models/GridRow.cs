@@ -10,9 +10,11 @@ namespace MVCGrid.Models
     {
         public GridRow()
         {
-            Data = new Dictionary<string, string>();
+            Values = new Dictionary<string, string>();
+            PlainTextValues = new Dictionary<string, string>();
         }
 
-        public Dictionary<string, string> Data { get; set; }
+        public Dictionary<string, string> Values { get; set; }
+        public Dictionary<string, string> PlainTextValues { get; set; }
     }
 }
