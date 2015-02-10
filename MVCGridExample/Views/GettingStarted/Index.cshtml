@@ -12,9 +12,9 @@
     <pre>
 public class MVCGridConfig
 {
-    public static void RegisterMappings()
+    public static void RegisterGrids()
     {
-        // add your Grid definitions here, using the MVCGridMappingTable.Add method
+        // add your Grid definitions here, using the MVCGridDefinitionTable.Add method
     }
 }
 </pre>
@@ -22,7 +22,7 @@ public class MVCGridConfig
     <li>Add the following line to <code>Global.asax</code> in the <code>Application_Start()</code> method
     
     <pre>
-MVCGridConfig.RegisterMappings();
+MVCGridConfig.RegisterGrids();
 </pre>
     </li>
     <li>Add your grid definitions to the method above. See the demo page for examples.</li>
