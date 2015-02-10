@@ -1,0 +1,12 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Documentation";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<h2>Grid Definition</h2>
+@Html.MVCGrid("GridDefinitionGrid")
+
+<h2>Column Definition</h2>
+@Html.MVCGrid("GridColumnGrid")
