@@ -1,0 +1,82 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Client-side API";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#sortButton').click(function () {
+                MVCGrid.setSort('Filtering', 'FirstName', 'asc')
+            });
+
+            $('#pageButton').click(function () {
+                MVCGrid.setPage('Filtering', 3)
+            });
+
+            $('#filterButton').click(function () {
+                MVCGrid.setFilters('Filtering',
+                    [
+                        { "columnName": "LastName", "value": "Smith" }
+                    ])
+            });
+        });
+
+    </script>
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="container">
+    <div class="row">
+        <button class="btn btn-default" id="sortButton">Sort by FirstName</button>
+        <button class="btn btn-default" id="pageButton">Goto Page 3</button>
+        <button class="btn btn-default" id="filterButton">Filter for Smith</button>
+    </div>
+</div>
+<p>&nbsp;</p>
+
+
+@Html.MVCGrid("Filtering")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+&lt;script type=&quot;text/javascript&quot;&gt;
+	$(function () {
+		$(&#39;#sortButton&#39;).click(function () {
+			MVCGrid.setSort(&#39;Filtering&#39;, &#39;FirstName&#39;, &#39;asc&#39;)
+		});
+		$(&#39;#pageButton&#39;).click(function () {
+			MVCGrid.setPage(&#39;Filtering&#39;, 3)
+		});
+		$(&#39;#filterButton&#39;).click(function () {
+			MVCGrid.setFilters(&#39;Filtering&#39;,
+				[
+					{ &quot;columnName&quot;: &quot;LastName&quot;, &quot;value&quot;: &quot;Smith&quot; }
+				])
+		});
+	});
+&lt;/script&gt;
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("Filtering")</pre>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre>@@Html.MVCGrid("Filtering")</pre>
+    </div>
+</div>

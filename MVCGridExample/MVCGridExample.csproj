@@ -241,6 +241,7 @@
     <Content Include="Views\Demo\LoadingMessage.cshtml" />
     <Content Include="Views\Demo\Filtering.cshtml" />
     <Content Include="Views\Demo\Detail.cshtml" />
+    <Content Include="Views\Demo\ClientSideApi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Detail\" />

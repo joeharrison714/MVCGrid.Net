@@ -59,5 +59,10 @@ namespace MVCGrid.Web.Controllers
             ViewBag.Id = id;
             return View();
         }
+
+        public ActionResult ClientSideApi()
+        {
+            return View();
+        }
     }
 }
