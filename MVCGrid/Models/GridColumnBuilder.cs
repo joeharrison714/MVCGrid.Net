@@ -63,6 +63,12 @@ namespace MVCGrid.Models
             return this;
         }
 
+        public GridColumnBuilder<T1> WithPlainTextValueExpression(Func<T1, GridContext, string> expression)
+        {
+            GridColumn.PlainTextValueExpression = expression;
+            return this;
+        }
+
         public GridColumnBuilder<T1> WithCellCssClassExpression(Func<T1, GridContext, string> expression)
         {
             GridColumn.CellCssClassExpression = expression;

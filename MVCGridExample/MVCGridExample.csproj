@@ -242,6 +242,7 @@
     <Content Include="Views\Demo\Filtering.cshtml" />
     <Content Include="Views\Demo\Detail.cshtml" />
     <Content Include="Views\Demo\ClientSideApi.cshtml" />
+    <Content Include="Views\Demo\Export.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Detail\" />

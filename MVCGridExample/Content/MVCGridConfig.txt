@@ -455,6 +455,52 @@ namespace MVCGridExample
             );
 
 
+            MVCGridMappingTable.Add("ExportGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) =>
+                        {
+                            return String.Format("<a href='{0}'>{1}</a>",
+                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
+                        })
+                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add().WithColumnName("Status")
+                        .WithHeaderText("Status")
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithClientSideLoadingMessageFunctionName("showLoading")
+                .WithClientSideLoadingCompleteFunctionName("hideLoading")
+                .WithRetrieveDataMethod((options) =>
+                {
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+
             //MVCGridMappingTable.Add DO NOT DELETE - Needed for demo code parsing
         }
 

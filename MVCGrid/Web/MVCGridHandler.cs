@@ -185,6 +185,13 @@ namespace MVCGrid.Web
 
             var results = grid.GetData(gridContext);
 
+            // if a page was requested higher than available pages, requery for first page
+            if (results.Rows.Count == 0 && results.TotalRecords.HasValue && results.TotalRecords.Value > 0)
+            {
+                gridContext.QueryOptions.PageIndex = 0;
+                results = grid.GetData(gridContext);
+            }
+
             renderingEngine.PrepareResponse(context.Response);
             renderingEngine.Render(results, gridContext, context.Response.OutputStream);
         }

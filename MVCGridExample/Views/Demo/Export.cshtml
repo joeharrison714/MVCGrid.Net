@@ -1,0 +1,67 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Export to CSV";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="container">
+    <div class="row">
+        <button class="btn btn-default" id="exportButton">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+        </button>
+    </div>
+</div>
+<p>&nbsp;</p>
+
+@Html.MVCGrid("ExportGrid")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+&lt;script type=&quot;text/javascript&quot;&gt;
+	$(function () {
+		$(&#39;#exportButton&#39;).click(function () {
+			location.href = MVCGrid.getExportUrl(&#39;ExportGrid&#39;);
+		});
+	});
+&lt;/script&gt;
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("ExportGrid")</pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre>@@Html.MVCGrid("ExportGrid")</pre>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+
+    <script type="text/javascript">
+        function showLoading() {
+            $.blockUI();
+        }
+        function hideLoading() {
+            $.unblockUI();
+        }
+
+        $(function () {
+            $('#exportButton').click(function () {
+                location.href = MVCGrid.getExportUrl('ExportGrid');
+            });
+        });
+    </script>
+}

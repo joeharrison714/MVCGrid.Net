@@ -64,5 +64,10 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Export()
+        {
+            return View();
+        }
     }
 }
