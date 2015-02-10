@@ -453,6 +453,9 @@ namespace MVCGridExample
                     };
                 })
             );
+
+
+            //MVCGridMappingTable.Add DO NOT DELETE - Needed for demo code parsing
         }
 
         private static GridConfiguration SetupGlobalConfiguration()

@@ -7,6 +7,42 @@
 
 @Html.MVCGrid("CustomLoading")
 
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+&lt;script src=&quot;~/Scripts/jquery.blockUI.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+	function showLoading() {
+		$.blockUI();
+	}
+	function hideLoading() {
+		$.unblockUI();
+	}
+&lt;/script&gt;
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("CustomLoading")</pre>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre>@@Html.MVCGrid("CustomLoading")</pre>
+    </div>
+</div>
+
 @section Scripts{
     <script src="~/Scripts/jquery.blockUI.js"></script>
 

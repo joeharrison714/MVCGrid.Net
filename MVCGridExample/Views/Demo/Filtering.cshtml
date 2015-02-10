@@ -18,6 +18,8 @@
 
 <h2>@ViewBag.Title</h2>
 
+<p>It is your responsibility to add the whatever inputs to your page that you want for filtering. Then call the <code>MVCGrid.setFilters</code> method to perform the filtering.</p>
+
 <div class="well">
     <div class="form-horizontal">
 
@@ -53,3 +55,39 @@
 
 
 @Html.MVCGrid("Filtering")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+&lt;script type=&quot;text/javascript&quot;&gt;
+	$(&#39;#btnFilter&#39;).click(function(){
+		MVCGrid.setFilters(&#39;Filtering&#39;,
+			[
+				{ &quot;columnName&quot;: &quot;FirstName&quot;, &quot;value&quot;: $(&#39;#FirstName&#39;).val() },
+				{ &quot;columnName&quot;: &quot;LastName&quot;, &quot;value&quot;: $(&#39;#LastName&#39;).val() },
+				{ &quot;columnName&quot;: &quot;Status&quot;, &quot;value&quot;: $(&#39;#Status&#39;).val() }
+			])
+	});
+&lt;/script&gt;
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("Filtering")</pre>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre>@@Html.MVCGrid("Filtering")</pre>
+    </div>
+</div>

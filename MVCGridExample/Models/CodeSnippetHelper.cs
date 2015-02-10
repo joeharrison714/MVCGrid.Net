@@ -18,7 +18,11 @@ namespace MVCGrid.Web.Models
             if (cached == null)
             {
                 string s = GetCodeSnippetInternal(gridName);
-                HttpContext.Current.Cache.Insert(cacheKey, s);
+
+                if (s != null)
+                {
+                    HttpContext.Current.Cache.Insert(cacheKey, s);
+                }
                 return s;
             }
             else
