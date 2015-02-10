@@ -6,6 +6,8 @@
     <title>MVCGrid.Net</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/sh/shCore.css" rel="stylesheet" />
+    <link href="~/Content/sh/shThemeDefault.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -37,6 +39,12 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="/MVCGridHandler.axd/script.js"></script>
+    <script src="~/Content/sh/shCore.js"></script>
+    <script src="~/Content/sh/shBrushJScript.js"></script>
+    <script src="~/Content/sh/shBrushCSharp.js"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
