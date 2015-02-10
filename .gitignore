@@ -5,3 +5,4 @@ MVCGrid/bin/
 *.suo
 *.user
 packages/
+MVCGridExample/Properties/PublishProfiles/
