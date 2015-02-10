@@ -17,51 +17,6 @@ namespace MVCGridExample
         {
             GridConfiguration globalConfig = SetupGlobalConfiguration();
 
-            var grid = new MVCGridBuilder<TestItem>()
-                .AddColumn("Col1", "Col1", ((p, h) => p.Col1),
-                    cellCssClassExpression: ((p, c) =>
-                    {
-                        if (p.Col1 == "Row3")
-                        {
-                            return "success";
-                        }
-                        return null;
-                    }))
-                .AddColumn("Col2", "Col2", ((p, h) => p.Col2))
-                .AddColumn(
-                    name: "Col3",
-                    headerText: "Column3",
-                    valueExpression: ((p, h) => String.Format("<a href='{1}'>{0}</a>", p.Col3, h.UrlHelper.Action("detail", "item", new { id = "test" }))),
-                    enableSort: false,
-                    htmlEncode: false,
-                    plainTextValueExpression: ((p, c) => p.Col3))
-                .WithRetrieveDataMethod(((options) =>
-                {
-                    TestItemRepository repo = new TestItemRepository();
-                    int totalRecords;
-                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), options.SortColumn, options.SortDirection == SortDirection.Dsc);
-
-                    items = new List<TestItem>();
-                    totalRecords = 0;
-
-                    return new QueryResult<TestItem>()
-                    {
-                        Items = items,
-                        TotalRecords = totalRecords
-                    };
-                }))
-                .WithPreloadData(true)
-                .WithRowCssClassExpression((p, h) =>
-                    {
-                        if (p.Col1 == "Row1")
-                        {
-                            return "success";
-                        }
-                        return null;
-                    });
-            MVCGridDefinitionTable.Add("TestMapping", grid);
-
-
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {

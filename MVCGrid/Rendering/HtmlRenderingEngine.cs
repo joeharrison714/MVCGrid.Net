@@ -55,7 +55,7 @@ namespace MVCGrid.Rendering
             {
                 sbHtml.Append("<tbody>");
                 sbHtml.Append("<tr>");
-                sbHtml.AppendFormat("<td colspan='{0}'>", gridContext.GridDefinition.GetColumns().Count());
+                sbHtml.AppendFormat("<td colspan='{0}'>", gridContext.GetVisibleColumns().Count());
                 sbHtml.Append(gridContext.GridDefinition.NoResultsMessage);
                 sbHtml.Append("</td>");
                 sbHtml.Append("</tr>");
@@ -87,7 +87,7 @@ namespace MVCGrid.Rendering
                 }
                 sbHtml.AppendLine(">");
 
-                foreach (var col in gridContext.GridDefinition.GetColumns())
+                foreach (var col in gridContext.GetVisibleColumns())
                 {
                     string val = "";
 
@@ -127,7 +127,7 @@ namespace MVCGrid.Rendering
         {
             sbHtml.AppendLine("<thead>");
             sbHtml.AppendLine("  <tr>");
-            foreach (var col in gridContext.GridDefinition.GetColumns())
+            foreach (var col in gridContext.GetVisibleColumns())
             {
                 sbHtml.Append("<th");
 

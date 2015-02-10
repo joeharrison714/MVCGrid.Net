@@ -28,7 +28,7 @@ namespace MVCGrid.Rendering
             using (StreamWriter sw = new StreamWriter(outputStream))
             {
                 StringBuilder sbHeaderRow = new StringBuilder();
-                foreach (var col in gridContext.GridDefinition.GetColumns())
+                foreach (var col in gridContext.GetVisibleColumns())
                 {
                     if (sbHeaderRow.Length != 0)
                     {
@@ -42,7 +42,7 @@ namespace MVCGrid.Rendering
                 foreach (var item in data.Rows)
                 {
                     StringBuilder sbRow = new StringBuilder();
-                    foreach (var col in gridContext.GridDefinition.GetColumns())
+                    foreach (var col in gridContext.GetVisibleColumns())
                     {
                         if (sbRow.Length != 0)
                         {

@@ -14,5 +14,20 @@ namespace MVCGrid.Models
         public QueryOptions QueryOptions { get; set; }
         public System.Web.Mvc.UrlHelper UrlHelper { get; set; }
         public string GridName { get; set; }
+
+        public IEnumerable<IMVCGridColumn> GetVisibleColumns()
+        {
+            List<IMVCGridColumn> visibleColumns = new List<IMVCGridColumn>();
+
+            foreach (var col in this.GridDefinition.GetColumns())
+            {
+                if (col.Visible)
+                {
+                    visibleColumns.Add(col);
+                }
+            }
+
+            return visibleColumns;
+        }
     }
 }

@@ -80,5 +80,11 @@ namespace MVCGrid.Models
             GridColumn.EnableFiltering = enableFiltering;
             return this;
         }
+
+        public GridColumnBuilder<T1> WithVisibility(bool visible)
+        {
+            GridColumn.Visible = visible;
+            return this;
+        }
     }
 }

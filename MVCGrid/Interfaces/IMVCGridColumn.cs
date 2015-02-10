@@ -12,5 +12,6 @@ namespace MVCGrid.Interfaces
         bool EnableSorting { get; }
         bool HtmlEncode { get; }
         bool EnableFiltering { get; }
+        bool Visible { get; }
     }
 }
