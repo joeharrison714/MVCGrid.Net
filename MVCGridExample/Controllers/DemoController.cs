@@ -69,5 +69,10 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Multiple()
+        {
+            return View();
+        }
     }
 }

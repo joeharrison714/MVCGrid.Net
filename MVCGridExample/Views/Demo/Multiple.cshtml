@@ -1,0 +1,33 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Multiple Grids";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>To have more than 1 grid on a page and still do sorting/paging/filtering, set a <code>GridDefinition.QueryStringPrefix</code> to something unique for each grid.</p>
+
+<h3>Grid 1</h3>
+@Html.MVCGrid("Multiple1")
+
+<h3>Grid 2</h3>
+@Html.MVCGrid("Multiple2")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("Multiple1")</pre>
+
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("Multiple2")</pre>
+    </div>
+</div>
+
+@*
+    <div class="panel panel-default">
+        <div class="panel-heading">View</div>
+        <div class="panel-body">
+            <pre>@@Html.MVCGrid("PagingGrid")</pre>
+        </div>
+    </div>*@

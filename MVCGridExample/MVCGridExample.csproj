@@ -265,6 +265,7 @@
     <Content Include="Views\GettingStarted\Index.cshtml" />
     <Content Include="Views\Documentation\Index.cshtml" />
     <Content Include="Views\Download\Index.cshtml" />
+    <Content Include="Views\Demo\Multiple.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Detail\" />

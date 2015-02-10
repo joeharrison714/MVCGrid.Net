@@ -321,8 +321,11 @@ namespace MVCGridExample
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
+                    string sortColumn = options.SortColumn;
+                    if (String.Compare(sortColumn, "status", true) == 0) sortColumn = "active";
+
                     var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
-                        options.SortColumn, options.SortDirection == SortDirection.Dsc);
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()
                     {
@@ -447,12 +450,15 @@ namespace MVCGridExample
                         }
                     }
 
+                    string sortColumn = options.SortColumn;
+                    if (String.Compare(sortColumn, "status", true) == 0) sortColumn = "active";
+
                     var items = repo.GetData(out totalRecords,
                         options.GetFilterString("FirstName"),
                         options.GetFilterString("LastName"),
                         active,
                         options.GetLimitOffset(), options.GetLimitRowcount(),
-                        options.SortColumn, options.SortDirection == SortDirection.Dsc);
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()
                     {
@@ -496,9 +502,12 @@ namespace MVCGridExample
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
+                    string sortColumn = options.SortColumn;
+                    if (String.Compare(sortColumn, "status", true) == 0) sortColumn = "active";
+
                     var items = repo.GetData(out totalRecords,
                         options.GetLimitOffset(), options.GetLimitRowcount(),
-                        options.SortColumn, options.SortDirection == SortDirection.Dsc);
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()
                     {
@@ -507,6 +516,83 @@ namespace MVCGridExample
                     };
                 })
             );
+
+            MVCGridDefinitionTable.Add("Multiple1", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) =>
+                        {
+                            return String.Format("<a href='{0}'>{1}</a>",
+                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
+                        })
+                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add().WithColumnName("Status")
+                        .WithHeaderText("Status")
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithQueryStringPrefix("grid1")
+                .WithRetrieveDataMethod((options) =>
+                {
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string sortColumn = options.SortColumn;
+                    if (String.Compare(sortColumn, "status", true) == 0) sortColumn = "active";
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+            MVCGridDefinitionTable.Add("Multiple2", new MVCGridBuilder<TestItem>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Col1")
+                        .WithValueExpression((p, c) => p.Col1);
+                    cols.Add().WithColumnName("Col2")
+                        .WithValueExpression((p, c) => p.Col2);
+                    cols.Add().WithColumnName("Col3")
+                        .WithValueExpression((p, c) => p.Col3);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("Col1")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithQueryStringPrefix("grid2")
+                .WithRetrieveDataMethod((options) =>
+                {
+                    TestItemRepository repo = new TestItemRepository();
+                    int totalRecords;
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), options.SortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<TestItem>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
 
 
 
