@@ -151,6 +151,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\GettingStartedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Demo\Export.cshtml" />
     <Content Include="Views\GettingStarted\Index.cshtml" />
     <Content Include="Views\Documentation\Index.cshtml" />
+    <Content Include="Views\Download\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Detail\" />

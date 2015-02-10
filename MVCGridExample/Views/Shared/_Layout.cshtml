@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/sh/shCore.css" rel="stylesheet" />
     <link href="~/Content/sh/shThemeDefault.css" rel="stylesheet" />
+    @RenderSection("head", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,6 +27,7 @@
                     <li>@Html.ActionLink("Getting Started", "Index", "gettingstarted")</li>
                     <li>@Html.ActionLink("Demos", "index", "demo")</li>
                     <li>@Html.ActionLink("Documentation", "index", "documentation")</li>
+                    <li>@Html.ActionLink("Download", "index", "download")</li>
                 </ul>
             </div>
         </div>
