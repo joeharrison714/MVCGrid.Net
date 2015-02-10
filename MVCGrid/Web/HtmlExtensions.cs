@@ -16,7 +16,7 @@ namespace MVCGrid.Web
     {
         public static IHtmlString MVCGrid(this HtmlHelper helper, string name)
         {
-            var currentMapping = MVCGridMappingTable.GetMappingInterface(name);
+            var currentMapping = MVCGridDefinitionTable.GetDefinitionInterface(name);
 
             return MVCGrid(helper, name, currentMapping);
         }

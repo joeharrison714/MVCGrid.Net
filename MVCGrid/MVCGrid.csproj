@@ -68,7 +68,7 @@
     <Compile Include="Models\SortDirection.cs" />
     <Compile Include="Web\MVCGridHandler.cs" />
     <Compile Include="Web\MVCGridHtmlGenerator.cs" />
-    <Compile Include="Web\MVCGridMappingTable.cs" />
+    <Compile Include="Web\MVCGridDefinitionTable.cs" />
     <Compile Include="Models\QueryOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\QueryStringParser.cs" />

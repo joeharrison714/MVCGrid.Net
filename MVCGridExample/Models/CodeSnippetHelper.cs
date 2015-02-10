@@ -44,13 +44,13 @@ namespace MVCGrid.Web.Models
                     contents = sr.ReadToEnd();
                 }
 
-                int startPos = contents.IndexOf(String.Format("MVCGridMappingTable.Add(\"{0}\"", gridName));
+                int startPos = contents.IndexOf(String.Format("MVCGridDefinitionTable.Add(\"{0}\"", gridName));
                 startPos = contents.LastIndexOf("\n", startPos) + 1;
-                int endPos = contents.IndexOf("MVCGridMappingTable.Add", startPos + 19);
+                int endPos = contents.IndexOf("MVCGridDefinitionTable.Add", startPos + 19);
 
                 string snippet = contents.Substring(startPos, endPos - startPos);
 
-                int indentLength = snippet.IndexOf("MVCGridMappingTable");
+                int indentLength = snippet.IndexOf("MVCGridDefinitionTable");
                 StringBuilder sbNew = new StringBuilder();
                 foreach (var line in snippet.Split('\n', '\r'))
                 {

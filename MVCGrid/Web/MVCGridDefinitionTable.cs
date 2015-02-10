@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVCGrid.Web
 {
-    public class MVCGridMappingTable
+    public class MVCGridDefinitionTable
     {
         private static Dictionary<string, object> _table = new Dictionary<string, object>();
 
@@ -44,14 +44,14 @@ namespace MVCGrid.Web
 
         }
 
-        public static GridDefinition<T1> GetMapping<T1>(string name)
+        public static GridDefinition<T1> GetDefinition<T1>(string name)
         {
 
-            return (GridDefinition<T1>)GetMappingInterface(name);
+            return (GridDefinition<T1>)GetDefinitionInterface(name);
 
         }
 
-        internal static IMVCGridDefinition GetMappingInterface(string name)
+        internal static IMVCGridDefinition GetDefinitionInterface(string name)
         {
             if (!_table.ContainsKey(name))
             {

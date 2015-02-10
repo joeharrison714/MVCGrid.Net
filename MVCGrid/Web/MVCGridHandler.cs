@@ -162,10 +162,10 @@ namespace MVCGrid.Web
                 sbDebug.Append(context.Request.QueryString[key]);
                 sbDebug.Append("<br />");
             }
-            
 
 
-            var grid = MVCGridMappingTable.GetMappingInterface(gridName);
+
+            var grid = MVCGridDefinitionTable.GetDefinitionInterface(gridName);
 
             var options = QueryStringParser.ParseOptions(grid, context.Request);
 
