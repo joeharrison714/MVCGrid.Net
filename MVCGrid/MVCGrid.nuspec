@@ -12,7 +12,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>mvc grid</tags>
     <dependencies>
-      <dependency id="Microsoft.AspNet.Mvc" version="(,3.0]" />
+      <dependency id="Microsoft.AspNet.Mvc" version="3.0" />
     </dependencies>
   </metadata>
   <files>
