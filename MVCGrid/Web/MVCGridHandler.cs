@@ -33,7 +33,11 @@ namespace MVCGrid.Web
                         _cachedBinaryResources = new Dictionary<string, byte[]>();
                         _cachedTextResources = new Dictionary<string, string>();
 
-                        _cachedTextResources.Add("MVCGrid.js", GetTextResource("MVCGrid.js"));
+
+                        string script = GetTextResource("MVCGrid.js");
+                        var handlerPath = HttpContext.Current.Request.CurrentExecutionFilePath;
+                        script = script.Replace("%%HANDLERPATH%%", handlerPath);
+                        _cachedTextResources.Add("MVCGrid.js", script);
 
                         _cachedBinaryResources.Add("ajaxloader.gif", GetBinaryResource("ajaxloader.gif"));
                         _cachedBinaryResources.Add("sort.png", GetBinaryResource("sort.png"));
@@ -104,7 +108,6 @@ namespace MVCGrid.Web
         public void ProcessRequest(HttpContext context)
         {
             Init();
-
 
             if (context.Request.Path.ToLower().EndsWith("/script.js"))
             {

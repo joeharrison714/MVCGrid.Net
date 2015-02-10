@@ -1,7 +1,7 @@
 ﻿
 var MVCGrid = new function () {
 
-    var handlerPath = '/MVCGridHandler.axd';
+    var handlerPath = '%%HANDLERPATH%%';
     var currentGrids = [];
 
     this.init = function () {
@@ -166,7 +166,7 @@ var MVCGrid = new function () {
     this.getExportUrl = function (mvcGridName) {
         var gridDef = findGridDef(mvcGridName);
 
-        var exportUrl = "/MVCGridHandler.axd" + location.search;
+        var exportUrl = handlerPath + location.search;
         exportUrl = updateURLParameter(exportUrl, 'engine', 'export');
         exportUrl = updateURLParameter(exportUrl, 'Name', mvcGridName);
 
