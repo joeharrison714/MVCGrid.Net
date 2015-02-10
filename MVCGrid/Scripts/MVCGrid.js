@@ -152,7 +152,7 @@ var MVCGrid = new function () {
                 $('#' + tableHolderHtmlId).html(result);
             },
             error: function (request, status, error) {
-                var errorhtml = '<p class="bg-danger">There was a problem loading the grid.</p>'
+                var errorhtml = '<div class="alert alert-warning" role="alert">There was a problem loading the grid.</div>'
                 $('#' + tableHolderHtmlId).html(errorhtml);
             },
             complete: function() {

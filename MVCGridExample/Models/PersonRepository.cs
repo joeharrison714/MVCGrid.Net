@@ -50,6 +50,36 @@ namespace MVCGrid.Web.Models
                             else
                                 query = query.OrderByDescending(p => p.LastName);
                             break;
+                        case "active":
+                            if (!desc)
+                                query = query.OrderBy(p => p.Active);
+                            else
+                                query = query.OrderByDescending(p => p.Active);
+                            break;
+                        case "email":
+                            if (!desc)
+                                query = query.OrderBy(p => p.Email);
+                            else
+                                query = query.OrderByDescending(p => p.Email);
+                            break;
+                        case "gender":
+                            if (!desc)
+                                query = query.OrderBy(p => p.Gender);
+                            else
+                                query = query.OrderByDescending(p => p.Gender);
+                            break;
+                        case "id":
+                            if (!desc)
+                                query = query.OrderBy(p => p.Id);
+                            else
+                                query = query.OrderByDescending(p => p.Id);
+                            break;
+                        case "startdate":
+                            if (!desc)
+                                query = query.OrderBy(p => p.StartDate);
+                            else
+                                query = query.OrderByDescending(p => p.StartDate);
+                            break;
                     }
                 }
 

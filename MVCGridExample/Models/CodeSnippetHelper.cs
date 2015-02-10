@@ -31,8 +31,8 @@ namespace MVCGrid.Web.Models
         {
             try
             {
-                string appDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
-                string codeFilename = Path.Combine(appDataPath, "MVCGridConfig.cs");
+                string appDataPath = HttpContext.Current.Server.MapPath("~/Content");
+                string codeFilename = Path.Combine(appDataPath, "MVCGridConfig.txt");
 
                 string contents;
                 using (StreamReader sr = new StreamReader(codeFilename))
