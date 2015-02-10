@@ -9,9 +9,6 @@ var MVCGrid = new function () {
 
             var mvcGridName = $("#" + this.id).find("input[name='MVCGridName']").val();
 
-            //var qsPrefix = $('#' + 'MVCGrid_' + mvcGridName + '_Prefix').val();
-
-            //var preload = $('#' + 'MVCGrid_' + mvcGridName + '_Preload').val() === 'true';
             var jsonData = $('#' + 'MVCGrid_' + mvcGridName + '_JsonData').val();
 
             currentGrids.push(
@@ -145,7 +142,7 @@ var MVCGrid = new function () {
                     window[gridDef.clientLoading]();
                 }
                 else {
-                    $('#' + loadingHtmlId).show();
+                    $('#' + loadingHtmlId).css("visibility", "visible");
                 }
             },
             success: function (result) {
@@ -160,7 +157,7 @@ var MVCGrid = new function () {
                     window[gridDef.clientLoadingComplete]();
                 }
                 else {
-                    $('#' + loadingHtmlId).hide();
+                    $('#' + loadingHtmlId).css("visibility", "hidden");
                 }
             }
         });

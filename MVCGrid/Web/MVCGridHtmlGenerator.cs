@@ -51,10 +51,10 @@ namespace MVCGrid.Web
 
             sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_JsonData' value='{1}' />", gridName, sbJson.ToString());
 
-            
 
-            sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='display:none;'>", gridName);
-            sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='Processing' />", HtmlUtility.GetHandlerPath());
+
+            sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);
+            sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='Processing' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath());
             sbHtml.Append("Processing...");
             sbHtml.Append("</div>");
 
