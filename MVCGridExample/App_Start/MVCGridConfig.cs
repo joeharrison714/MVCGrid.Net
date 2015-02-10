@@ -248,7 +248,7 @@ namespace MVCGridExample
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => {
                             return String.Format("<a href='{0}'>View</a>",
-                                c.UrlHelper.Action("detail", new { id = p.Id }));
+                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
                             });
                 })
                 .WithSorting(true)

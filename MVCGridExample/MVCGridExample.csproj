@@ -234,8 +234,10 @@
     <Content Include="Views\Demo\Preloading.cshtml" />
     <Content Include="Views\Demo\LoadingMessage.cshtml" />
     <Content Include="Views\Demo\Filtering.cshtml" />
+    <Content Include="Views\Demo\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Detail\" />
     <Folder Include="Views\Item\" />
   </ItemGroup>
   <ItemGroup>

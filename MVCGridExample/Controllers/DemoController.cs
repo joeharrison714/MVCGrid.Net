@@ -53,5 +53,11 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Detail(string id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
     }
 }
