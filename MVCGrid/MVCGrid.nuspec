@@ -5,10 +5,10 @@
     <version>1.0.0</version>
     <authors>Joe Harrison</authors>
     <owners>Joe Harrison</owners>
-    <licenseUrl>https://github.com/bigjoe714/MVCGrid/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/bigjoe714/MVCGrid</projectUrl>
+    <licenseUrl>https://github.com/bigjoe714/MVCGrid.Net/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://mvcgrid.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A simple server-side grid for ASP.NET MVC and Bootstrap with paging and sorting.</description>
+    <description>A grid for ASP.NET MVC and Bootstrap with ajax paging and sorting. Also has filtering support, export to csv, back button support, and graceful degradation.</description>
     <copyright>Copyright 2015</copyright>
     <tags>mvc grid</tags>
     <dependencies>
@@ -16,6 +16,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\MVCGrid.dll" target="lib\net45" />
+    <file src="bin\Release\MVCGrid.dll" target="lib\net40" />
   </files>
 </package>

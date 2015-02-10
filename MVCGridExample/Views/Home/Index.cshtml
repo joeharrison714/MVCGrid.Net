@@ -3,9 +3,20 @@
     ViewBag.Title = "Home Page";
 }
 
-<h1>Grid Test</h1>
+<h1>MVCGrid.Net</h1>
+<p>A grid for ASP.NET MVC and Bootstrap with ajax paging and sorting. Also has filtering support, export to csv, back button support, and graceful degradation.</p>
+<h2>Features</h2>
+<ul>
+    <li>Uses your existing model objects</li>
+    <li>Server-side sorting and paging using AJAX</li>
+    <li>updates query string to support maintaining grid state when navigating back</li>
+    <li>gracefully degrades on older browsers (works on IE8)</li>
+    <li>Built-in exporting to csv</li>
+    <li>Filtering support with minimal client-side code</li>
+</ul>
 
-@(Html.MVCGrid("TestMapping"))
+<h2>Example</h2>
+@(Html.MVCGrid("TestGrid"))
 
-<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />
-<input type="button" value="Export" onclick="location.href = MVCGrid.getExportUrl('TestMapping');" />
+@*<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />
+<input type="button" value="Export" onclick="location.href = MVCGrid.getExportUrl('TestMapping');" />*@

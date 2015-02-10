@@ -1,38 +1,16 @@
 # MVCGrid.Net
+A grid for ASP.NET MVC and Bootstrap with ajax paging and sorting. Also has filtering support, export to csv, back button support, and graceful degradation.
+
 
 ## Features
 * Uses your existing model objects
 * Server-side sorting and paging using AJAX
 * updates query string to support maintaining grid state when navigating back
-* gracefully degrades on older browsers
+* gracefully degrades on older browsers (works on IE8)
 * Built-in exporting to csv
+* Filtering support with minimal client-side code
 
 
 ## Usage
 
-Add a mapping to you app start (Global.asax)
-
-```
-var grid = new GridDefinition<TestItem>(globalConfig)
-	.WithColumn("Col1", "Col1", ((p, h) => p.Col1))
-	.WithColumn("Col2", "Col2", ((p, h) => p.Col2))
-	.WithColumn("Col3", "Col3", ((p, h) => p.Col3))
-	.WithRetrieveData(((options) =>
-	{
-		TestItemRepository repo = new TestItemRepository();
-		int totalRecords;
-		var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), options.SortColumn, options.SortDirection == SortDirection.Dsc);
-
-		return new QueryResult<TestItem>()
-		{
-			Items = items,
-			TotalRecords = totalRecords
-		};
-	}));
-MVCGridMappingTable.Add("TestMapping", grid);
-```
-
-Add the following to your view to show the grid:
-```
-@(Html.MVCGrid("TestMapping"))
-```
+See http://mvcgrid.net

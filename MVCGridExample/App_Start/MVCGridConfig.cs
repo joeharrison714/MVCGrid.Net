@@ -62,6 +62,59 @@ namespace MVCGridExample
             MVCGridMappingTable.Add("TestMapping", grid);
 
 
+            MVCGridMappingTable.Add("TestGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(true)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) =>
+                        {
+                            return String.Format("<a href='{0}'>{1}</a>",
+                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
+                        });
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add().WithColumnName("StartDate")
+                        .WithHeaderText("Start Date")
+                        .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                    cols.Add().WithColumnName("Status")
+                        .WithHeaderText("Status")
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
+                        .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger"); ;
+                    cols.Add().WithColumnName("Gender")
+                        .WithValueExpression((p, c) => p.Gender);
+
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("Id")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithPreloadData(true)
+                .WithRetrieveDataMethod((options) =>
+                {
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string sortColumn = options.SortColumn;
+                    if (String.Compare(sortColumn, "status", true) == 0) sortColumn = "active";
+
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+
             MVCGridMappingTable.Add("EmployeeGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
