@@ -136,6 +136,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DemoController.cs" />
+    <Compile Include="Controllers\GettingStartedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Data\Person.cs">
@@ -243,6 +244,7 @@
     <Content Include="Views\Demo\Detail.cshtml" />
     <Content Include="Views\Demo\ClientSideApi.cshtml" />
     <Content Include="Views\Demo\Export.cshtml" />
+    <Content Include="Views\GettingStarted\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Detail\" />

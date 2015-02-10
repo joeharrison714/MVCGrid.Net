@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Getting Started";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<ol>
+    <li>Install the NuGet Package, or manually add a reference to MVCGrid.dll</li>
+    <li>Create a file called <code>MVCGridConfig.cs</code> under the App_Start folder</li>
+    <li>Add the following contents to the new file:
+    <pre>
+public class MVCGridConfig
+{
+    public static void RegisterMappings()
+    {
+        // add your Grid definitions here, using the MVCGridMappingTable.Add method
+    }
+}
+</pre>
+    </li>
+    <li>Add the following line to <code>Global.asax</code> in the <code>Application_Start()</code> method
+    
+    <pre>
+MVCGridConfig.RegisterMappings();
+</pre>
+    </li>
+    <li>Add your grid definitions to the method above. See the demo page for examples.</li>
+    <li>Use the grids in your view with <code>@@Html.MVCGrid("YourGridName")</code></li>
+</ol>
