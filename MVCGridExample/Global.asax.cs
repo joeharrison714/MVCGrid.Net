@@ -17,7 +17,7 @@ namespace MVCGridExample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            MVCGridConfig.RegisterMappings();
+            MVCGridConfig.RegisterGrids();
         }
     }
 }

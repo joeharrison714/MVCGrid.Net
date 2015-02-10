@@ -13,7 +13,7 @@ namespace MVCGridExample
 {
     public class MVCGridConfig
     {
-        public static void RegisterMappings()
+        public static void RegisterGrids()
         {
             GridConfiguration globalConfig = SetupGlobalConfiguration();
 
@@ -59,10 +59,10 @@ namespace MVCGridExample
                         }
                         return null;
                     });
-            MVCGridMappingTable.Add("TestMapping", grid);
+            MVCGridDefinitionTable.Add("TestMapping", grid);
 
 
-            MVCGridMappingTable.Add("TestGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -115,7 +115,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridMappingTable.Add("EmployeeGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("EmployeeGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -140,7 +140,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("SortableGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("SortableGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -189,7 +189,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("PagingGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("PagingGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -247,7 +247,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("DIGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("DIGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -280,7 +280,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("FormattingGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("FormattingGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -325,7 +325,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridMappingTable.Add("StyledGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("StyledGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -377,7 +377,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("Preloading", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("Preloading", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -411,7 +411,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("CustomLoading", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("CustomLoading", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -449,7 +449,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridMappingTable.Add("Filtering", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("Filtering", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -508,7 +508,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridMappingTable.Add("ExportGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("ExportGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -554,7 +554,7 @@ namespace MVCGridExample
             );
 
 
-            //MVCGridMappingTable.Add DO NOT DELETE - Needed for demo code parsing
+            //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
         }
 
         private static GridConfiguration SetupGlobalConfiguration()
