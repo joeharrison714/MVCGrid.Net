@@ -5,11 +5,20 @@
 
 <h1>@ViewBag.Title</h1>
 
+<h2>Prerequisites</h2>
+<ul>
+    <li>MVC 3 or greater</li>
+    <li>jQuery</li>
+    <li>Bootstrap 3</li>
+</ul>
+
+<h2>Installation</h2>
 <ol>
     <li>Install the NuGet Package, or manually add a reference to MVCGrid.dll</li>
     <li>Create a file called <code>MVCGridConfig.cs</code> under the App_Start folder</li>
-    <li>Add the following contents to the new file:
+    <li>Add the following contents to the new file inside the namespace section:
     <pre>
+using MVCGrid.Web;
 public class MVCGridConfig
 {
     public static void RegisterGrids()
@@ -23,6 +32,21 @@ public class MVCGridConfig
     
     <pre>
 MVCGridConfig.RegisterGrids();
+</pre>
+    </li>
+    <li>Add the following to your web.config:
+    <pre>
+  &lt;system.webServer&gt;
+    &lt;handlers&gt;
+      &lt;add name=&quot;MVCGridHandler&quot; verb=&quot;*&quot; path=&quot;MVCGridHandler.axd&quot; type=&quot;MVCGrid.Web.MVCGridHandler, MVCGrid&quot; /&gt;
+    &lt;/handlers&gt;
+  &lt;/system.webServer&gt;
+</pre>
+    </li>
+    <li>Add the javascript reference to your _Layout page after jquery is referenced:
+<pre>
+&lt;!-- Be sure this is after jquery reference --&gt;
+&lt;script src=&quot;~/MVCGridHandler.axd/script.js&quot;&gt;&lt;/script&gt;
 </pre>
     </li>
     <li>Add your grid definitions to the method above. See the demo page for examples.</li>
