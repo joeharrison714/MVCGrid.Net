@@ -646,6 +646,31 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("QueryOptionsGrid", new MVCGridBuilder<MethodDocItem>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("ReturnType")
+                        .WithHeaderText("Return Type")
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return)));
+                    cols.Add().WithColumnName("Name")
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name)));
+                    cols.Add().WithColumnName("Description")
+                        .WithValueExpression((p, c) => p.Description);
+                })
+                .WithPreloadData(true)
+                .WithRetrieveDataMethod((options) =>
+                {
+                    var result = new QueryResult<MethodDocItem>();
+
+                    DocumentationRepository repo = new DocumentationRepository();
+                    result.Items = repo.GetData("QueryOptions");
+
+                    return result;
+                })
+            );
+
 
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
         }
