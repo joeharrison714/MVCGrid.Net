@@ -80,7 +80,7 @@ namespace MVCGrid.Models
 
             if (context.GridDefinition.Paging && !result.TotalRecords.HasValue)
             {
-                throw new Exception("When paging is enabled, QueryResult must contacin the TotalRecords");
+                throw new Exception("When paging is enabled, QueryResult must contain the TotalRecords");
             }
 
             foreach (var item in queryResult.Items)
