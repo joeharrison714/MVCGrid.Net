@@ -138,13 +138,11 @@ namespace MVCGrid.Rendering
 
             Models.PagingModel pagingModel = model.PagingModel;
 
-            string recordText = String.Format("Showing {0} to {1} of {2} entries",
-                pagingModel.FirstRecord, pagingModel.LastRecord, pagingModel.TotalRecords
-                );
-
             sbHtml.Append("<div class=\"row\">");
             sbHtml.Append("<div class=\"col-xs-6\">");
-            sbHtml.AppendLine(recordText);
+            sbHtml.AppendFormat("Showing {0} to {1} of {2} entries",
+                pagingModel.FirstRecord, pagingModel.LastRecord, pagingModel.TotalRecords
+                );
             sbHtml.Append("</div>");
 
 
@@ -177,7 +175,7 @@ namespace MVCGrid.Rendering
             sbHtml.Append("<a href='#' aria-label='Previous' ");
             if (pageToStart < pagingModel.CurrentPage)
             {
-                sbHtml.AppendFormat("onclick='{0}'", String.Format(pagingModel.GotoPageLinkFormatString, pagingModel.CurrentPage - 1));
+                sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage - 1]);
             }
             else
             {
@@ -194,7 +192,7 @@ namespace MVCGrid.Rendering
                     sbHtml.Append(" class='active'");
                 }
                 sbHtml.Append(">");
-                sbHtml.AppendFormat("<a href='#' onclick='{0}'>{1}</a></li>", String.Format(pagingModel.GotoPageLinkFormatString, i), i);
+                sbHtml.AppendFormat("<a href='#' onclick='{0}'>{1}</a></li>", pagingModel.PageLinks[i], i);
             }
 
 
@@ -208,7 +206,7 @@ namespace MVCGrid.Rendering
             sbHtml.Append("<a href='#' aria-label='Next' ");
             if (pageToEnd > pagingModel.CurrentPage)
             {
-                sbHtml.AppendFormat("onclick='{0}'", String.Format(pagingModel.GotoPageLinkFormatString, pagingModel.CurrentPage + 1));
+                sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage + 1]);
             }
             else
             {

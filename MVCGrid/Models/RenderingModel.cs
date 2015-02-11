@@ -7,12 +7,18 @@ namespace MVCGrid.Models
 {
     public class PagingModel
     {
+        public PagingModel()
+        {
+            PageLinks = new Dictionary<int, string>();
+        }
+
         public int FirstRecord { get; set; }
         public int LastRecord { get; set; }
         public int TotalRecords { get; set; }
-        public string GotoPageLinkFormatString { get; set; }
         public int CurrentPage { get; set; }
         public int NumberOfPages { get; set; }
+
+        public Dictionary<int, string> PageLinks { get; set; }
     }
 
     public class RenderingModel

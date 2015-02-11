@@ -186,13 +186,13 @@ namespace MVCGrid.Web
                 gridContext.QueryOptions.ItemsPerPage = null;
             }
 
-            var results = grid.GetData(gridContext);
+            var results = ((GridDefinitionBase)grid).GetData(gridContext);
 
             // if a page was requested higher than available pages, requery for first page
             if (results.Rows.Count == 0 && results.TotalRecords.HasValue && results.TotalRecords.Value > 0)
             {
                 gridContext.QueryOptions.PageIndex = 0;
-                results = grid.GetData(gridContext);
+                results = ((GridDefinitionBase)grid).GetData(gridContext);
             }
 
             renderingEngine.PrepareResponse(context.Response);
@@ -210,15 +210,11 @@ namespace MVCGrid.Web
                 {
                     engine = new CsvRenderingEngine();
                 }
-                else if (String.Compare(re, "razor", true) == 0)
-                {
-                    engine = new RazorRenderingEngine();
-                }
             }
 
             if (engine == null)
             {
-                 engine = new HtmlRenderingEngine();
+                engine = new HtmlRenderingEngine();
             }
 
             return engine;

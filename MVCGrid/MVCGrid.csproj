@@ -57,7 +57,6 @@
     <Compile Include="Rendering\BootstrapHtmlWriter.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
     <Compile Include="Rendering\HtmlRenderingEngine.cs" />
-    <Compile Include="Rendering\RazorRenderingEngine.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />
     <Compile Include="Utility\HtmlUtility.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />

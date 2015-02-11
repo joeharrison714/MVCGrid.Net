@@ -8,7 +8,12 @@ using System.Threading.Tasks;
 
 namespace MVCGrid.Models
 {
-    public class GridDefinition<T1> : IMVCGridDefinition
+    public abstract class GridDefinitionBase
+    {
+        internal abstract GridData GetData(GridContext context);
+    }
+
+    public class GridDefinition<T1> : GridDefinitionBase, IMVCGridDefinition
     {
         const string DefaultNoResultsMessage = "No results.";
 
@@ -71,7 +76,7 @@ namespace MVCGrid.Models
         public Func<QueryOptions, QueryResult<T1>> RetrieveData { get; set; }
         public Func<T1, GridContext, string> RowCssClassExpression { get; set; }
 
-        public GridData GetData(GridContext context)
+        internal override GridData GetData(GridContext context)
         {
             GridData result = new GridData();
 

@@ -37,7 +37,7 @@ namespace MVCGrid.Web
 
                 IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine();
 
-                var results = grid.GetData(gridContext);
+                var results = ((MVCGrid.Models.GridDefinitionBase)grid).GetData(gridContext);
 
                 using (MemoryStream ms = new MemoryStream())
                 {

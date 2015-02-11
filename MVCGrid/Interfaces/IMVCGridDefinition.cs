@@ -9,7 +9,6 @@ namespace MVCGrid.Interfaces
     internal interface IMVCGridDefinition
     {
         IEnumerable<IMVCGridColumn> GetColumns();
-        GridData GetData(GridContext context);
         GridConfiguration GridConfiguration { get; }
         string QueryStringPrefix { get; }
         bool PreloadData { get; }
