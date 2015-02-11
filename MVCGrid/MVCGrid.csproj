@@ -52,8 +52,10 @@
     <Compile Include="Models\MVCGridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />
+    <Compile Include="Models\RenderingModel.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
     <Compile Include="Rendering\HtmlRenderingEngine.cs" />
+    <Compile Include="Rendering\RazorRenderingEngine.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />
     <Compile Include="Utility\HtmlUtility.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
