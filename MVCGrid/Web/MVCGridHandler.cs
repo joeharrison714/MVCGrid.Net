@@ -210,6 +210,10 @@ namespace MVCGrid.Web
                 {
                     engine = new CsvRenderingEngine();
                 }
+                else if (String.Compare(re, "razor", true) == 0)
+                {
+                    engine = new RazorRenderingEngine();
+                }
             }
 
             if (engine == null)
