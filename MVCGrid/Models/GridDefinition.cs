@@ -10,17 +10,17 @@ namespace MVCGrid.Models
 {
     public abstract class GridDefinitionBase
     {
-        internal abstract GridData GetData(GridContext context);
+        internal abstract List<Row> GetData(GridContext context, out int? totalRecords);
     }
 
     public class GridDefinition<T1> : GridDefinitionBase, IMVCGridDefinition
     {
-        private Type _htmlWriterType;
+        private Type _defaultRenderingEngine;
         const string DefaultNoResultsMessage = "No results.";
 
         public GridDefinition() : this(null)
         {
-            
+            //_defaultRenderingEngine=
         }
 
         public GridDefinition(GridConfiguration copyFromConfig):base()
@@ -32,7 +32,7 @@ namespace MVCGrid.Models
 
             Columns = new List<GridColumn<T1>>();
             NoResultsMessage = DefaultNoResultsMessage;
-            _htmlWriterType = typeof(MVCGrid.Rendering.BootstrapHtmlWriter);
+            //_htmlWriterType = typeof(MVCGrid.Rendering.BootstrapHtmlWriter);
         }
 
         public GridConfiguration GridConfiguration { get; set; }
@@ -78,58 +78,63 @@ namespace MVCGrid.Models
         public Func<QueryOptions, QueryResult<T1>> RetrieveData { get; set; }
         public Func<T1, GridContext, string> RowCssClassExpression { get; set; }
 
-        internal override GridData GetData(GridContext context)
+        internal override List<Row> GetData(GridContext context, out int? totalRecords)
         {
-            GridData result = new GridData();
+            List<Row> resultRows = new List<Row>();
 
             var queryResult = RetrieveData(context.QueryOptions);
-            result.TotalRecords = queryResult.TotalRecords;
+            totalRecords = queryResult.TotalRecords;
 
-            if (context.GridDefinition.Paging && !result.TotalRecords.HasValue)
+            if (context.GridDefinition.Paging && !totalRecords.HasValue)
             {
                 throw new Exception("When paging is enabled, QueryResult must contain the TotalRecords");
             }
 
             foreach (var item in queryResult.Items)
             {
-                GridRow thisRow = new GridRow();
+                Row thisRow = new Row();
 
                 if (RowCssClassExpression != null)
                 {
                     string rowCss = RowCssClassExpression(item, context);
                     if (!String.IsNullOrWhiteSpace(rowCss))
                     {
-                        thisRow.RowCssClass = rowCss;
+                        thisRow.CalculatedCssClass = rowCss;
                     }
                 }
 
                 foreach (var col in this.Columns)
                 {
-                    string val = col.ValueExpression(item, context);
+                    Cell thisCell = new Cell();
+                    thisRow.Cells.Add(col.ColumnName, thisCell);
 
-                    string plainVal = val;
-                    if (col.PlainTextValueExpression != null)
+                    thisCell.HtmlText = col.ValueExpression(item, context);
+
+                    if (col.HtmlEncode)
                     {
-                        plainVal = col.PlainTextValueExpression(item, context);
+                        thisCell.HtmlText = System.Web.HttpUtility.HtmlEncode(thisCell.HtmlText);
                     }
 
-                    thisRow.Values.Add(col.ColumnName, val);
-                    thisRow.PlainTextValues.Add(col.ColumnName, plainVal);
+                    thisCell.PlainText = thisCell.HtmlText;
+                    if (col.PlainTextValueExpression != null)
+                    {
+                        thisCell.PlainText = col.PlainTextValueExpression(item, context);
+                    }
 
                     if (col.CellCssClassExpression != null)
                     {
                         string cellCss = col.CellCssClassExpression(item, context);
                         if (!String.IsNullOrWhiteSpace(cellCss))
                         {
-                            thisRow.CellCssClasses.Add(col.ColumnName, cellCss);
+                            thisCell.CalculatedCssClass = cellCss;
                         }
                     }
                 }
 
-                result.Rows.Add(thisRow);
+                resultRows.Add(thisRow);
             }
 
-            return result;
+            return resultRows;
         }
 
         /// <summary>
@@ -149,15 +154,15 @@ namespace MVCGrid.Models
         public string ClientSideLoadingMessageFunctionName { get; set; }
         public string ClientSideLoadingCompleteFunctionName { get; set; }
 
-        public Type HtmlWriterType
+        public Type DefaultRenderingEngine
         {
             get
             {
-                return _htmlWriterType;
+                return _defaultRenderingEngine;
             }
             set
             {
-                _htmlWriterType = value;
+                _defaultRenderingEngine = value;
             }
         }
     }

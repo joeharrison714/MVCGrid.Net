@@ -13,11 +13,14 @@ namespace MVCGrid.Rendering
 {
     public class HtmlRenderingEngine : IMVCGridRenderingEngine
     {
-        IMVCGridHtmlWriter _writer;
+        private string CssTable;
+        private string HtmlImageSortAsc;
+        private string HtmlImageSortDsc;
+        private string HtmlImageSort;
 
-        public HtmlRenderingEngine(IMVCGridHtmlWriter writer)
+        public HtmlRenderingEngine()
         {
-            _writer = writer;
+            CssTable = "table table-striped table-bordered";
         }
 
         public void PrepareResponse(HttpResponse response)
@@ -29,139 +32,208 @@ namespace MVCGrid.Rendering
             get { return true; }
         }
 
-        public void Render(GridData data, GridContext gridContext, Stream outputStream)//HttpResponse httpResponse
+        public void Render(RenderingModel model, Stream outputStream)
         {
-            RenderingModel model = PrepModel(data, gridContext);
+            HtmlImageSortAsc = String.Format("<img src='{0}/sortup.png' class='pull-right' />", model.HandlerPath);
+            HtmlImageSortDsc = String.Format("<img src='{0}/sortdown.png' class='pull-right' />", model.HandlerPath);
+            HtmlImageSort = String.Format("<img src='{0}/sort.png' class='pull-right' />", model.HandlerPath);
 
-            var content = _writer.WriteHtml(model);
+            StringBuilder sbHtml = new StringBuilder();
+
+            sbHtml.AppendFormat("<table id='{0}'", model.TableHtmlId);
+            AppendCssAttribute(CssTable, sbHtml);
+            sbHtml.Append(">");
+
+            RenderHeader(model, sbHtml);
+
+            if (model.Rows.Count > 0)
+            {
+                RenderBody(model, sbHtml);
+            }
+            else
+            {
+                sbHtml.Append("<tbody>");
+                sbHtml.Append("<tr>");
+                sbHtml.AppendFormat("<td colspan='{0}'>", model.Columns.Count());
+                sbHtml.Append(model.NoResultsMessage);
+                sbHtml.Append("</td>");
+                sbHtml.Append("</tr>");
+                sbHtml.Append("</tbody>");
+            }
+            sbHtml.AppendLine("</table>");
+
+            RenderPaging(model, sbHtml);
 
             using (StreamWriter sw = new StreamWriter(outputStream))
             {
-                sw.Write(content.ToString());
+                sw.Write(sbHtml.ToString());
             }
         }
 
-        private RenderingModel PrepModel(Models.GridData data, Models.GridContext gridContext)
+        private void AppendCssAttribute(string classString, StringBuilder sbHtml)
         {
-            RenderingModel model = new RenderingModel();
-
-            model.HandlerPath = HtmlUtility.GetHandlerPath();
-            model.TableHtmlId = HtmlUtility.GetTableHtmlId(gridContext.GridName);
-
-            PrepColumns(gridContext, model);
-            PrepRows(data, gridContext, model);
-
-            if (model.Rows.Count == 0)
+            if (!String.IsNullOrWhiteSpace(classString))
             {
-                model.NoResultsMessage = gridContext.GridDefinition.NoResultsMessage;
-            }
-
-            model.PagingModel = null;
-            if (gridContext.QueryOptions.ItemsPerPage.HasValue)
-            {
-                model.PagingModel = new PagingModel();
-
-                int currentPageIndex = gridContext.QueryOptions.PageIndex.Value;
-
-                model.PagingModel.TotalRecords = data.TotalRecords.Value;
-
-                model.PagingModel.FirstRecord = (currentPageIndex * gridContext.QueryOptions.ItemsPerPage.Value) + 1;
-                model.PagingModel.LastRecord = (model.PagingModel.FirstRecord + gridContext.QueryOptions.ItemsPerPage.Value) - 1;
-                if (model.PagingModel.LastRecord > data.TotalRecords)
-                {
-                    model.PagingModel.LastRecord = data.TotalRecords.Value;
-                }
-                model.PagingModel.CurrentPage = currentPageIndex + 1;
-
-                var numberOfPagesD = (data.TotalRecords.Value + 0.0) / (gridContext.QueryOptions.ItemsPerPage.Value + 0.0);
-                model.PagingModel.NumberOfPages = (int)Math.Ceiling(numberOfPagesD);
-
-                for (int i = 1; i <= model.PagingModel.NumberOfPages; i++)
-                {
-                    model.PagingModel.PageLinks.Add(i, HtmlUtility.MakeGotoPageLink(gridContext.GridName, i));
-                }
-            }
-            return model;
-        }
-
-        private void PrepRows(Models.GridData data, Models.GridContext gridContext, RenderingModel model)
-        {
-            foreach (var item in data.Rows)
-            {
-                Row renderingRow = new Row();
-                model.Rows.Add(renderingRow);
-
-                if (!String.IsNullOrWhiteSpace(item.RowCssClass))
-                {
-                    renderingRow.CalculatedCssClass = item.RowCssClass;
-                }
-
-                foreach (var col in gridContext.GetVisibleColumns())
-                {
-                    string val = "";
-
-                    if (item.Values.ContainsKey(col.ColumnName))
-                    {
-                        val = item.Values[col.ColumnName];
-                    }
-
-                    Cell renderingCell = new Cell();
-                    renderingRow.Cells.Add(col.ColumnName, renderingCell);
-                    if (item.CellCssClasses.ContainsKey(col.ColumnName))
-                    {
-                        string cellCss = item.CellCssClasses[col.ColumnName];
-                        if (!String.IsNullOrWhiteSpace(cellCss))
-                        {
-                            renderingCell.CalculatedCssClass = cellCss;
-                        }
-                    }
-
-                    if (col.HtmlEncode)
-                    {
-                        renderingCell.HtmlText = HttpUtility.HtmlEncode(val);
-                    }
-                    else
-                    {
-                        renderingCell.HtmlText = val;
-                    }
-                }
+                sbHtml.Append(String.Format(" class='{0}'", classString));
             }
         }
 
-        private void PrepColumns(Models.GridContext gridContext, RenderingModel model)
+        private void RenderBody(Models.RenderingModel model, StringBuilder sbHtml)
         {
-            foreach (var col in gridContext.GetVisibleColumns())
+            sbHtml.AppendLine("<tbody>");
+
+            foreach (var row in model.Rows)
             {
-                Column renderingColumn = new Column();
-                model.Columns.Add(renderingColumn);
-                renderingColumn.Name = col.ColumnName;
-                renderingColumn.HeaderText = col.HeaderText;
+                sbHtml.Append("<tr");
+                AppendCssAttribute(row.CalculatedCssClass, sbHtml);
+                sbHtml.AppendLine(">");
 
-                if (gridContext.GridDefinition.Sorting && col.EnableSorting)
+                foreach (var col in model.Columns)
                 {
-                    SortDirection linkDirection = SortDirection.Asc;
-                    SortDirection iconDirection = SortDirection.Unspecified;
+                    var cell = row.Cells[col.Name];
 
-                    if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Asc)
-                    {
-                        iconDirection = SortDirection.Asc;
-                        linkDirection = SortDirection.Dsc;
-                    }
-                    else if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Dsc)
-                    {
-                        iconDirection = SortDirection.Dsc;
-                        linkDirection = SortDirection.Asc;
-                    }
-                    else
-                    {
-                        iconDirection = SortDirection.Unspecified;
-                        linkDirection = SortDirection.Dsc;
-                    }
-
-                    renderingColumn.Onclick = HtmlUtility.MakeSortLink(gridContext.GridName, col.ColumnName, linkDirection);
-                    renderingColumn.SortIconDirection = iconDirection;
+                    sbHtml.Append("<td");
+                    AppendCssAttribute(cell.CalculatedCssClass, sbHtml);
+                    sbHtml.Append(">");
+                    sbHtml.Append(cell.HtmlText);
+                    sbHtml.Append("</td>");
                 }
+                sbHtml.AppendLine("  </tr>");
             }
+
+            sbHtml.AppendLine("</tbody>");
+        }
+
+        private void RenderHeader(Models.RenderingModel model, StringBuilder sbHtml)
+        {
+            sbHtml.AppendLine("<thead>");
+            sbHtml.AppendLine("  <tr>");
+            foreach (var col in model.Columns)
+            {
+                sbHtml.Append("<th");
+
+                if (!String.IsNullOrWhiteSpace(col.Onclick))
+                {
+                    sbHtml.Append(" style='cursor: pointer;'");
+                    sbHtml.AppendFormat(" onclick='{0}'", col.Onclick);
+                }
+                sbHtml.Append(">");
+
+                sbHtml.Append(col.HeaderText);
+
+                if (col.SortIconDirection.HasValue)
+                {
+                    switch (col.SortIconDirection)
+                    {
+                        case Models.SortDirection.Asc:
+                            sbHtml.Append(" ");
+                            sbHtml.Append(HtmlImageSortAsc);
+                            break;
+                        case Models.SortDirection.Dsc:
+                            sbHtml.Append(" ");
+                            sbHtml.Append(HtmlImageSortDsc);
+                            break;
+                        case Models.SortDirection.Unspecified:
+                            sbHtml.Append(" ");
+                            sbHtml.Append(HtmlImageSort);
+                            break;
+                    }
+                }
+                sbHtml.AppendLine("</th>");
+            }
+            sbHtml.AppendLine("  </tr>");
+            sbHtml.AppendLine("</thead>");
+        }
+
+        private void RenderPaging(Models.RenderingModel model, StringBuilder sbHtml)
+        {
+            if (model.PagingModel == null)
+            {
+                return;
+            }
+
+            Models.PagingModel pagingModel = model.PagingModel;
+
+            sbHtml.Append("<div class=\"row\">");
+            sbHtml.Append("<div class=\"col-xs-6\">");
+            sbHtml.AppendFormat("Showing {0} to {1} of {2} entries",
+                pagingModel.FirstRecord, pagingModel.LastRecord, pagingModel.TotalRecords
+                );
+            sbHtml.Append("</div>");
+
+
+            sbHtml.Append("<div class=\"col-xs-6\">");
+            int pageToStart = pagingModel.CurrentPage - 2;
+            while (pageToStart < 1)
+            {
+                pageToStart++;
+            }
+            int pageToEnd = pageToStart + 4;
+            while (pageToEnd > pagingModel.NumberOfPages)
+            {
+                pageToStart--;
+                pageToEnd = pageToStart + 4;
+            }
+            while (pageToStart < 1)
+            {
+                pageToStart++;
+            }
+
+            sbHtml.Append("<ul class='pagination pull-right' style='margin-top: 0;'>");
+
+            sbHtml.Append("<li");
+            if (pageToStart == pagingModel.CurrentPage)
+            {
+                sbHtml.Append(" class='disabled'");
+            }
+            sbHtml.Append(">");
+
+            sbHtml.Append("<a href='#' aria-label='Previous' ");
+            if (pageToStart < pagingModel.CurrentPage)
+            {
+                sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage - 1]);
+            }
+            else
+            {
+                sbHtml.AppendFormat("onclick='{0}'", "return false;");
+            }
+            sbHtml.Append(">");
+            sbHtml.Append("<span aria-hidden='true'>&laquo; Previous</span></a></li>");
+
+            for (int i = pageToStart; i <= pageToEnd; i++)
+            {
+                sbHtml.Append("<li");
+                if (i == pagingModel.CurrentPage)
+                {
+                    sbHtml.Append(" class='active'");
+                }
+                sbHtml.Append(">");
+                sbHtml.AppendFormat("<a href='#' onclick='{0}'>{1}</a></li>", pagingModel.PageLinks[i], i);
+            }
+
+
+            sbHtml.Append("<li");
+            if (pageToEnd == pagingModel.CurrentPage)
+            {
+                sbHtml.Append(" class='disabled'");
+            }
+            sbHtml.Append(">");
+
+            sbHtml.Append("<a href='#' aria-label='Next' ");
+            if (pageToEnd > pagingModel.CurrentPage)
+            {
+                sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage + 1]);
+            }
+            else
+            {
+                sbHtml.AppendFormat("onclick='{0}'", "return false;");
+            }
+            sbHtml.Append(">");
+            sbHtml.Append("<span aria-hidden='true'>Next &raquo;</span></a></li>");
+
+            sbHtml.Append("</ul>");
+            sbHtml.Append("</div>");
+            sbHtml.Append("</div>");
         }
     }
 }

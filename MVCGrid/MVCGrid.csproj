@@ -48,13 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IMVCGridHtmlWriter.cs" />
+    <Compile Include="Engine\GridEngine.cs" />
     <Compile Include="Interfaces\IMVCGridRenderingEngine.cs" />
     <Compile Include="Models\MVCGridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />
     <Compile Include="Models\RenderingModel.cs" />
-    <Compile Include="Rendering\BootstrapHtmlWriter.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
     <Compile Include="Rendering\HtmlRenderingEngine.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />

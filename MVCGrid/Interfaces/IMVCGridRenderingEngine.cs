@@ -13,6 +13,6 @@ namespace MVCGrid.Interfaces
     {
         bool AllowsPaging { get; }
         void PrepareResponse(HttpResponse response);
-        void Render(GridData data, GridContext gridContext, Stream outputStream);
+        void Render(RenderingModel model, Stream outputStream);
     }
 }

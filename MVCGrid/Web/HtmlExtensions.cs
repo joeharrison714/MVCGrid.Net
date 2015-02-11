@@ -1,4 +1,5 @@
-﻿using MVCGrid.Interfaces;
+﻿using MVCGrid.Engine;
+using MVCGrid.Interfaces;
 using MVCGrid.Rendering;
 using MVCGrid.Utility;
 using System;
@@ -35,14 +36,13 @@ namespace MVCGrid.Web
 
                 var gridContext = GridContextUtility.Create(HttpContext.Current, gridName, grid, options);
 
-                IMVCGridHtmlWriter writer = (IMVCGridHtmlWriter)Activator.CreateInstance(gridContext.GridDefinition.HtmlWriterType, true);
-                IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine(writer);
+                IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine();
 
-                var results = ((MVCGrid.Models.GridDefinitionBase)grid).GetData(gridContext);
-
+                GridEngine engine = new GridEngine();
+                
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    renderingEngine.Render(results, gridContext, ms);
+                    engine.Run(renderingEngine, gridContext, ms);
 
                     preload = Encoding.ASCII.GetString(ms.ToArray());
                 }

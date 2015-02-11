@@ -1,4 +1,5 @@
-﻿using MVCGrid.Interfaces;
+﻿using MVCGrid.Engine;
+using MVCGrid.Interfaces;
 using MVCGrid.Models;
 using MVCGrid.Rendering;
 using MVCGrid.Utility;
@@ -157,16 +158,14 @@ namespace MVCGrid.Web
         {
             string gridName = context.Request["Name"];
 
-            StringBuilder sbDebug = new StringBuilder();
-            foreach (string key in context.Request.QueryString.AllKeys)
-            {
-                sbDebug.Append(key);
-                sbDebug.Append(" = ");
-                sbDebug.Append(context.Request.QueryString[key]);
-                sbDebug.Append("<br />");
-            }
-
-
+            //StringBuilder sbDebug = new StringBuilder();
+            //foreach (string key in context.Request.QueryString.AllKeys)
+            //{
+            //    sbDebug.Append(key);
+            //    sbDebug.Append(" = ");
+            //    sbDebug.Append(context.Request.QueryString[key]);
+            //    sbDebug.Append("<br />");
+            //}
 
             var grid = MVCGridDefinitionTable.GetDefinitionInterface(gridName);
 
@@ -174,35 +173,14 @@ namespace MVCGrid.Web
 
             var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
-            IMVCGridHtmlWriter writer = (IMVCGridHtmlWriter)Activator.CreateInstance(gridContext.GridDefinition.HtmlWriterType, true);
+            IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context);
 
-            IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context, writer);
-            
-
-            //if (renderingEngine is HtmlRenderingEngine)
-            //{
-            //    context.Response.Write(sbDebug.ToString());
-            //}
-
-            if (!renderingEngine.AllowsPaging)
-            {
-                gridContext.QueryOptions.ItemsPerPage = null;
-            }
-
-            var results = ((GridDefinitionBase)grid).GetData(gridContext);
-
-            // if a page was requested higher than available pages, requery for first page
-            if (results.Rows.Count == 0 && results.TotalRecords.HasValue && results.TotalRecords.Value > 0)
-            {
-                gridContext.QueryOptions.PageIndex = 0;
-                results = ((GridDefinitionBase)grid).GetData(gridContext);
-            }
-
+            GridEngine engine = new GridEngine();
             renderingEngine.PrepareResponse(context.Response);
-            renderingEngine.Render(results, gridContext, context.Response.OutputStream);
+            engine.Run(renderingEngine, gridContext, context.Response.OutputStream);
         }
 
-        private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context, IMVCGridHtmlWriter writer)
+        private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context)
         {
             IMVCGridRenderingEngine engine = null;
 
@@ -217,7 +195,7 @@ namespace MVCGrid.Web
 
             if (engine == null)
             {
-                engine = new HtmlRenderingEngine(writer);
+                engine = new HtmlRenderingEngine();
             }
 
             return engine;
