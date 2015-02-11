@@ -220,7 +220,6 @@
       <LastGenOutput>SampleDB.cs</LastGenOutput>
     </Content>
     <Content Include="App_Data\documentation.csv" />
-    <Content Include="App_Data\Template.cshtml" />
     <None Include="Properties\PublishProfiles\Arvixe.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
