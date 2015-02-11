@@ -6,10 +6,60 @@
 <h1>@ViewBag.Title</h1>
 
 <h2>Grid Definition</h2>
-@Html.MVCGrid("GridDefinitionGrid")
+@Html.MVCGrid("GridDefinition")
 
 <h2>Column Definition</h2>
-@Html.MVCGrid("GridColumnGrid")
+@Html.MVCGrid("GridColumn")
 
 <h2>QueryOptions</h2>
-@Html.MVCGrid("QueryOptionsGrid")
+@Html.MVCGrid("QueryOptions")
+
+<br /><br />
+
+<h2>Code used to generate the 3 above grids:</h2>
+<h3>Just because I could</h3>
+<pre class="brush: csharp">
+var docsReturnTypeColumn = new GridColumn&lt;methoddocitem&gt;()
+{
+    ColumnName = &quot;ReturnType&quot;,
+    HeaderText = &quot;Return Type&quot;,
+    HtmlEncode = false,
+    ValueExpression = (p, c) =&gt; String.Format(&quot;&lt;code&gt;{0}&lt;/code&gt;&quot;, HttpUtility.HtmlEncode(p.Return))
+};
+var docsNameColumn = new GridColumn&lt;methoddocitem&gt;()
+{
+    ColumnName = &quot;Name&quot;,
+    HtmlEncode = false,
+    ValueExpression = (p, c) =&gt; String.Format(&quot;&lt;code&gt;{0}&lt;/code&gt;&quot;, HttpUtility.HtmlEncode(p.Name))
+};
+var docsDescriptionColumn = new GridColumn&lt;methoddocitem&gt;()
+{
+    ColumnName = &quot;Description&quot;,
+    ValueExpression = (p, c) =&gt; p.Description
+};
+Func&lt;gridcontext, queryresult&lt;MethodDocItem&gt;&gt; docsLoadData = (context) =&gt;
+{
+    var result = new QueryResult&lt;MethodDocItem&gt;();
+    DocumentationRepository repo = new DocumentationRepository();
+    result.Items = repo.GetData(context.GridName);
+    return result;
+};
+MVCGridDefinitionTable.Add(&quot;GridDefinition&quot;, new MVCGridBuilder&lt;MethodDocItem&gt;()
+    .AddColumn(docsReturnTypeColumn)
+    .AddColumn(docsNameColumn)
+    .AddColumn(docsDescriptionColumn)
+    .WithRetrieveDataMethod(docsLoadData)
+);
+MVCGridDefinitionTable.Add(&quot;GridColumn&quot;, new MVCGridBuilder&lt;MethodDocItem&gt;()
+    .AddColumn(docsReturnTypeColumn)
+    .AddColumn(docsNameColumn)
+    .AddColumn(docsDescriptionColumn)
+    .WithRetrieveDataMethod(docsLoadData)
+);
+MVCGridDefinitionTable.Add(&quot;QueryOptions&quot;, new MVCGridBuilder&lt;MethodDocItem&gt;()
+    .AddColumn(docsReturnTypeColumn)
+    .AddColumn(docsNameColumn)
+    .AddColumn(docsDescriptionColumn)
+    .WithRetrieveDataMethod(docsLoadData)
+);
+</pre>

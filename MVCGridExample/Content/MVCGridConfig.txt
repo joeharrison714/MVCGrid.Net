@@ -49,8 +49,10 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithPreloadData(true)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -109,8 +111,9 @@ namespace MVCGridExample
                 })
                 .WithSorting(true)
                 .WithDefaultSortColumn("LastName")
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
                     var result = new QueryResult<Person>();
 
                     using (var db = new SampleDatabaseEntities())
@@ -160,8 +163,10 @@ namespace MVCGridExample
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(10)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     var result = new QueryResult<Person>();
 
                     using (var db = new SampleDatabaseEntities())
@@ -218,8 +223,10 @@ namespace MVCGridExample
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(10)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -262,8 +269,10 @@ namespace MVCGridExample
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(10)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -315,8 +324,10 @@ namespace MVCGridExample
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(10)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -347,13 +358,15 @@ namespace MVCGridExample
                         .WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
-                .WithPreloadData(true)
+                .WithPreloadData(false)
                 .WithSorting(true)
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(10)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -387,8 +400,10 @@ namespace MVCGridExample
                 .WithItemsPerPage(10)
                 .WithClientSideLoadingMessageFunctionName("showLoading")
                 .WithClientSideLoadingCompleteFunctionName("hideLoading")
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -430,8 +445,10 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithFiltering(true)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -496,8 +513,10 @@ namespace MVCGridExample
                 .WithItemsPerPage(10)
                 .WithClientSideLoadingMessageFunctionName("showLoading")
                 .WithClientSideLoadingCompleteFunctionName("hideLoading")
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -543,8 +562,10 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithQueryStringPrefix("grid1")
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -578,8 +599,10 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithQueryStringPrefix("grid2")
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     TestItemRepository repo = new TestItemRepository();
                     int totalRecords;
                     var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), options.SortColumn, options.SortDirection == SortDirection.Dsc);
@@ -620,8 +643,10 @@ namespace MVCGridExample
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(20)
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
+                    var options = context.QueryOptions;
+
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
@@ -641,79 +666,54 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("GridDefinitionGrid", new MVCGridBuilder<MethodDocItem>()
-                .AddColumns(cols =>
-                {
-                    cols.Add().WithColumnName("ReturnType")
-                        .WithHeaderText("Return Type")
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return)));
-                    cols.Add().WithColumnName("Name")
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name)));
-                    cols.Add().WithColumnName("Description")
-                        .WithValueExpression((p, c) => p.Description);
-                })
-                .WithPreloadData(true)
-                .WithRetrieveDataMethod((options) =>
-                {
-                    var result = new QueryResult<MethodDocItem>();
+            var docsReturnTypeColumn = new GridColumn<MethodDocItem>()
+            {
+                ColumnName = "ReturnType",
+                HeaderText = "Return Type",
+                HtmlEncode = false,
+                ValueExpression = (p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return))
+            };
+            var docsNameColumn = new GridColumn<MethodDocItem>()
+            {
+                ColumnName = "Name",
+                HtmlEncode = false,
+                ValueExpression = (p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name))
+            };
+            var docsDescriptionColumn = new GridColumn<MethodDocItem>()
+            {
+                ColumnName = "Description",
+                ValueExpression = (p, c) => p.Description
+            };
 
-                    DocumentationRepository repo = new DocumentationRepository();
-                    result.Items = repo.GetData("GridDefinition");
+            Func<GridContext, QueryResult<MethodDocItem>> docsLoadData = (context) =>
+            {
+                var result = new QueryResult<MethodDocItem>();
 
-                    return result;
-                })
+                DocumentationRepository repo = new DocumentationRepository();
+                result.Items = repo.GetData(context.GridName);
+
+                return result;
+            };
+
+            MVCGridDefinitionTable.Add("GridDefinition", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsNameColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
             );
 
-            MVCGridDefinitionTable.Add("GridColumnGrid", new MVCGridBuilder<MethodDocItem>()
-                .AddColumns(cols =>
-                {
-                    cols.Add().WithColumnName("ReturnType")
-                        .WithHeaderText("Return Type")
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return)));
-                    cols.Add().WithColumnName("Name")
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name)));
-                    cols.Add().WithColumnName("Description")
-                        .WithValueExpression((p, c) => p.Description);
-                })
-                .WithPreloadData(true)
-                .WithRetrieveDataMethod((options) =>
-                {
-                    var result = new QueryResult<MethodDocItem>();
-
-                    DocumentationRepository repo = new DocumentationRepository();
-                    result.Items = repo.GetData("GridColumn");
-
-                    return result;
-                })
+            MVCGridDefinitionTable.Add("GridColumn", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsNameColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
             );
 
-            MVCGridDefinitionTable.Add("QueryOptionsGrid", new MVCGridBuilder<MethodDocItem>()
-                .AddColumns(cols =>
-                {
-                    cols.Add().WithColumnName("ReturnType")
-                        .WithHeaderText("Return Type")
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return)));
-                    cols.Add().WithColumnName("Name")
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name)));
-                    cols.Add().WithColumnName("Description")
-                        .WithValueExpression((p, c) => p.Description);
-                })
-                .WithPreloadData(true)
-                .WithRetrieveDataMethod((options) =>
-                {
-                    var result = new QueryResult<MethodDocItem>();
-
-                    DocumentationRepository repo = new DocumentationRepository();
-                    result.Items = repo.GetData("QueryOptions");
-
-                    return result;
-                })
+            MVCGridDefinitionTable.Add("QueryOptions", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsNameColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
             );
 
 

@@ -270,7 +270,6 @@
     <Content Include="Views\Demo\CustomStyle.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Detail\" />
     <Folder Include="Views\Item\" />
   </ItemGroup>
   <ItemGroup>

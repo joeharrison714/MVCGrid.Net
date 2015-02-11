@@ -44,7 +44,13 @@ namespace MVCGrid.Models
             return this;
         }
 
-        public MVCGridBuilder<T1> WithRetrieveDataMethod(Func<QueryOptions, QueryResult<T1>> retrieveData)
+        public MVCGridBuilder<T1> AddColumn(GridColumn<T1> column)
+        {
+            GridDefinition.AddColumn(column);
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithRetrieveDataMethod(Func<GridContext, QueryResult<T1>> retrieveData)
         {
             GridDefinition.RetrieveData = retrieveData;
             return this;

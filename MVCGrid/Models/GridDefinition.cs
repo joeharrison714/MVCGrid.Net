@@ -71,14 +71,14 @@ namespace MVCGrid.Models
 
         private List<GridColumn<T1>> Columns { get; set; }
 
-        public Func<QueryOptions, QueryResult<T1>> RetrieveData { get; set; }
+        public Func<GridContext, QueryResult<T1>> RetrieveData { get; set; }
         public Func<T1, GridContext, string> RowCssClassExpression { get; set; }
 
         internal override List<Row> GetData(GridContext context, out int? totalRecords)
         {
             List<Row> resultRows = new List<Row>();
 
-            var queryResult = RetrieveData(context.QueryOptions);
+            var queryResult = RetrieveData(context);
             totalRecords = queryResult.TotalRecords;
 
             if (context.GridDefinition.Paging && !totalRecords.HasValue)
