@@ -25,18 +25,45 @@ namespace MVCGrid.Rendering
         {
             RenderingModel model = new RenderingModel();
 
+            model.HandlerPath = HtmlUtility.GetHandlerPath();
+            model.TableHtmlId = HtmlUtility.GetTableHtmlId(gridContext.GridName);
+            
             PrepColumns(gridContext, model);
             PrepRows(data, gridContext, model);
 
-            string filename = HttpContext.Current.Server.MapPath("~/App_Data/Template.cshtml");
-            string templateContents;
-
-            using (StreamReader sr = new StreamReader(filename))
+            if (model.Rows.Count == 0)
             {
-                templateContents = sr.ReadToEnd();
+                model.NoResultsMessage = gridContext.GridDefinition.NoResultsMessage;
             }
 
+            model.PagingModel = null;
+            if (gridContext.QueryOptions.ItemsPerPage.HasValue)
+            {
+                model.PagingModel = new PagingModel();
 
+                int currentPageIndex = gridContext.QueryOptions.PageIndex.Value;
+
+                model.PagingModel.FirstRecord = (currentPageIndex * gridContext.QueryOptions.ItemsPerPage.Value) + 1;
+                model.PagingModel.LastRecord = (model.PagingModel.FirstRecord + gridContext.QueryOptions.ItemsPerPage.Value) - 1;
+                if (model.PagingModel.LastRecord > data.TotalRecords)
+                {
+                    model.PagingModel.LastRecord = data.TotalRecords.Value;
+                }
+                model.PagingModel.CurrentPage = currentPageIndex + 1;
+                model.PagingModel.GotoPageLinkFormatString = String.Format("MVCGrid.setPage(\"{0}\", ", gridContext.GridName);
+                model.PagingModel.GotoPageLinkFormatString += "{0}); return false;";
+
+                var numberOfPagesD = (data.TotalRecords.Value + 0.0) / (gridContext.QueryOptions.ItemsPerPage.Value + 0.0);
+                model.PagingModel.NumberOfPages = (int)Math.Ceiling(numberOfPagesD);
+            }
+
+            BootstrapHtmlWriter writer = new BootstrapHtmlWriter();
+            var test = writer.WriteHtml(model);
+
+            using (StreamWriter sw = new StreamWriter(outputStream))
+            {
+                sw.Write(test);
+            }
         }
 
         private static void PrepRows(Models.GridData data, Models.GridContext gridContext, RenderingModel model)
@@ -73,11 +100,11 @@ namespace MVCGrid.Rendering
 
                     if (col.HtmlEncode)
                     {
-                        renderingCell.Html = HttpUtility.HtmlEncode(val);
+                        renderingCell.HtmlText = HttpUtility.HtmlEncode(val);
                     }
                     else
                     {
-                        renderingCell.Html = val;
+                        renderingCell.HtmlText = val;
                     }
                 }
             }

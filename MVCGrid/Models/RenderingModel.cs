@@ -5,6 +5,16 @@ using System.Text;
 
 namespace MVCGrid.Models
 {
+    public class PagingModel
+    {
+        public int FirstRecord { get; set; }
+        public int LastRecord { get; set; }
+        public int TotalRecords { get; set; }
+        public string GotoPageLinkFormatString { get; set; }
+        public int CurrentPage { get; set; }
+        public int NumberOfPages { get; set; }
+    }
+
     public class RenderingModel
     {
         public RenderingModel()
@@ -12,14 +22,23 @@ namespace MVCGrid.Models
             Columns = new List<Column>();
             Rows = new List<Row>();
         }
+        public string HandlerPath { get; set; }
+        public string TableHtmlId { get; set; }
         public List<Column> Columns { get; set; }
         public List<Row> Rows { get; set; }
+
+        public string NoResultsMessage { get; set; }
+
+        /// <summary>
+        /// Paging data. Will be null if paging should not be displayed
+        /// </summary>
+        public PagingModel PagingModel { get; set; }
     }
 
     public class Cell
     {
         public string CalculatedCssClass { get; set; }
-        public string Html { get; set; }
+        public string HtmlText { get; set; }
         public string PlainText { get; set; }
     }
 
