@@ -20,7 +20,6 @@ namespace MVCGrid.Models
 
         public GridDefinition() : this(null)
         {
-            //_defaultRenderingEngine=
         }
 
         public GridDefinition(GridConfiguration copyFromConfig):base()
@@ -32,7 +31,7 @@ namespace MVCGrid.Models
 
             Columns = new List<GridColumn<T1>>();
             NoResultsMessage = DefaultNoResultsMessage;
-            //_htmlWriterType = typeof(MVCGrid.Rendering.BootstrapHtmlWriter);
+            _defaultRenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
         }
 
         public GridConfiguration GridConfiguration { get; set; }

@@ -11,14 +11,14 @@ using System.Web;
 
 namespace MVCGrid.Rendering
 {
-    public class HtmlRenderingEngine : IMVCGridRenderingEngine
+    public class BootstrapRenderingEngine : IMVCGridRenderingEngine
     {
         private string CssTable;
         private string HtmlImageSortAsc;
         private string HtmlImageSortDsc;
         private string HtmlImageSort;
 
-        public HtmlRenderingEngine()
+        public BootstrapRenderingEngine()
         {
             CssTable = "table table-striped table-bordered";
         }

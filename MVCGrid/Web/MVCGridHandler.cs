@@ -152,7 +152,7 @@ namespace MVCGrid.Web
             context.Response.Flush();
         }
 
-        
+
 
         private void HandleTable(HttpContext context)
         {
@@ -173,34 +173,13 @@ namespace MVCGrid.Web
 
             var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
-            IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context);
-
             GridEngine engine = new GridEngine();
+
+            IMVCGridRenderingEngine renderingEngine = engine.GetRenderingEngine(gridContext);
+
             renderingEngine.PrepareResponse(context.Response);
             engine.Run(renderingEngine, gridContext, context.Response.OutputStream);
         }
-
-        private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context)
-        {
-            IMVCGridRenderingEngine engine = null;
-
-            if (context.Request.QueryString["engine"] != null)
-            {
-                string re = context.Request.QueryString["engine"];
-                if (String.Compare(re, "export", true) == 0)
-                {
-                    engine = new CsvRenderingEngine();
-                }
-            }
-
-            if (engine == null)
-            {
-                engine = new HtmlRenderingEngine();
-            }
-
-            return engine;
-        }
-
         
         private void HandleScript(HttpContext context)
         {

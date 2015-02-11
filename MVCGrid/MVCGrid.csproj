@@ -55,7 +55,7 @@
     <Compile Include="Models\GridContext.cs" />
     <Compile Include="Models\RenderingModel.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
-    <Compile Include="Rendering\HtmlRenderingEngine.cs" />
+    <Compile Include="Rendering\BootstrapRenderingEngine.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />
     <Compile Include="Utility\HtmlUtility.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
@@ -63,8 +63,6 @@
     <Compile Include="Interfaces\IMVCGridDefinition.cs" />
     <Compile Include="Models\GridColumn.cs" />
     <Compile Include="Models\GridConfiguration.cs" />
-    <Compile Include="Models\GridData.cs" />
-    <Compile Include="Models\GridRow.cs" />
     <Compile Include="Models\QueryResult.cs" />
     <Compile Include="Models\GridDefinition.cs" />
     <Compile Include="Models\SortDirection.cs" />

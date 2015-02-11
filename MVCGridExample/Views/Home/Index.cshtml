@@ -16,6 +16,13 @@
 </ul>
 
 <h2>Example</h2>
+<div class="container">
+    <div class="row">
+        <button class="btn btn-default pull-right" id="exportButton" onclick="location.href = MVCGrid.getExportUrl('TestGrid');">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+        </button>
+    </div>
+</div>
 @(Html.MVCGrid("TestGrid"))
 
 @*<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />

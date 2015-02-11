@@ -27,7 +27,8 @@ namespace MVCGridExample
                         {
                             return String.Format("<a href='{0}'>{1}</a>",
                                 c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
-                        });
+                        })
+                        .WithPlainTextValueExpression((p,c) => p.Id.ToString());
                     cols.Add().WithColumnName("FirstName")
                         .WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);

@@ -13,6 +13,26 @@ namespace MVCGrid.Engine
 {
     public class GridEngine
     {
+        public IMVCGridRenderingEngine GetRenderingEngine(GridContext gridContext)
+        {
+            IMVCGridRenderingEngine renderingEngine = null;
+
+            if (!String.IsNullOrWhiteSpace(gridContext.QueryOptions.RenderingEngineName))
+            {
+                if (String.Compare(gridContext.QueryOptions.RenderingEngineName, "export", true) == 0)
+                {
+                    renderingEngine = new CsvRenderingEngine();
+                }
+            }
+
+            if (renderingEngine == null)
+            {
+                renderingEngine = (IMVCGridRenderingEngine)Activator.CreateInstance(gridContext.GridDefinition.DefaultRenderingEngine, true);
+            }
+
+            return renderingEngine;
+        }
+
         public void Run(IMVCGridRenderingEngine renderingEngine, GridContext gridContext, Stream outputStream)
         {
             if (!renderingEngine.AllowsPaging)
@@ -43,7 +63,6 @@ namespace MVCGrid.Engine
             model.TableHtmlId = HtmlUtility.GetTableHtmlId(gridContext.GridName);
 
             PrepColumns(gridContext, model);
-            //PrepRows(data, gridContext, model);
             model.Rows = rows;
 
             if (model.Rows.Count == 0)
@@ -78,51 +97,6 @@ namespace MVCGrid.Engine
             }
             return model;
         }
-
-        //private void PrepRows(Models.GridData data, Models.GridContext gridContext, RenderingModel model)
-        //{
-        //    foreach (var item in data.Rows)
-        //    {
-        //        Row renderingRow = new Row();
-        //        model.Rows.Add(renderingRow);
-
-        //        if (!String.IsNullOrWhiteSpace(item.RowCssClass))
-        //        {
-        //            renderingRow.CalculatedCssClass = item.RowCssClass;
-        //        }
-
-        //        foreach (var col in gridContext.GetVisibleColumns())
-        //        {
-        //            string val = "";
-
-        //            if (item.Values.ContainsKey(col.ColumnName))
-        //            {
-        //                val = item.Values[col.ColumnName];
-        //            }
-
-        //            Cell renderingCell = new Cell();
-        //            renderingRow.Cells.Add(col.ColumnName, renderingCell);
-        //            if (item.CellCssClasses.ContainsKey(col.ColumnName))
-        //            {
-        //                string cellCss = item.CellCssClasses[col.ColumnName];
-        //                if (!String.IsNullOrWhiteSpace(cellCss))
-        //                {
-        //                    renderingCell.CalculatedCssClass = cellCss;
-        //                }
-        //            }
-
-        //            if (col.HtmlEncode)
-        //            {
-        //                renderingCell.HtmlText = HttpUtility.HtmlEncode(val);
-        //            }
-        //            else
-        //            {
-        //                renderingCell.HtmlText = val;
-        //            }
-        //        }
-        //    }
-        //}
-
         private void PrepColumns(Models.GridContext gridContext, RenderingModel model)
         {
             foreach (var col in gridContext.GetVisibleColumns())

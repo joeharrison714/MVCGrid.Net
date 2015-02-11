@@ -12,6 +12,8 @@ namespace MVCGrid.Models
             Filters = new Dictionary<string, string>();
         }
 
+        public string RenderingEngineName { get; set; }
+
         public SortDirection SortDirection { get; set; }
         public string SortColumn { get; set; }
 

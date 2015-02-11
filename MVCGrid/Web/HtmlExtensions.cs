@@ -36,9 +36,9 @@ namespace MVCGrid.Web
 
                 var gridContext = GridContextUtility.Create(HttpContext.Current, gridName, grid, options);
 
-                IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine();
-
                 GridEngine engine = new GridEngine();
+
+                IMVCGridRenderingEngine renderingEngine = engine.GetRenderingEngine(gridContext);
                 
                 using (MemoryStream ms = new MemoryStream())
                 {

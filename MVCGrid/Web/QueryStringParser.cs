@@ -19,6 +19,12 @@ namespace MVCGrid.Web
 
             var options = new QueryOptions();
 
+            if (httpRequest.QueryString["engine"] != null)
+            {
+                string re = httpRequest.QueryString["engine"];
+                options.RenderingEngineName = re;
+            }
+
             if (!grid.Paging)
             {
                 options.ItemsPerPage = null;
