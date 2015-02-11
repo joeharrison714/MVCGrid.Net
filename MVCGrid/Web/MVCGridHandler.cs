@@ -174,7 +174,10 @@ namespace MVCGrid.Web
 
             var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
-            IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context);
+            IMVCGridHtmlWriter writer = (IMVCGridHtmlWriter)Activator.CreateInstance(gridContext.GridDefinition.HtmlWriterType, true);
+
+            IMVCGridRenderingEngine renderingEngine = DetermineRenderingEngine(context, writer);
+            
 
             //if (renderingEngine is HtmlRenderingEngine)
             //{
@@ -199,7 +202,7 @@ namespace MVCGrid.Web
             renderingEngine.Render(results, gridContext, context.Response.OutputStream);
         }
 
-        private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context)
+        private IMVCGridRenderingEngine DetermineRenderingEngine(HttpContext context, IMVCGridHtmlWriter writer)
         {
             IMVCGridRenderingEngine engine = null;
 
@@ -214,7 +217,7 @@ namespace MVCGrid.Web
 
             if (engine == null)
             {
-                engine = new HtmlRenderingEngine();
+                engine = new HtmlRenderingEngine(writer);
             }
 
             return engine;

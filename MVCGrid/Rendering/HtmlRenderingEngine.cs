@@ -13,8 +13,11 @@ namespace MVCGrid.Rendering
 {
     public class HtmlRenderingEngine : IMVCGridRenderingEngine
     {
-        public HtmlRenderingEngine()
+        IMVCGridHtmlWriter _writer;
+
+        public HtmlRenderingEngine(IMVCGridHtmlWriter writer)
         {
+            _writer = writer;
         }
 
         public void PrepareResponse(HttpResponse response)
@@ -30,8 +33,7 @@ namespace MVCGrid.Rendering
         {
             RenderingModel model = PrepModel(data, gridContext);
 
-            BootstrapHtmlWriter writer = new BootstrapHtmlWriter();
-            var content = writer.WriteHtml(model);
+            var content = _writer.WriteHtml(model);
 
             using (StreamWriter sw = new StreamWriter(outputStream))
             {

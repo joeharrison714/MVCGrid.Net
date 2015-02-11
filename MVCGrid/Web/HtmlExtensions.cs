@@ -35,7 +35,8 @@ namespace MVCGrid.Web
 
                 var gridContext = GridContextUtility.Create(HttpContext.Current, gridName, grid, options);
 
-                IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine();
+                IMVCGridHtmlWriter writer = (IMVCGridHtmlWriter)Activator.CreateInstance(gridContext.GridDefinition.HtmlWriterType, true);
+                IMVCGridRenderingEngine renderingEngine = new HtmlRenderingEngine(writer);
 
                 var results = ((MVCGrid.Models.GridDefinitionBase)grid).GetData(gridContext);
 

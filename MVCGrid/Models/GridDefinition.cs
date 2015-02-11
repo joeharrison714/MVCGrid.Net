@@ -15,6 +15,7 @@ namespace MVCGrid.Models
 
     public class GridDefinition<T1> : GridDefinitionBase, IMVCGridDefinition
     {
+        private Type _htmlWriterType;
         const string DefaultNoResultsMessage = "No results.";
 
         public GridDefinition() : this(null)
@@ -31,6 +32,7 @@ namespace MVCGrid.Models
 
             Columns = new List<GridColumn<T1>>();
             NoResultsMessage = DefaultNoResultsMessage;
+            _htmlWriterType = typeof(MVCGrid.Rendering.BootstrapHtmlWriter);
         }
 
         public GridConfiguration GridConfiguration { get; set; }
@@ -147,6 +149,17 @@ namespace MVCGrid.Models
         public string ClientSideLoadingMessageFunctionName { get; set; }
         public string ClientSideLoadingCompleteFunctionName { get; set; }
 
+        public Type HtmlWriterType
+        {
+            get
+            {
+                return _htmlWriterType;
+            }
+            set
+            {
+                _htmlWriterType = value;
+            }
+        }
     }
 
 }
