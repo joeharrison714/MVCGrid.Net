@@ -595,6 +595,52 @@ namespace MVCGridExample
             );
 
 
+            MVCGridDefinitionTable.Add("CustomStyle", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) =>
+                        {
+                            return String.Format("<a href='{0}'>{1}</a>",
+                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
+                        })
+                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add().WithColumnName("Status")
+                        .WithHeaderText("Status")
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                })
+                .WithDefaultRenderingEngine(typeof(CustomHtmlRenderingEngine))
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(20)
+                .WithRetrieveDataMethod((options) =>
+                {
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string sortColumn = options.SortColumn;
+                    if (String.Compare(sortColumn, "status", true) == 0) sortColumn = "active";
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
 
 
             MVCGridDefinitionTable.Add("GridDefinitionGrid", new MVCGridBuilder<MethodDocItem>()

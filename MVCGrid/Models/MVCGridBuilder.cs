@@ -115,5 +115,11 @@ namespace MVCGrid.Models
             GridDefinition.Filtering = filtering;
             return this;
         }
+
+        public MVCGridBuilder<T1> WithDefaultRenderingEngine(Type renderingEngineType)
+        {
+            GridDefinition.DefaultRenderingEngine = renderingEngineType;
+            return this;
+        }
     }
 }

@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CodeSnippetHelper.cs" />
+    <Compile Include="Models\CustomHtmlRenderingEngine.cs" />
     <Compile Include="Models\DocumentationRepository.cs" />
     <Compile Include="Models\PersonRepository.cs" />
     <Compile Include="Models\TestItem.cs" />
@@ -266,6 +267,7 @@
     <Content Include="Views\Documentation\Index.cshtml" />
     <Content Include="Views\Download\Index.cshtml" />
     <Content Include="Views\Demo\Multiple.cshtml" />
+    <Content Include="Views\Demo\CustomStyle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Detail\" />

@@ -2,6 +2,9 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section head{
+@RenderSection("head", required: false)
+}
 
 <p>&nbsp;</p>
 
@@ -20,7 +23,8 @@
             <li>@Html.ActionLink("Client-Side API", "clientsideapi")</li>
             <li>@Html.ActionLink("Export to CSV", "export")</li>
             <li>@Html.ActionLink("Multiple Grids on Same Page", "multiple")</li>
-
+            <li>@Html.ActionLink("Custom Style", "CustomStyle")</li>
+            
 
         </ul>
     </div>

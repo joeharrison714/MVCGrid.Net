@@ -1,0 +1,126 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "CustomStyle";
+}
+
+@section head{
+    <style type="text/css">
+        table.customStyleTable{
+            width: 100%;
+        }
+        /*table.customStyleTable tr th{
+            background-color: blue;
+        }*/        
+        table.customStyleTable tr:nth-child(odd) { background-color:#fff; }
+        table.customStyleTable tr:nth-child(even) { background-color:#9cf; }
+        table.customStyleTable thead th { background: #fc9; }
+
+        .pageItem{
+            display: inline; float: left; margin: 2px;
+        }
+    </style>
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>To use a custom style for your table, you will need to implement the <code>IMVCGridRenderingEngine</code> to create your table. Everything you need to populate your table will be given to you in the <code>RenderingModel</code> object.
+    Once you have the implementation, set the property on your grid definition to use your new rendering engine: <code>gridDef.DefaultRenderingEngine = typeof(CustomHtmlRenderingEngine);</code>.  This same method could also be used to create custom export formats.
+    </p>
+
+@Html.MVCGrid("CustomStyle")
+
+<br /><br />
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>CustomHtmlRenderingEngine.cs</strong></div>
+    <div class="panel-body">
+<pre class="brush: csharp">
+    public class CustomHtmlRenderingEngine : IMVCGridRenderingEngine
+{
+    public bool AllowsPaging
+    {
+        get { return true; }
+    }
+    public void PrepareResponse(HttpResponse response)
+    {
+    }
+    public void Render(MVCGrid.Models.RenderingModel model, System.IO.Stream outputStream)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(&quot;&lt;table class=&#39;customStyleTable&#39;&gt;&lt;thead&gt;&lt;tr&gt;&quot;);
+        foreach (var col in model.Columns)
+        {
+            sb.Append(&quot;&lt;th&quot;); if (!string.isnullorwhitespace(col.onclick))
+                                {
+                                sb.appendformat(&quot; onclick=&#39;{0}&#39; &quot;, col.Onclick);
+            }
+            sb.Append(&quot;&gt;&quot;);
+            sb.Append(col.HeaderText);
+            if (col.SortIconDirection.HasValue)
+            {
+                switch (col.SortIconDirection.Value)
+                {
+                    case MVCGrid.Models.SortDirection.Asc:
+                        sb.Append(&quot; (Ascending)&quot;);
+                        break;
+                    case MVCGrid.Models.SortDirection.Dsc:
+                        sb.Append(&quot; (Descending)&quot;);
+                        break;
+                    case MVCGrid.Models.SortDirection.Unspecified:
+                        sb.Append(&quot; (Sort)&quot;);
+                        break;
+                }
+            }
+            sb.Append(&quot;&lt;/th&gt;&quot;);
+        }
+        sb.Append(&quot;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&quot;);
+        foreach (var row in model.Rows)
+        {
+            sb.Append(&quot;&lt;tr&quot;); if (!string.isnullorwhitespace(row.calculatedcssclass))
+                                {
+                                sb.appendformat(&quot; class=&#39;{0}&#39; &quot;, row.CalculatedCssClass);
+            }
+            sb.Append(&quot;&gt;&quot;);
+            foreach (var col in model.Columns)
+            {
+                var cell = row.Cells[col.Name];
+                sb.Append(&quot;&lt;td&quot;); if (!string.isnullorwhitespace(cell.calculatedcssclass))
+                                    {
+                                    sb.appendformat(&quot; class=&#39;{0}&#39; &quot;, cell.CalculatedCssClass);
+                }
+                sb.Append(&quot;&gt;&quot;);
+                sb.Append(cell.HtmlText);
+                sb.Append(&quot;&lt;/td&gt;&quot;);
+            }
+            sb.Append(&quot;&lt;/tr&gt;&quot;);
+        }
+        sb.Append(&quot;&lt;/tbody&gt;&lt;/table&gt;&quot;);
+        if (model.PagingModel != null)
+        {
+            sb.Append(&quot;&lt;div&gt;&lt;ul&gt;&quot;);
+            foreach (var pl in model.PagingModel.PageLinks)
+            {
+                sb.Append(&quot;&lt;li class=&#39;pageItem&#39;&gt;&quot;);
+                sb.AppendFormat(&quot;&lt;a href=&#39;#&#39; onclick=&#39;{0}&#39;&gt;{1}&lt;/a&gt;&quot;, pl.Value, pl.Key);
+                sb.Append(&quot;&lt;/li&gt;&quot;);
+            }
+            sb.Append(&quot;&lt;/ul&gt;&lt;/div&gt;&quot;);
+        }
+        using (StreamWriter sw = new StreamWriter(outputStream))
+        {
+            sw.Write(sb.ToString());
+        }
+    }
+}
+</pre>
+    </div>
+</div>
+
+@*<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre>@@Html.MVCGrid("SortableGrid")</pre>
+    </div>
+</div>*@
