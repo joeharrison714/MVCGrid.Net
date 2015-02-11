@@ -15,35 +15,32 @@ namespace MVCGrid.Models
 
     public class GridDefinition<T1> : GridDefinitionBase, IMVCGridDefinition
     {
-        private Type _defaultRenderingEngine;
-        const string DefaultNoResultsMessage = "No results.";
-
-        public GridDefinition() : this(null)
+        public GridDefinition() : this(new GridDefaults())
         {
         }
 
-        public GridDefinition(GridConfiguration copyFromConfig):base()
+        public GridDefinition(GridDefaults gridDefaults):base()
         {
-            if (copyFromConfig != null)
-            {
-                GridConfiguration = GridConfiguration.CopyFrom(copyFromConfig);
-            }
-
             Columns = new List<GridColumn<T1>>();
-            NoResultsMessage = DefaultNoResultsMessage;
-            _defaultRenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
-        }
 
-        public GridConfiguration GridConfiguration { get; set; }
+            if (gridDefaults != null)
+            {
+                this.PreloadData = gridDefaults.PreloadData;
+                this.Paging = gridDefaults.Paging;
+                this.ItemsPerPage = gridDefaults.ItemsPerPage;
+                this.Sorting = gridDefaults.Sorting;
+                this.DefaultSortColumn = gridDefaults.DefaultSortColumn;
+                this.NoResultsMessage = gridDefaults.NoResultsMessage;
+                this.ClientSideLoadingMessageFunctionName = gridDefaults.ClientSideLoadingMessageFunctionName;
+                this.ClientSideLoadingCompleteFunctionName = gridDefaults.ClientSideLoadingCompleteFunctionName;
+                this.Filtering = gridDefaults.Filtering;
+                this.DefaultRenderingEngine = gridDefaults.DefaultRenderingEngine;
+            }
+        }
 
         public IEnumerable<IMVCGridColumn> GetColumns()
         {
-            List<IMVCGridColumn> interfaceList = new List<IMVCGridColumn>();
-            foreach (var col in Columns)
-            {
-                interfaceList.Add(col);
-            }
-            return interfaceList;
+            return Columns.Cast<IMVCGridColumn>();
         }
 
         public void AddColumn(GridColumn<T1> column)
@@ -153,17 +150,7 @@ namespace MVCGrid.Models
         public string ClientSideLoadingMessageFunctionName { get; set; }
         public string ClientSideLoadingCompleteFunctionName { get; set; }
 
-        public Type DefaultRenderingEngine
-        {
-            get
-            {
-                return _defaultRenderingEngine;
-            }
-            set
-            {
-                _defaultRenderingEngine = value;
-            }
-        }
+        public Type DefaultRenderingEngine { get; set; }
     }
 
 }

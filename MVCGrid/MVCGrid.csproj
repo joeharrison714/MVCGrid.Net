@@ -62,7 +62,7 @@
     <Compile Include="Interfaces\IMVCGridColumn.cs" />
     <Compile Include="Interfaces\IMVCGridDefinition.cs" />
     <Compile Include="Models\GridColumn.cs" />
-    <Compile Include="Models\GridConfiguration.cs" />
+    <Compile Include="Models\GridDefaults.cs" />
     <Compile Include="Models\QueryResult.cs" />
     <Compile Include="Models\GridDefinition.cs" />
     <Compile Include="Models\SortDirection.cs" />

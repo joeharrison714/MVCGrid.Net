@@ -15,8 +15,6 @@ namespace MVCGridExample
     {
         public static void RegisterGrids()
         {
-            GridConfiguration globalConfig = SetupGlobalConfiguration();
-
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
@@ -349,7 +347,7 @@ namespace MVCGridExample
                         .WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
-                .WithPreloadData(true)
+                .WithPreloadData(false)
                 .WithSorting(true)
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
@@ -720,14 +718,6 @@ namespace MVCGridExample
 
 
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
-        }
-
-        private static GridConfiguration SetupGlobalConfiguration()
-        {
-            GridConfiguration globalConfig = new GridConfiguration();
-            globalConfig.ItemsPerPage = 10;
-            globalConfig.TableCssClasses = new HashSet<string>() { "table", "table-striped", "table-bordered" };
-            return globalConfig;
         }
     }
 }

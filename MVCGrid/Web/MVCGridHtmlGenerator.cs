@@ -39,8 +39,6 @@ namespace MVCGrid.Web
             sbJson.Append("}");
             //mvcGridName, qsPrefix: qsPrefix, preloaded: preload }
 
-            GridConfiguration config = def.GridConfiguration;
-
             StringBuilder sbHtml = new StringBuilder();
 
             sbHtml.AppendFormat("<div id='{0}' class='{1}'>", HtmlUtility.GetContainerHtmlId(gridName), HtmlUtility.ContainerCssClass);
