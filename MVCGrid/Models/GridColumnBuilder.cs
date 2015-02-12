@@ -87,9 +87,9 @@ namespace MVCGrid.Models
             return this;
         }
 
-        public GridColumnBuilder<T1> WithValueTemplate(Func<T1, GridContext, TemplateModel> expression)
+        public GridColumnBuilder<T1> WithValueTemplate(string template)
         {
-            GridColumn.ValueTemplate = expression;
+            GridColumn.ValueTemplate = template;
             return this;
         }
     }

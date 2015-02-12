@@ -110,10 +110,11 @@ namespace MVCGrid.Models
                     {
                         thisCell.HtmlText = col.ValueExpression(item, context);
                     }
-                    else if (col.ValueTemplate != null)
+                    else if (!String.IsNullOrWhiteSpace(col.ValueTemplate))
                     {
-                        var templateModel = col.ValueTemplate(item, context);
-                        thisCell.HtmlText = templatingEngine.Process(templateModel, context);
+                        var templateModel = new TemplateModel(item, context);
+
+                        thisCell.HtmlText = templatingEngine.Process(col.ValueTemplate, templateModel);
                     }
                     else
                     {

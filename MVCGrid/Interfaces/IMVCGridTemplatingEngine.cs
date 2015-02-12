@@ -8,6 +8,6 @@ namespace MVCGrid.Interfaces
 {
     public interface IMVCGridTemplatingEngine
     {
-        string Process(TemplateModel model, GridContext gridContect);
+        string Process(string template, TemplateModel model);
     }
 }

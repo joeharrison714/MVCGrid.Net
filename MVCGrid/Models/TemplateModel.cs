@@ -1,37 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 
 namespace MVCGrid.Models
 {
     public class TemplateModel
     {
-
-        public TemplateModel(string template, object args)
+        public TemplateModel()
         {
-            Template = template;
+        }
 
-            Args = new Dictionary<string, object>();
+        public TemplateModel(dynamic item, GridContext gridContext)
+        {
+            this.Item = item;
+            this.GridContext = gridContext;
+        }
 
-            if (args != null)
+        public dynamic Item { get; set; }
+        public GridContext GridContext { get; set; }
+
+        public UrlHelper Url
+        {
+            get
             {
-                foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(args))
-                {
-                    object obj2 = descriptor.GetValue(args);
-                    Args.Add(descriptor.Name, obj2);
-                }
+                return GridContext.UrlHelper;
             }
         }
-
-        public TemplateModel(string template, Dictionary<string, object> args)
-        {
-            Template = template;
-            Args = args;
-        }
-
-        public string Template { get; set; }
-        public Dictionary<string,object> Args { get; set; } 
     }
 }

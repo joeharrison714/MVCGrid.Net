@@ -11,19 +11,23 @@ namespace MVCGrid.Templating
 {
     public class SmartFormatTemplatingEngine : IMVCGridTemplatingEngine
     {
-        public string Process(TemplateModel model, GridContext gridContext)
+        public string Process(string template, TemplateModel model)
         {
-            dynamic eo = new ExpandoObject();
 
-            var dict = eo as IDictionary<string, Object>;
-
-            foreach (var item in model.Args)
-            {
-                dict.Add(item.Key, item.Value);
-            }
-
-            string result = Smart.Format(model.Template, (object)eo);
+            string result = Smart.Format(template, model);
             return result;
+
+            //dynamic eo = new ExpandoObject();
+
+            //var dict = eo as IDictionary<string, Object>;
+
+            //foreach (var item in model.Args)
+            //{
+            //    dict.Add(item.Key, item.Value);
+            //}
+
+            //string result = Smart.Format(model.Template, (object)eo);
+            //return result;
         }
     }
 }

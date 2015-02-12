@@ -38,7 +38,7 @@ namespace MVCGrid.Models
         /// <summary>
         /// Template for returning the cell value. Use this or ValueExpression.
         /// </summary>
-        public Func<T1, GridContext, TemplateModel> ValueTemplate { get; set; }
+        public string ValueTemplate { get; set; }
 
         /// <summary>
         /// The expression for returning the cell value. Use this or ValueTemplate.
