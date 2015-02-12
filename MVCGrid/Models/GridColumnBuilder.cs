@@ -86,5 +86,11 @@ namespace MVCGrid.Models
             GridColumn.Visible = visible;
             return this;
         }
+
+        public GridColumnBuilder<T1> WithValueTemplate(Func<T1, GridContext, TemplateModel> expression)
+        {
+            GridColumn.ValueTemplate = expression;
+            return this;
+        }
     }
 }

@@ -59,7 +59,7 @@ namespace MVCGrid.Models
                     "column.ColumnName");
             }
 
-            if (column.ValueExpression == null)
+            if (column.ValueExpression == null && column.ValueTemplate == null)
             {
                 throw new ArgumentException(
                     String.Format("Column '{0}' is missing a value expression.", column.ColumnName), 
@@ -86,6 +86,8 @@ namespace MVCGrid.Models
                 throw new Exception("When paging is enabled, QueryResult must contain the TotalRecords");
             }
 
+            IMVCGridTemplatingEngine templatingEngine = new MVCGrid.Templating.SmartFormatTemplatingEngine();
+
             foreach (var item in queryResult.Items)
             {
                 Row thisRow = new Row();
@@ -104,7 +106,19 @@ namespace MVCGrid.Models
                     Cell thisCell = new Cell();
                     thisRow.Cells.Add(col.ColumnName, thisCell);
 
-                    thisCell.HtmlText = col.ValueExpression(item, context);
+                    if (col.ValueExpression != null)
+                    {
+                        thisCell.HtmlText = col.ValueExpression(item, context);
+                    }
+                    else if (col.ValueTemplate != null)
+                    {
+                        var templateModel = col.ValueTemplate(item, context);
+                        thisCell.HtmlText = templatingEngine.Process(templateModel, context);
+                    }
+                    else
+                    {
+                        thisCell.HtmlText = "";
+                    }
 
                     if (col.HtmlEncode)
                     {
