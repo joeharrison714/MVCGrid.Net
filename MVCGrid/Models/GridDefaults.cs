@@ -20,6 +20,7 @@ namespace MVCGrid.Models
             Filtering = false;
             RenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
             TemplatingEngine = typeof(MVCGrid.Templating.SimpleTemplatingEngine);
+            AdditionalSettings = new Dictionary<string, string>();
         }
 
         public bool PreloadData { get; set; }
@@ -33,5 +34,6 @@ namespace MVCGrid.Models
         public bool Filtering { get; set; }
         public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
+        public Dictionary<string, string> AdditionalSettings { get; set; }
     }
 }

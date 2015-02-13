@@ -24,7 +24,7 @@ namespace MVCGrid.Rendering
             httpResponse.BufferOutput = false;
         }
 
-        public void Render(Models.RenderingModel model, TextWriter outputStream)
+        public void Render(Models.RenderingModel model, Models.GridContext gridContext, TextWriter outputStream)
         {
             var sw = outputStream;
 

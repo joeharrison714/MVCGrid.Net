@@ -36,6 +36,7 @@ namespace MVCGrid.Models
                 this.Filtering = gridDefaults.Filtering;
                 this.RenderingEngine = gridDefaults.RenderingEngine;
                 this.TemplatingEngine = gridDefaults.TemplatingEngine;
+                this.AdditionalSettings = gridDefaults.AdditionalSettings;
             }
         }
 
@@ -174,6 +175,8 @@ namespace MVCGrid.Models
 
         public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
+
+        public Dictionary<string, string> AdditionalSettings { get; set; }
 
     }
 

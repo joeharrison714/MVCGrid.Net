@@ -13,14 +13,16 @@ namespace MVCGrid.Rendering
 {
     public class BootstrapRenderingEngine : IMVCGridRenderingEngine
     {
-        private string CssTable;
+        private string DefaultTableCss;
         private string HtmlImageSortAsc;
         private string HtmlImageSortDsc;
         private string HtmlImageSort;
 
+        public const string SettingNameTableClass = "TableClass";
+
         public BootstrapRenderingEngine()
         {
-            CssTable = "table table-striped table-bordered";
+            DefaultTableCss = "table table-striped table-bordered";
         }
 
         public void PrepareResponse(HttpResponse response)
@@ -32,16 +34,22 @@ namespace MVCGrid.Rendering
             get { return true; }
         }
 
-        public void Render(RenderingModel model, TextWriter outputStream)
+        public void Render(RenderingModel model, GridContext gridContext, TextWriter outputStream)
         {
             HtmlImageSortAsc = String.Format("<img src='{0}/sortup.png' class='pull-right' />", model.HandlerPath);
             HtmlImageSortDsc = String.Format("<img src='{0}/sortdown.png' class='pull-right' />", model.HandlerPath);
             HtmlImageSort = String.Format("<img src='{0}/sort.png' class='pull-right' />", model.HandlerPath);
 
+            string tableCss = DefaultTableCss;
+            if (gridContext.GridDefinition.AdditionalSettings.ContainsKey(SettingNameTableClass))
+            {
+                tableCss = gridContext.GridDefinition.AdditionalSettings[SettingNameTableClass];
+            }
+
             StringBuilder sbHtml = new StringBuilder();
 
             sbHtml.AppendFormat("<table id='{0}'", model.TableHtmlId);
-            AppendCssAttribute(CssTable, sbHtml);
+            AppendCssAttribute(tableCss, sbHtml);
             sbHtml.Append(">");
 
             RenderHeader(model, sbHtml);

@@ -21,7 +21,7 @@ namespace MVCGrid.RazorTemplates
         {
         }
 
-        public void Render(Models.RenderingModel model, System.IO.TextWriter outputStream)
+        public void Render(Models.RenderingModel model, Models.GridContext gridContext, System.IO.TextWriter outputStream)
         {
             //model.
             string template = @"

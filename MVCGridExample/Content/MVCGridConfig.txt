@@ -54,6 +54,7 @@ namespace MVCGridExample
 //");
 
                 })
+                .WithAdditionalSetting(MVCGrid.Rendering.BootstrapRenderingEngine.SettingNameTableClass, "notreal")
                 .WithSorting(true)
                 .WithDefaultSortColumn("Id")
                 .WithPaging(true)

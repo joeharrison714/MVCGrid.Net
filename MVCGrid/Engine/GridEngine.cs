@@ -42,7 +42,7 @@ namespace MVCGrid.Engine
 
             var model = GenerateModel(gridContext);
 
-            renderingEngine.Render(model, outputStream);
+            renderingEngine.Render(model, gridContext, outputStream);
         }
 
         public RenderingModel GenerateModel(GridContext gridContext)

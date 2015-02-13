@@ -19,7 +19,7 @@ namespace MVCGrid.Web.Models
         {
         }
 
-        public void Render(MVCGrid.Models.RenderingModel model, System.IO.TextWriter outputStream)
+        public void Render(MVCGrid.Models.RenderingModel model, MVCGrid.Models.GridContext gridContext, System.IO.TextWriter outputStream)
         {
             StringBuilder sb = new StringBuilder();
 

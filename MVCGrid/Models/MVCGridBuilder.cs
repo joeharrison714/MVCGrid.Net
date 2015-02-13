@@ -133,5 +133,20 @@ namespace MVCGrid.Models
             GridDefinition.TemplatingEngine = templatingEngine;
             return this;
         }
+
+        public MVCGridBuilder<T1> WithAdditionalSetting(string name, string value)
+        {
+            GridDefinition.AdditionalSettings[name] = value;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithoutAdditionalSetting(string name)
+        {
+            if (GridDefinition.AdditionalSettings.ContainsKey(name))
+            {
+                GridDefinition.AdditionalSettings.Remove(name);
+            }
+            return this;
+        }
     }
 }
