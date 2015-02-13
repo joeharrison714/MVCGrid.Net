@@ -32,7 +32,7 @@ namespace MVCGrid.Rendering
             get { return true; }
         }
 
-        public void Render(RenderingModel model, Stream outputStream)
+        public void Render(RenderingModel model, TextWriter outputStream)
         {
             HtmlImageSortAsc = String.Format("<img src='{0}/sortup.png' class='pull-right' />", model.HandlerPath);
             HtmlImageSortDsc = String.Format("<img src='{0}/sortdown.png' class='pull-right' />", model.HandlerPath);
@@ -64,10 +64,7 @@ namespace MVCGrid.Rendering
 
             RenderPaging(model, sbHtml);
 
-            using (StreamWriter sw = new StreamWriter(outputStream))
-            {
-                sw.Write(sbHtml.ToString());
-            }
+            outputStream.Write(sbHtml.ToString());
         }
 
         private void AppendCssAttribute(string classString, StringBuilder sbHtml)

@@ -42,7 +42,10 @@ namespace MVCGrid.Web
                 
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    engine.Run(renderingEngine, gridContext, ms);
+                    using (TextWriter tw = new StreamWriter(ms))
+                    {
+                        engine.Run(renderingEngine, gridContext, tw);
+                    }
 
                     preload = Encoding.ASCII.GetString(ms.ToArray());
                 }

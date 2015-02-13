@@ -21,7 +21,7 @@ namespace MVCGrid.RazorTemplates
         {
         }
 
-        public void Render(Models.RenderingModel model, System.IO.Stream outputStream)
+        public void Render(Models.RenderingModel model, System.IO.TextWriter outputStream)
         {
             //model.
             string template = @"
@@ -156,10 +156,9 @@ namespace MVCGrid.RazorTemplates
 
             var result = RazorEngine.Engine.Razor.RunCompile(template, templateKey, typeof(Models.RenderingModel), model);
 
-            using (StreamWriter sw = new StreamWriter(outputStream))
-            {
-                sw.Write(result);
-            }
+
+            outputStream.Write(result);
+
         }
     }
 }

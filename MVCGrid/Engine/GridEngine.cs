@@ -33,7 +33,7 @@ namespace MVCGrid.Engine
             return renderingEngine;
         }
 
-        public void Run(IMVCGridRenderingEngine renderingEngine, GridContext gridContext, Stream outputStream)
+        public void Run(IMVCGridRenderingEngine renderingEngine, GridContext gridContext, TextWriter outputStream)
         {
             if (!renderingEngine.AllowsPaging)
             {

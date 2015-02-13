@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MVCGrid.Rendering
@@ -20,44 +21,45 @@ namespace MVCGrid.Rendering
             httpResponse.Clear();
             httpResponse.ContentType = "text/csv";
             httpResponse.AddHeader("content-disposition", "attachment; filename=\"" + "export" + ".csv\"");
+            httpResponse.BufferOutput = false;
         }
 
-        public void Render(Models.RenderingModel model, Stream outputStream)
+        public void Render(Models.RenderingModel model, TextWriter outputStream)
         {
-            using (StreamWriter sw = new StreamWriter(outputStream))
+            var sw = outputStream;
+
+            StringBuilder sbHeaderRow = new StringBuilder();
+            foreach (var col in model.Columns)
             {
-                StringBuilder sbHeaderRow = new StringBuilder();
+                if (sbHeaderRow.Length != 0)
+                {
+                    sbHeaderRow.Append(",");
+                }
+                sbHeaderRow.Append(CsvEncode(col.Name));
+            }
+            sbHeaderRow.AppendLine();
+            sw.Write(sbHeaderRow.ToString());
+
+            foreach (var item in model.Rows)
+            {
+                StringBuilder sbRow = new StringBuilder();
                 foreach (var col in model.Columns)
                 {
-                    if (sbHeaderRow.Length != 0)
+                    var cell = item.Cells[col.Name];
+
+                    if (sbRow.Length != 0)
                     {
-                        sbHeaderRow.Append(",");
+                        sbRow.Append(",");
                     }
-                    sbHeaderRow.Append(CsvEncode(col.Name));
+
+                    string val = cell.PlainText;
+
+                    sbRow.Append(CsvEncode(val));
                 }
-                sbHeaderRow.AppendLine();
-                sw.Write(sbHeaderRow.ToString());
-
-                foreach (var item in model.Rows)
-                {
-                    StringBuilder sbRow = new StringBuilder();
-                    foreach (var col in model.Columns)
-                    {
-                        var cell = item.Cells[col.Name];
-
-                        if (sbRow.Length != 0)
-                        {
-                            sbRow.Append(",");
-                        }
-
-                        string val = cell.PlainText;
-
-                        sbRow.Append(CsvEncode(val));
-                    }
-                    sbRow.AppendLine();
-                    sw.Write(sbRow.ToString());
-                }
+                sbRow.AppendLine();
+                sw.Write(sbRow.ToString());
             }
+
         }
 
         private string CsvEncode(string s)

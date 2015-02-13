@@ -178,7 +178,7 @@ namespace MVCGrid.Web
             IMVCGridRenderingEngine renderingEngine = engine.GetRenderingEngine(gridContext);
 
             renderingEngine.PrepareResponse(context.Response);
-            engine.Run(renderingEngine, gridContext, context.Response.OutputStream);
+            engine.Run(renderingEngine, gridContext, context.Response.Output);
         }
         
         private void HandleScript(HttpContext context)

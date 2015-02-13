@@ -19,7 +19,7 @@ namespace MVCGrid.Web.Models
         {
         }
 
-        public void Render(MVCGrid.Models.RenderingModel model, System.IO.Stream outputStream)
+        public void Render(MVCGrid.Models.RenderingModel model, System.IO.TextWriter outputStream)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -94,10 +94,9 @@ namespace MVCGrid.Web.Models
                 sb.Append("</ul></div>");
             }
 
-            using (StreamWriter sw = new StreamWriter(outputStream))
-            {
-                sw.Write(sb.ToString());
-            }
+
+            outputStream.Write(sb.ToString());
+
         }
     }
 }
