@@ -1,0 +1,15 @@
+﻿@model MVCGrid.Models.RenderingModel
+@{
+    Layout = null;
+}
+
+<table>
+    <thead>
+        <tr>
+            @foreach (var col in Model.Columns)
+            {
+                <th>@col.HeaderText</th>
+            }
+        </tr>
+    </thead>
+</table>
