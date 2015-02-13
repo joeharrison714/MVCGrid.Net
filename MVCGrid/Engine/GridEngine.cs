@@ -40,6 +40,13 @@ namespace MVCGrid.Engine
                 gridContext.QueryOptions.ItemsPerPage = null;
             }
 
+            var model = GenerateModel(gridContext);
+
+            renderingEngine.Render(model, outputStream);
+        }
+
+        public RenderingModel GenerateModel(GridContext gridContext)
+        {
             int? totalRecords;
             var rows = ((GridDefinitionBase)gridContext.GridDefinition).GetData(gridContext, out totalRecords);
 
@@ -51,8 +58,7 @@ namespace MVCGrid.Engine
             }
 
             var model = PrepModel(totalRecords, rows, gridContext);
-
-            renderingEngine.Render(model, outputStream);
+            return model;
         }
 
         private RenderingModel PrepModel(int? totalRecords, List<Row> rows, Models.GridContext gridContext)
