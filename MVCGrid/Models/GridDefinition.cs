@@ -117,7 +117,8 @@ namespace MVCGrid.Models
                         {
                             Item = item,
                             GridContext = context,
-                            GridColumn = col
+                            GridColumn = col,
+                            Row= thisRow
                         };
 
                         thisCell.HtmlText = templatingEngine.Process(col.ValueTemplate, templateModel);

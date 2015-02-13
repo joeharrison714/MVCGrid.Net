@@ -19,7 +19,7 @@ namespace MVCGrid.Models
             ClientSideLoadingCompleteFunctionName = null;
             Filtering = false;
             RenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
-            TemplatingEngine = typeof(MVCGrid.Templating.SmartFormatTemplatingEngine);
+            TemplatingEngine = typeof(MVCGrid.Templating.SimpleTemplatingEngine);
         }
 
         public bool PreloadData { get; set; }

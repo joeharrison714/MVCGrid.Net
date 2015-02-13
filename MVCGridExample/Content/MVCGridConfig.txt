@@ -1,5 +1,4 @@
 ﻿using MVCGrid.Models;
-using MVCGrid.RazorTemplates;
 using MVCGrid.Web;
 using MVCGrid.Web.Data;
 using MVCGrid.Web.Models;
@@ -17,8 +16,6 @@ namespace MVCGridExample
         public static void RegisterGrids()
         {
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
-                .WithTemplatingEngine(typeof(RazorTemplatingEngine))
-                .WithRenderingEngine(typeof(RazorRenderingEngine))
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -45,11 +42,14 @@ namespace MVCGridExample
                         .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger"); ;
                     cols.Add().WithColumnName("Gender")
                         .WithValueExpression((p, c) => p.Gender);
+                    cols.Add().WithColumnName("Url")
+                        .WithVisibility(false)
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
                     cols.Add().WithColumnName("Button")
                         .WithHtmlEncoding(false)
                         .WithValueTemplate(@"
-<a class='btn btn-default' href='@(Model.Url.Action(""detail"", ""demo"", new{ id = Model.Item.Id}))' role='button'>
-    @Model.Item.FirstName
+<a class='btn btn-default' href='{Row.Url}' role='button'>
+    {Model.FirstName}
 </a>
 ");
 

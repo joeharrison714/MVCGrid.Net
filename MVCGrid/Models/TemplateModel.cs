@@ -16,6 +16,7 @@ namespace MVCGrid.Models
         public IMVCGridColumn GridColumn { get; set; }
         public dynamic Item { get; set; }
         public GridContext GridContext { get; set; }
+        public Row Row { get; set; }
 
         public UrlHelper Url
         {

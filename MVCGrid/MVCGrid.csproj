@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SmartFormat">
-      <HintPath>..\packages\SmartFormat.NET.1.2.0.0\lib\net40\SmartFormat.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -61,7 +58,7 @@
     <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
     <Compile Include="Rendering\BootstrapRenderingEngine.cs" />
-    <Compile Include="Templating\SmartFormatTemplatingEngine.cs" />
+    <Compile Include="Templating\SimpleTemplatingEngine.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />
     <Compile Include="Utility\HtmlUtility.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
