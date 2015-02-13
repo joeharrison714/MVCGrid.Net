@@ -18,6 +18,7 @@ namespace MVCGridExample
         {
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
                 .WithTemplatingEngine(typeof(RazorTemplatingEngine))
+                .WithRenderingEngine(typeof(RazorRenderingEngine))
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")

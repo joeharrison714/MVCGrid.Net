@@ -173,6 +173,7 @@ namespace MVCGrid.Models
 
         public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
+
     }
 
 }

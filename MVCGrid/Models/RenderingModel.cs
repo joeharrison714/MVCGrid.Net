@@ -19,6 +19,26 @@ namespace MVCGrid.Models
         public int NumberOfPages { get; set; }
 
         public Dictionary<int, string> PageLinks { get; set; }
+
+        public void CalculatePageStartAndEnd(int pagesToDisplay, out int start, out int end)
+        {
+            int pageToStart = CurrentPage - ((pagesToDisplay - 1) / 2);
+            if (pageToStart < 1) pageToStart = 1;
+
+            int pageToEnd = pageToStart + (pagesToDisplay - 1);
+            
+            if (pageToEnd > NumberOfPages)
+            {
+                int diff = pageToEnd - NumberOfPages;
+                
+                pageToEnd = NumberOfPages;
+                pageToStart = pageToStart - diff;
+            }
+            if (pageToStart < 1) pageToStart = 1;
+
+            start = pageToStart;
+            end = pageToEnd;
+        }
     }
 
     public class RenderingModel

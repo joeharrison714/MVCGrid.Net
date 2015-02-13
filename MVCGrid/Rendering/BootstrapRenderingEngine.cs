@@ -163,21 +163,9 @@ namespace MVCGrid.Rendering
 
 
             sbHtml.Append("<div class=\"col-xs-6\">");
-            int pageToStart = pagingModel.CurrentPage - 2;
-            while (pageToStart < 1)
-            {
-                pageToStart++;
-            }
-            int pageToEnd = pageToStart + 4;
-            while (pageToEnd > pagingModel.NumberOfPages)
-            {
-                pageToStart--;
-                pageToEnd = pageToStart + 4;
-            }
-            while (pageToStart < 1)
-            {
-                pageToStart++;
-            }
+            int pageToStart;
+            int pageToEnd;
+            pagingModel.CalculatePageStartAndEnd(5, out pageToStart, out pageToEnd);
 
             sbHtml.Append("<ul class='pagination pull-right' style='margin-top: 0;'>");
 
