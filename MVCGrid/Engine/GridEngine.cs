@@ -27,7 +27,7 @@ namespace MVCGrid.Engine
 
             if (renderingEngine == null)
             {
-                renderingEngine = (IMVCGridRenderingEngine)Activator.CreateInstance(gridContext.GridDefinition.DefaultRenderingEngine, true);
+                renderingEngine = (IMVCGridRenderingEngine)Activator.CreateInstance(gridContext.GridDefinition.RenderingEngine, true);
             }
 
             return renderingEngine;

@@ -18,7 +18,8 @@ namespace MVCGrid.Models
             ClientSideLoadingMessageFunctionName = null;
             ClientSideLoadingCompleteFunctionName = null;
             Filtering = false;
-            DefaultRenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
+            RenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
+            TemplatingEngine = typeof(MVCGrid.Templating.SmartFormatTemplatingEngine);
         }
 
         public bool PreloadData { get; set; }
@@ -30,6 +31,7 @@ namespace MVCGrid.Models
         public string ClientSideLoadingMessageFunctionName { get; set; }
         public string ClientSideLoadingCompleteFunctionName { get; set; }
         public bool Filtering { get; set; }
-        public Type DefaultRenderingEngine { get; set; }
+        public Type RenderingEngine { get; set; }
+        public Type TemplatingEngine { get; set; }
     }
 }

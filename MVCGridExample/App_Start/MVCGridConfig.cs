@@ -1,4 +1,5 @@
 ﻿using MVCGrid.Models;
+using MVCGrid.RazorTemplates;
 using MVCGrid.Web;
 using MVCGrid.Web.Data;
 using MVCGrid.Web.Models;
@@ -16,6 +17,7 @@ namespace MVCGridExample
         public static void RegisterGrids()
         {
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
+                .WithTemplatingEngine(typeof(RazorTemplatingEngine))
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -45,8 +47,8 @@ namespace MVCGridExample
                     cols.Add().WithColumnName("Button")
                         .WithHtmlEncoding(false)
                         .WithValueTemplate(@"
-<a class='btn btn-default' href='/demo/detail/{Item.Id}' role='button'>
-    Button
+<a class='btn btn-default' href='@(Model.Url.Action(""detail"", ""demo"", new{ id = Model.Item.Id}))' role='button'>
+    @Model.Item.FirstName
 </a>
 ");
 
@@ -645,7 +647,7 @@ namespace MVCGridExample
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
                 })
-                .WithDefaultRenderingEngine(typeof(CustomHtmlRenderingEngine))
+                .WithRenderingEngine(typeof(CustomHtmlRenderingEngine))
                 .WithSorting(true)
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)

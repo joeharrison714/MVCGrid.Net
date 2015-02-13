@@ -20,6 +20,7 @@ namespace MVCGrid.Interfaces
         string ClientSideLoadingCompleteFunctionName { get; set; }
         bool Filtering { get; set; }
 
-        Type DefaultRenderingEngine { get; set; }
+        Type RenderingEngine { get; set; }
+        Type TemplatingEngine { get; set; }
     }
 }

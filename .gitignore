@@ -6,3 +6,5 @@ MVCGrid/bin/
 *.user
 packages/
 MVCGridExample/Properties/PublishProfiles/
+MVCGrid.RazorTemplates/bin/
+MVCGrid.RazorTemplates/obj/

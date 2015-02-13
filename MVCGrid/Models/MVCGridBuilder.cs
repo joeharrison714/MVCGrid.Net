@@ -122,9 +122,15 @@ namespace MVCGrid.Models
             return this;
         }
 
-        public MVCGridBuilder<T1> WithDefaultRenderingEngine(Type renderingEngineType)
+        public MVCGridBuilder<T1> WithRenderingEngine(Type renderingEngineType)
         {
-            GridDefinition.DefaultRenderingEngine = renderingEngineType;
+            GridDefinition.RenderingEngine = renderingEngineType;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithTemplatingEngine(Type templatingEngine)
+        {
+            GridDefinition.TemplatingEngine = templatingEngine;
             return this;
         }
     }

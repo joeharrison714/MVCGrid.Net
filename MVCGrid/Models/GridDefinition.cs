@@ -34,7 +34,8 @@ namespace MVCGrid.Models
                 this.ClientSideLoadingMessageFunctionName = gridDefaults.ClientSideLoadingMessageFunctionName;
                 this.ClientSideLoadingCompleteFunctionName = gridDefaults.ClientSideLoadingCompleteFunctionName;
                 this.Filtering = gridDefaults.Filtering;
-                this.DefaultRenderingEngine = gridDefaults.DefaultRenderingEngine;
+                this.RenderingEngine = gridDefaults.RenderingEngine;
+                this.TemplatingEngine = gridDefaults.TemplatingEngine;
             }
         }
 
@@ -86,7 +87,7 @@ namespace MVCGrid.Models
                 throw new Exception("When paging is enabled, QueryResult must contain the TotalRecords");
             }
 
-            IMVCGridTemplatingEngine templatingEngine = new MVCGrid.Templating.SmartFormatTemplatingEngine();
+            IMVCGridTemplatingEngine templatingEngine = (IMVCGridTemplatingEngine)Activator.CreateInstance(context.GridDefinition.TemplatingEngine, true);
 
             foreach (var item in queryResult.Items)
             {
@@ -112,7 +113,12 @@ namespace MVCGrid.Models
                     }
                     else if (!String.IsNullOrWhiteSpace(col.ValueTemplate))
                     {
-                        var templateModel = new TemplateModel(item, context);
+                        var templateModel = new TemplateModel()
+                        {
+                            Item = item,
+                            GridContext = context,
+                            GridColumn = col
+                        };
 
                         thisCell.HtmlText = templatingEngine.Process(col.ValueTemplate, templateModel);
                     }
@@ -165,7 +171,8 @@ namespace MVCGrid.Models
         public string ClientSideLoadingMessageFunctionName { get; set; }
         public string ClientSideLoadingCompleteFunctionName { get; set; }
 
-        public Type DefaultRenderingEngine { get; set; }
+        public Type RenderingEngine { get; set; }
+        public Type TemplatingEngine { get; set; }
     }
 
 }

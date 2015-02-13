@@ -279,6 +279,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MVCGrid.RazorTemplates\MVCGrid.RazorTemplates.csproj">
+      <Project>{6952c680-783f-4efb-a090-848b0e3438e0}</Project>
+      <Name>MVCGrid.RazorTemplates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MVCGrid\MVCGrid.csproj">
       <Project>{7ee14ade-a4b9-4454-b16a-78b4a5b7d0be}</Project>
       <Name>MVCGrid</Name>
