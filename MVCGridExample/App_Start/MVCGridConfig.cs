@@ -45,13 +45,13 @@ namespace MVCGridExample
                     cols.Add().WithColumnName("Url")
                         .WithVisibility(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
-                    cols.Add().WithColumnName("Button")
-                        .WithHtmlEncoding(false)
-                        .WithValueTemplate(@"
-<a class='btn btn-default' href='{Row.Url}' role='button'>
-    {Model.FirstName}
-</a>
-");
+//                    cols.Add().WithColumnName("Button")  //Templating demo
+//                        .WithHtmlEncoding(false)
+//                        .WithValueTemplate(@"
+//<a class='btn btn-default' href='{Row.Url}' role='button'>
+//    {Model.FirstName}
+//</a>
+//");
 
                 })
                 .WithSorting(true)
