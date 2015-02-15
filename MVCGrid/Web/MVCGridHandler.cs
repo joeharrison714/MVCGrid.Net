@@ -46,7 +46,6 @@ namespace MVCGrid.Web
                         {
                             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
                             controllerPath = urlHelper.Action("Grid", "MVCGrid");
-                            controllerPath = urlHelper.Content("~" + controllerPath);
                         }
                         catch { }
 
