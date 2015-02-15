@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Getting Started";
 }
 
@@ -14,12 +13,14 @@
 
 <h2>Installation</h2>
 <ol>
-    <li>Install the NuGet Package, or manually add a reference to MVCGrid.dll
-    <div><a href="http://badge.fury.io/nu/MVCGrid.net"><img src="https://badge.fury.io/nu/MVCGrid.net.svg" alt="NuGet version" height="18"></a></div>
+    <li>
+        Install the NuGet Package, or manually add a reference to MVCGrid.dll
+        <div><a href="http://badge.fury.io/nu/MVCGrid.net"><img src="https://badge.fury.io/nu/MVCGrid.net.svg" alt="NuGet version" height="18"></a></div>
     </li>
     <li>Create a file called <code>MVCGridConfig.cs</code> under the App_Start folder</li>
-    <li>Add the following contents to the new file inside the namespace section:
-    <pre>
+    <li>
+        Add the following contents to the new file inside the namespace section:
+        <pre>
 using MVCGrid.Web;
 public class MVCGridConfig
 {
@@ -30,14 +31,16 @@ public class MVCGridConfig
 }
 </pre>
     </li>
-    <li>Add the following line to <code>Global.asax</code> in the <code>Application_Start()</code> method
-    
-    <pre>
+    <li>
+        Add the following line to <code>Global.asax</code> in the <code>Application_Start()</code> method
+
+        <pre>
 MVCGridConfig.RegisterGrids();
 </pre>
     </li>
-    <li>Add the following to your web.config:
-    <pre>
+    <li>
+        Add the following to your web.config:
+        <pre>
   &lt;system.webServer&gt;
     &lt;handlers&gt;
       &lt;add name=&quot;MVCGridHandler&quot; verb=&quot;*&quot; path=&quot;MVCGridHandler.axd&quot; type=&quot;MVCGrid.Web.MVCGridHandler, MVCGrid&quot; /&gt;
@@ -45,7 +48,8 @@ MVCGridConfig.RegisterGrids();
   &lt;/system.webServer&gt;
 </pre>
     </li>
-    <li>Add the javascript reference to your _Layout page after jquery is referenced:
+    <li>
+        Add the javascript reference to your _Layout page after jquery is referenced:
 <pre>
 &lt;!-- Be sure this is after jquery reference --&gt;
 &lt;script src=&quot;~/MVCGridHandler.axd/script.js&quot;&gt;&lt;/script&gt;
@@ -54,3 +58,59 @@ MVCGridConfig.RegisterGrids();
     <li>Add your grid definitions to the method above. See the demo page for examples.</li>
     <li>Use the grids in your view with <code>@@Html.MVCGrid("YourGridName")</code></li>
 </ol>
+
+<h2>Creating Grid Definitions</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("UsageExample")</pre>
+    </div>
+</div>
+
+<h2>Non-Fluent Example</h2>
+<pre class="brush: csharp">
+GridDefinition&lt;YourModelItem&gt; def = new GridDefinition&lt;YourModelItem&gt;();
+
+GridColumn&lt;YourModelItem&gt; column = new GridColumn&lt;YourModelItem&gt;();
+column.ColumnName = &quot;UniqueColumnName&quot;;
+column.HeaderText = &quot;Any Header&quot;;
+column.ValueExpression = (i, c) =&gt; i.YourProperty;
+def.AddColumn(column);
+
+def.RetrieveData = (options) =&gt;
+{
+	return new QueryResult&lt;YourModelItem&gt;()
+		{
+			Items = new List&lt;YourModelItem&gt;(),
+			TotalRecords = 0
+		};
+};
+
+MVCGridDefinitionTable.Add(&quot;NonFluentUsageExample&quot;, def);
+</pre>
+
+<h2>Setting Defaults</h2>
+
+<pre class="brush: csharp">
+GridDefaults defaultSet1 = new GridDefaults()
+{
+	Paging = true,
+	ItemsPerPage = 20,
+	Sorting = true,
+	NoResultsMessage = &quot;Sorry, no results were found&quot;
+};
+
+MVCGridDefinitionTable.Add(&quot;UsageExample&quot;,
+	new MVCGridBuilder&lt;YourModelItem&gt;(defaultSet1) // pass in defaults object to ctor
+	.AddColumns(cols =&gt;
+	{
+		// add columns
+	})
+	.WithRetrieveDataMethod((context) =&gt;
+	{
+		//get data
+		return new QueryResult&lt;YourModelItem&gt;();
+	})
+);
+</pre>

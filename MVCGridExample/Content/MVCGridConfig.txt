@@ -726,9 +726,9 @@ namespace MVCGridExample
                         .WithHeaderText("Any Header")
                         .WithValueExpression((i, c) => i.YourProperty); // use the Value Expression to return the cell text for this column
                 })
-                .WithRetrieveDataMethod((options) =>
+                .WithRetrieveDataMethod((context) =>
                 {
-                    // Query your data here. Obey Ordering, paging and filtering paramters given in the options.
+                    // Query your data here. Obey Ordering, paging and filtering paramters given in the context.QueryOptions.
                     // Use Entity Framwork, a module from your IoC Container, or any other method.
                     // Return QueryResult object containing IEnumerable<YouModelItem>
 
@@ -741,9 +741,49 @@ namespace MVCGridExample
                 })
             );
 
-
-
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
+
+
+            GridDefinition<YourModelItem> def = new GridDefinition<YourModelItem>();
+
+            GridColumn<YourModelItem> column = new GridColumn<YourModelItem>();
+            column.ColumnName = "UniqueColumnName";
+            column.HeaderText = "Any Header";
+            column.ValueExpression = (i, c) => i.YourProperty;
+            def.AddColumn(column);
+
+            def.RetrieveData = (options) =>
+            {
+                return new QueryResult<YourModelItem>()
+                    {
+                        Items = new List<YourModelItem>(),
+                        TotalRecords = 0
+                    };
+            };
+            MVCGridDefinitionTable.Add("NonFluentUsageExample", def);
+
+            GridDefaults defaultSet1 = new GridDefaults()
+            {
+                Paging = true,
+                ItemsPerPage = 20,
+                Sorting = true,
+                NoResultsMessage = "Sorry, no results were found"
+            };
+
+            MVCGridDefinitionTable.Add("DefaultsExample",
+                new MVCGridBuilder<YourModelItem>(defaultSet1) // pass in defauls object to ctor
+                .AddColumns(cols =>
+                {
+                    // add columns
+                })
+                .WithDefaultSortColumn("Test")
+                .WithRetrieveDataMethod((context) =>
+                {
+                    //get data
+                    return new QueryResult<YourModelItem>();
+                })
+            );
+
         }
 
 

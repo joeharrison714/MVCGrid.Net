@@ -13,6 +13,11 @@ namespace MVCGrid.Models
             GridDefinition = new GridDefinition<T1>();
         }
 
+        public MVCGridBuilder(GridDefaults gridDefaults)
+        {
+            GridDefinition = new GridDefinition<T1>(gridDefaults);
+        }
+
         public GridDefinition<T1> GridDefinition { get; set; }
 
         public MVCGridBuilder<T1> AddColumn(string name, string headerText, Func<T1, GridContext, string> valueExpression,
