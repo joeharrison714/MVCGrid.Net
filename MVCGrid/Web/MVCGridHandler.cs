@@ -41,6 +41,15 @@ namespace MVCGrid.Web
 
                         var controllerPath = HttpContext.Current.Request.ApplicationPath;
                         controllerPath += "mvcgrid/grid";
+
+                        try
+                        {
+                            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+                            controllerPath = urlHelper.Action("Grid", "MVCGrid");
+                            controllerPath = urlHelper.Content("~" + controllerPath);
+                        }
+                        catch { }
+
                         script = script.Replace("%%CONTROLLERPATH%%", controllerPath);
 
                         _cachedTextResources.Add("MVCGrid.js", script);

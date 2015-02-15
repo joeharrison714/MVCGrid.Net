@@ -37,6 +37,7 @@ namespace MVCGrid.Models
                 this.RenderingEngine = gridDefaults.RenderingEngine;
                 this.TemplatingEngine = gridDefaults.TemplatingEngine;
                 this.AdditionalSettings = gridDefaults.AdditionalSettings;
+                this.RenderingMode = gridDefaults.RenderingMode;
             }
         }
 
