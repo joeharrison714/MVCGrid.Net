@@ -2,6 +2,7 @@
 var MVCGrid = new function () {
 
     var handlerPath = '%%HANDLERPATH%%';
+    var controllerPath = '%%CONTROLLERPATH%%';
     var currentGrids = [];
 
     this.init = function () {
@@ -132,9 +133,15 @@ var MVCGrid = new function () {
 
         var gridDef = findGridDef(mvcGridName);;
 
+        var ajaxBaseUrl = handlerPath;
+
+        if (gridDef.renderingMode == 'controller') {
+            ajaxBaseUrl = controllerPath;
+        }
+
         $.ajax({
             type: "GET",
-            url: handlerPath + location.search,
+            url: ajaxBaseUrl + location.search,
             data: { 'Name': mvcGridName },
             cache: false,
             beforeSend: function () {

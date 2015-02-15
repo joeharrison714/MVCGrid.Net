@@ -21,6 +21,7 @@ namespace MVCGrid.Models
             RenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
             TemplatingEngine = typeof(MVCGrid.Templating.SimpleTemplatingEngine);
             AdditionalSettings = new Dictionary<string, string>();
+            RenderingMode = Models.RenderingMode.RenderingEngine;
         }
 
         public bool PreloadData { get; set; }
@@ -35,5 +36,6 @@ namespace MVCGrid.Models
         public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
         public Dictionary<string, string> AdditionalSettings { get; set; }
+        public RenderingMode RenderingMode { get; set; }
     }
 }

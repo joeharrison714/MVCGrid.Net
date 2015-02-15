@@ -62,6 +62,7 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithPreloadData(true)
+                .WithRenderingMode(RenderingMode.Controller)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;

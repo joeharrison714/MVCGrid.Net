@@ -53,6 +53,11 @@ namespace MVCGrid.Web
 
         internal static IMVCGridDefinition GetDefinitionInterface(string name)
         {
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
             if (!_table.ContainsKey(name))
             {
                 throw new Exception(

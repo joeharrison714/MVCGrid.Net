@@ -24,5 +24,6 @@ namespace MVCGrid.Interfaces
         Type TemplatingEngine { get; set; }
 
         Dictionary<string, string> AdditionalSettings { get; set; }
+        RenderingMode RenderingMode { get; set; }
     }
 }

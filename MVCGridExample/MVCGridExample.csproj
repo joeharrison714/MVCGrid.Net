@@ -270,6 +270,7 @@
     <Content Include="Views\Download\Index.cshtml" />
     <Content Include="Views\Demo\Multiple.cshtml" />
     <Content Include="Views\Demo\CustomStyle.cshtml" />
+    <Content Include="Views\MVCGrid\_Grid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

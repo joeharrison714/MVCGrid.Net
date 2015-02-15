@@ -54,6 +54,7 @@
     <Compile Include="Models\MVCGridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />
+    <Compile Include="Models\RenderingMode.cs" />
     <Compile Include="Models\RenderingModel.cs" />
     <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Models\QueryResult.cs" />
     <Compile Include="Models\GridDefinition.cs" />
     <Compile Include="Models\SortDirection.cs" />
+    <Compile Include="Web\MVCGridController.cs" />
     <Compile Include="Web\MVCGridHandler.cs" />
     <Compile Include="Web\MVCGridHtmlGenerator.cs" />
     <Compile Include="Web\MVCGridDefinitionTable.cs" />

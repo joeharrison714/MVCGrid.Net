@@ -38,22 +38,55 @@ namespace MVCGrid.Web
 
                 GridEngine engine = new GridEngine();
 
-                IMVCGridRenderingEngine renderingEngine = engine.GetRenderingEngine(gridContext);
-                
-                using (MemoryStream ms = new MemoryStream())
+                switch (grid.RenderingMode)
                 {
-                    using (TextWriter tw = new StreamWriter(ms))
-                    {
-                        engine.Run(renderingEngine, gridContext, tw);
-                    }
-
-                    preload = Encoding.ASCII.GetString(ms.ToArray());
+                    case Models.RenderingMode.RenderingEngine:
+                        preload = RenderUsingRenderingEngine(engine, gridContext);
+                        break;
+                    case Models.RenderingMode.Controller:
+                        preload = RenderUsingController(engine, gridContext, helper);
+                        break;
+                    default:
+                        throw new InvalidOperationException();
                 }
             }
 
             html = html.Replace("%%PRELOAD%%", preload);
 
             return MvcHtmlString.Create(html);
+        }
+
+        private static string RenderUsingController(GridEngine engine, Models.GridContext gridContext, HtmlHelper helper)
+        {
+            var model = engine.GenerateModel(gridContext);
+
+            var controllerContext = helper.ViewContext.Controller.ControllerContext;
+            ViewDataDictionary vdd = new ViewDataDictionary(model);
+            TempDataDictionary tdd = new TempDataDictionary();
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(controllerContext,
+                                                                         "~/Views/MVCGrid/_Grid.cshtml");
+                var viewContext = new ViewContext(controllerContext, viewResult.View, vdd, tdd, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(controllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+        private static string RenderUsingRenderingEngine(GridEngine engine, Models.GridContext gridContext)
+        {
+            IMVCGridRenderingEngine renderingEngine = engine.GetRenderingEngine(gridContext);
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (TextWriter tw = new StreamWriter(ms))
+                {
+                    engine.Run(renderingEngine, gridContext, tw);
+                }
+
+                return Encoding.ASCII.GetString(ms.ToArray());
+            }
         }
     }
 }

@@ -38,6 +38,11 @@ namespace MVCGrid.Web
                         string script = GetTextResource("MVCGrid.js");
                         var handlerPath = HttpContext.Current.Request.CurrentExecutionFilePath;
                         script = script.Replace("%%HANDLERPATH%%", handlerPath);
+
+                        var controllerPath = HttpContext.Current.Request.ApplicationPath;
+                        controllerPath += "mvcgrid/grid";
+                        script = script.Replace("%%CONTROLLERPATH%%", controllerPath);
+
                         _cachedTextResources.Add("MVCGrid.js", script);
 
                         _cachedBinaryResources.Add("ajaxloader.gif", GetBinaryResource("ajaxloader.gif"));

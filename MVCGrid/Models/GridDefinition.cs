@@ -177,6 +177,7 @@ namespace MVCGrid.Models
         public Type TemplatingEngine { get; set; }
 
         public Dictionary<string, string> AdditionalSettings { get; set; }
+        public RenderingMode RenderingMode { get; set; }
 
     }
 

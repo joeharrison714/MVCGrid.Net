@@ -36,6 +36,9 @@ namespace MVCGrid.Web
             sbJson.Append(",");
             sbJson.AppendFormat("\"clientLoadingComplete\": \"{0}\"", def.ClientSideLoadingCompleteFunctionName);
 
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"renderingMode\": \"{0}\"", def.RenderingMode.ToString().ToLower());
+
             sbJson.Append("}");
             //mvcGridName, qsPrefix: qsPrefix, preloaded: preload }
 

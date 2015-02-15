@@ -148,5 +148,13 @@ namespace MVCGrid.Models
             }
             return this;
         }
+
+        public MVCGridBuilder<T1> WithRenderingMode(RenderingMode mode)
+        {
+            GridDefinition.RenderingMode = mode;
+            return this;
+        }
+
+        
     }
 }
