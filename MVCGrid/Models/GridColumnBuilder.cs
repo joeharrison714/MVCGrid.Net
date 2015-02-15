@@ -57,12 +57,19 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// The expression for returning the cell value. Use this or ValueTemplate.
+        /// </summary>
         public GridColumnBuilder<T1> WithValueExpression(Func<T1, GridContext, string> expression)
         {
             GridColumn.ValueExpression = expression;
             return this;
         }
 
+
+        /// <summary>
+        /// Optional. Only needed if different from ValueExpression
+        /// </summary>
         public GridColumnBuilder<T1> WithPlainTextValueExpression(Func<T1, GridContext, string> expression)
         {
             GridColumn.PlainTextValueExpression = expression;
@@ -87,9 +94,23 @@ namespace MVCGrid.Models
             return this;
         }
 
+
+
+        /// <summary>
+        /// Template for returning the cell value. Use this or ValueExpression.
+        /// </summary>
         public GridColumnBuilder<T1> WithValueTemplate(string template)
         {
             GridColumn.ValueTemplate = template;
+            return this;
+        }
+
+        /// <summary>
+        /// Object to pass to QueryOptions when this coumn is sorted on. Only specify if different from ColumnName
+        /// </summary>
+        public GridColumnBuilder<T1> WithSortColumnData(object sortColumnData)
+        {
+            GridColumn.SortColumnData = sortColumnData;
             return this;
         }
     }

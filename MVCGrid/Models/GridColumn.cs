@@ -56,5 +56,10 @@ namespace MVCGrid.Models
         public bool HtmlEncode { get; set; }
         public bool EnableFiltering { get; set; }
         public bool Visible { get; set; }
+
+        /// <summary>
+        /// Object to pass to QueryOptions when this coumn is sorted on. Only specify if different from ColumnName
+        /// </summary>
+        public object SortColumnData { get; set; }
     }
 }

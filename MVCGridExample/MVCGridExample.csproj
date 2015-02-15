@@ -179,6 +179,7 @@
     <Compile Include="Models\CodeSnippetHelper.cs" />
     <Compile Include="Models\CustomHtmlRenderingEngine.cs" />
     <Compile Include="Models\DocumentationRepository.cs" />
+    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\PersonRepository.cs" />
     <Compile Include="Models\TestItem.cs" />
     <Compile Include="Models\TestItemRepository.cs" />

@@ -9,6 +9,10 @@ namespace MVCGrid.Models
 {
     public class GridContext
     {
+        public GridContext()
+        {
+            Items = new Dictionary<string, object>();
+        }
         internal IMVCGridDefinition GridDefinition { get; set; }
         public HttpContext CurrentHttpContext { get; set; }
         public QueryOptions QueryOptions { get; set; }
@@ -29,5 +33,10 @@ namespace MVCGrid.Models
 
             return visibleColumns;
         }
+
+        /// <summary>
+        /// Arbitrary settings for this conext
+        /// </summary>
+        public Dictionary<string, object> Items { get; set; }
     }
 }

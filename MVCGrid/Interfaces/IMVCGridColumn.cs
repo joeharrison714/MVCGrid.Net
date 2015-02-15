@@ -13,5 +13,6 @@ namespace MVCGrid.Interfaces
         bool HtmlEncode { get; }
         bool EnableFiltering { get; }
         bool Visible { get; }
+        object SortColumnData { get; }
     }
 }

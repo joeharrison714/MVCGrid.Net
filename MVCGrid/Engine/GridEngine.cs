@@ -117,12 +117,12 @@ namespace MVCGrid.Engine
                     SortDirection linkDirection = SortDirection.Asc;
                     SortDirection iconDirection = SortDirection.Unspecified;
 
-                    if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Asc)
+                    if (gridContext.QueryOptions.SortColumnName == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Asc)
                     {
                         iconDirection = SortDirection.Asc;
                         linkDirection = SortDirection.Dsc;
                     }
-                    else if (gridContext.QueryOptions.SortColumn == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Dsc)
+                    else if (gridContext.QueryOptions.SortColumnName == col.ColumnName && gridContext.QueryOptions.SortDirection == SortDirection.Dsc)
                     {
                         iconDirection = SortDirection.Dsc;
                         linkDirection = SortDirection.Asc;

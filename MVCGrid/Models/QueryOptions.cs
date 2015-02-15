@@ -7,6 +7,8 @@ namespace MVCGrid.Models
 {
     public class QueryOptions
     {
+        private object _sortColumnData = null;
+
         public QueryOptions()
         {
             Filters = new Dictionary<string, string>();
@@ -15,7 +17,27 @@ namespace MVCGrid.Models
         public string RenderingEngineName { get; set; }
 
         public SortDirection SortDirection { get; set; }
-        public string SortColumn { get; set; }
+        public string SortColumnName { get; set; }
+        public object SortColumnData
+        {
+            get
+            {
+                if (_sortColumnData == null)
+                {
+                    return SortColumnName;
+                }
+                return _sortColumnData;
+            }
+            set
+            {
+                _sortColumnData = value;
+            }
+        }
+
+        public T GetSortColumnData<T>()
+        {
+            return (T)SortColumnData;
+        }
 
         public int? PageIndex { get; set; }
         public int? ItemsPerPage { get; set; }

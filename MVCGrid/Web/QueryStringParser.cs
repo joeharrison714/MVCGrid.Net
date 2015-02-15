@@ -77,12 +77,12 @@ namespace MVCGrid.Web
 
             if (!grid.Sorting)
             {
-                options.SortColumn = null;
-                options.SortDirection = SortDirection.Asc;
+                options.SortColumnName = null;
+                options.SortDirection = SortDirection.Unspecified;
             }
             else
             {
-                options.SortColumn = null;
+                options.SortColumnName = null;
 
                 string sortColName = null;
                 if (httpRequest.QueryString[qsKeySort] != null)
@@ -110,7 +110,8 @@ namespace MVCGrid.Web
                     }
                 }
 
-                options.SortColumn = sortColName;
+                options.SortColumnName = sortColName;
+                options.SortColumnData = colDef.SortColumnData;
                 
 
                 options.SortDirection = SortDirection.Asc;
