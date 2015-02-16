@@ -12,11 +12,33 @@
 </ul>
 
 <h2>Installation</h2>
+<h3>Using NuGet Package</h3>
 <ol>
     <li>
-        Install the NuGet Package, or manually add a reference to MVCGrid.dll
-        <div><a href="http://badge.fury.io/nu/MVCGrid.net"><img src="https://badge.fury.io/nu/MVCGrid.net.svg" alt="NuGet version" height="18"></a></div>
+        Install the NuGet Package
+        <div class="nuget-badge">
+            <p>
+                <code>
+                    PM&gt; Install-Package MVCGrid.Net
+                </code>
+            </p>
+        </div>
     </li>
+    <li>
+        Add the javascript reference to your _Layout page after jquery is referenced:
+<pre>
+&lt;!-- Be sure this is after jquery reference --&gt;
+&lt;script src=&quot;~/MVCGridHandler.axd/script.js&quot;&gt;&lt;/script&gt;
+</pre>
+    </li>
+    <li>Add your grid definitions to the <code>RegisterGrids</code> method in the <code>MVCGridConfig</code> file under the App_Start folder. See below for example.</li>
+    <li>Use the grids in your view by adding the using <code>@@using MVCGrid.Web</code> and then the html helper <code>@@Html.MVCGrid("YourGridName")</code></li>
+
+</ol>
+
+<h3>Manually Installing</h3>
+<ol>
+    <li>Add a reference to MVCGrid.dll</li>
     <li>Create a file called <code>MVCGridConfig.cs</code> under the App_Start folder</li>
     <li>
         Add the following contents to the new file inside the namespace section:
@@ -55,8 +77,8 @@ MVCGridConfig.RegisterGrids();
 &lt;script src=&quot;~/MVCGridHandler.axd/script.js&quot;&gt;&lt;/script&gt;
 </pre>
     </li>
-    <li>Add your grid definitions to the method above. See the demo page for examples.</li>
-    <li>Use the grids in your view with <code>@@Html.MVCGrid("YourGridName")</code></li>
+    <li>Add your grid definitions to the method above. See below for example.</li>
+    <li>Use the grids in your view by adding the using <code>@@using MVCGrid.Web</code> and then the html helper <code>@@Html.MVCGrid("YourGridName")</code></li>
 </ol>
 
 <h2>Creating Grid Definitions</h2>
@@ -114,3 +136,5 @@ MVCGridDefinitionTable.Add(&quot;UsageExample&quot;,
 	})
 );
 </pre>
+
+<p class="lead">See <a href="@Url.Action("index", "demo")">Demos Page</a> for more examples.</p>
