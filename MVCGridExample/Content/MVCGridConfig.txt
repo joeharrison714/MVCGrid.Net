@@ -62,7 +62,6 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithPreloadData(true)
-                .WithRenderingMode(RenderingMode.Controller)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -693,7 +692,6 @@ namespace MVCGridExample
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
                 })
-                .WithRenderingEngine(typeof(CustomHtmlRenderingEngine))
                 .WithSorting(true)
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
@@ -717,57 +715,6 @@ namespace MVCGridExample
                         TotalRecords = totalRecords
                     };
                 })
-            );
-
-
-            var docsReturnTypeColumn = new GridColumn<MethodDocItem>()
-            {
-                ColumnName = "ReturnType",
-                HeaderText = "Return Type",
-                HtmlEncode = false,
-                ValueExpression = (p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return))
-            };
-            var docsNameColumn = new GridColumn<MethodDocItem>()
-            {
-                ColumnName = "Name",
-                HtmlEncode = false,
-                ValueExpression = (p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name))
-            };
-            var docsDescriptionColumn = new GridColumn<MethodDocItem>()
-            {
-                ColumnName = "Description",
-                ValueExpression = (p, c) => p.Description
-            };
-
-            Func<GridContext, QueryResult<MethodDocItem>> docsLoadData = (context) =>
-            {
-                var result = new QueryResult<MethodDocItem>();
-
-                DocumentationRepository repo = new DocumentationRepository();
-                result.Items = repo.GetData(context.GridName);
-
-                return result;
-            };
-
-            MVCGridDefinitionTable.Add("GridDefinition", new MVCGridBuilder<MethodDocItem>()
-                .AddColumn(docsReturnTypeColumn)
-                .AddColumn(docsNameColumn)
-                .AddColumn(docsDescriptionColumn)
-                .WithRetrieveDataMethod(docsLoadData)
-            );
-
-            MVCGridDefinitionTable.Add("GridColumn", new MVCGridBuilder<MethodDocItem>()
-                .AddColumn(docsReturnTypeColumn)
-                .AddColumn(docsNameColumn)
-                .AddColumn(docsDescriptionColumn)
-                .WithRetrieveDataMethod(docsLoadData)
-            );
-
-            MVCGridDefinitionTable.Add("QueryOptions", new MVCGridBuilder<MethodDocItem>()
-                .AddColumn(docsReturnTypeColumn)
-                .AddColumn(docsNameColumn)
-                .AddColumn(docsDescriptionColumn)
-                .WithRetrieveDataMethod(docsLoadData)
             );
 
             MVCGridDefinitionTable.Add("UsageExample", new MVCGridBuilder<YourModelItem>()
@@ -834,6 +781,57 @@ namespace MVCGridExample
                     //get data
                     return new QueryResult<YourModelItem>();
                 })
+            );
+
+
+            var docsReturnTypeColumn = new GridColumn<MethodDocItem>()
+            {
+                ColumnName = "ReturnType",
+                HeaderText = "Return Type",
+                HtmlEncode = false,
+                ValueExpression = (p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Return))
+            };
+            var docsNameColumn = new GridColumn<MethodDocItem>()
+            {
+                ColumnName = "Name",
+                HtmlEncode = false,
+                ValueExpression = (p, c) => String.Format("<code>{0}</code>", HttpUtility.HtmlEncode(p.Name))
+            };
+            var docsDescriptionColumn = new GridColumn<MethodDocItem>()
+            {
+                ColumnName = "Description",
+                ValueExpression = (p, c) => p.Description
+            };
+
+            Func<GridContext, QueryResult<MethodDocItem>> docsLoadData = (context) =>
+            {
+                var result = new QueryResult<MethodDocItem>();
+
+                DocumentationRepository repo = new DocumentationRepository();
+                result.Items = repo.GetData(context.GridName);
+
+                return result;
+            };
+
+            MVCGridDefinitionTable.Add("GridDefinition", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsNameColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
+            );
+
+            MVCGridDefinitionTable.Add("GridColumn", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsNameColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
+            );
+
+            MVCGridDefinitionTable.Add("QueryOptions", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsNameColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
             );
 
         }
