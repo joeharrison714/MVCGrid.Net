@@ -1,4 +1,4 @@
-GridDefinition,1,"Func<QueryOptions, QueryResult<T1>>",RetrieveData,"This is the method that will actually query the data to populate the grid.  Use entity framework, a module from you IoC container, direct SQL queries, etc.  to get the data. The QueryOptions object will be provided and will be populated with the currently requested sorting, paging, and filtering options which you must take into account.  See the QueryOptions documentation below. You must return a QueryResult object which takes an enumerable of your type and a count of the total number of records which must be provided if paging is enabled."
+GridDefinition,1,"Func<GridContext, QueryResult<T1>>",RetrieveData,"This is the method that will actually query the data to populate the grid.  Use entity framework, a module from you IoC container, direct SQL queries, etc.  to get the data. Inside the providee GridContext there is a QueryOptions object which will be populated with the currently requested sorting, paging, and filtering options which you must take into account.  See the QueryOptions documentation below. You must return a QueryResult object which takes an enumerable of your type and a count of the total number of records which must be provided if paging is enabled."
 GridDefinition,2,bool,Paging,Enables paging on the grid
 GridDefinition,3,int,ItemsPerPage,Number of items to display on each page
 GridDefinition,4,bool,Sorting,"Enables sorting on the grid. Note, sorting must also be enabled on each column where sorting is wanted"
@@ -9,17 +9,24 @@ GridDefinition,8,string,QueryStringPrefix,"A prefix to add to all query string p
 GridDefinition,9,string,NoResultsMessage,Text to display when there are no results.
 GridDefinition,10,string,ClientSideLoadingMessageFunctionName,Name of function to call before ajax call begins
 GridDefinition,11,string,ClientSideLoadingCompleteFunctionName,Name of function to call before ajax call ends
-GridDefinition,1,"Func<T1, GridContext, string>",RowCssClassExpression,Use this to specify a custom css class based on data for the current row
+GridDefinition,12,"Func<T1, GridContext, string>",RowCssClassExpression,Use this to specify a custom css class based on data for the current row
+GridDefinition,13,"Dictionary<string, string>",AdditionalSettings,Arbitrary additional settings for this grid
+GridDefinition,14,RenderingMode,RenderingMode,"The rendering mode to use for this grid. By default it will use the RenderingEngine rendering mode. If you want to use a custom Razor view to display your grid, change this to Controller"
+GridDefinition,15,string,ViewPath,"When RenderingMode is set to Controller, this is the path to the razor view to use."
 GridColumn,2,string,ColumnName,A unique name for this column
 GridColumn,3,string,HeaderText,"Header text to display for the current column, if different from ColumnName"
 GridColumn,4,"Func<T1, GridContext, string>",ValueExpression,"This is how to specify the contents of the current cell. If this contains HTML, set HTMLEncode to false"
 GridColumn,5,"Func<T1, GridContext, string>",PlainTextValueExpression,"This is how to specify the contents of the current cell when used in an export file, if different that ValueExpression"
 GridColumn,6,"Func<T1, GridContext, string>",CellCssClassExpression,Use this to specify a custom css class based on data for the current cell
+GridColumn,7,string,ValueTemplate,Template for formatting cell value
 GridColumn,7,bool,EnableSorting,Enables sorting on this column
 GridColumn,8,bool,EnableFiltering,Enables filtering on this column
 GridColumn,9,bool,HtmlEncode,Disables html encoding on the data for the current cell. Turn this off if your ValueExpression returns HTML.
+GridColumn,10,bool,Visible,If the current column is visbile
+GridColumn,11,object,SortColumnData,Object to pass to QueryOptions when this coumn is sorted on. Only specify if different from ColumnName
 QueryOptions,1,string,SortColumn,"Set to null if sorting is disabled. If sorting is enabled, the requested sort column is validated against the list of column names and only set if it is valid and sorting is enabled on that column."
 QueryOptions,2,int?,PageIndex,"Set to null if paging is disabled. Parsed from the request and set to the requested page index. If less than 0, it is set to 0."
 QueryOptions,3,int?,ItemsPerPage,Set to null if paging is disabled. Otherwise it is set to the ItemPerPage specified in the grid
 QueryOptions,4,"Dictionary<string, string>",Filters,"Set to an empty dictionary if filtering is disabled. If filtering is enabled, the requested filters are validated against the list of column names and the key is set to the column name if the column name is valid and filtering is enabled on that column.  The filter dictionaty item is not added if the value is null or empty."
 QueryOptions,5,string,GetFilterString(string columnName),Use this to check for a filter on a coluln.  Will return null if the column has no filter specified.
+QueryOptions,6,object,SortColumnData,"The object from the ColumnDefinition of the currently sorted coumn, if different from the ColumnName"

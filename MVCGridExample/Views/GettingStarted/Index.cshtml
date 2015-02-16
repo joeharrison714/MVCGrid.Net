@@ -83,6 +83,8 @@ MVCGridConfig.RegisterGrids();
 
 <h2>Creating Grid Definitions</h2>
 
+<p>Below is a basic example of how to configure a grid. See the documenation or demos for additional properties.</p>
+
 <div class="panel panel-default">
     <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
     <div class="panel-body">
@@ -91,6 +93,7 @@ MVCGridConfig.RegisterGrids();
 </div>
 
 <h2>Non-Fluent Example</h2>
+<p>You can also confugre the grids using the non-fluent method if you prefer.</p>
 <pre class="brush: csharp">
 GridDefinition&lt;YourModelItem&gt; def = new GridDefinition&lt;YourModelItem&gt;();
 
@@ -113,6 +116,7 @@ MVCGridDefinitionTable.Add(&quot;NonFluentUsageExample&quot;, def);
 </pre>
 
 <h2>Setting Defaults</h2>
+<p>To set defaults for multiple grids, create a <code>GridDefaults</code> object and set the desired properties. Then pass that <code>GridDefaults</code> object into the GridBuilder or GridDefinition when creating it.</p>
 
 <pre class="brush: csharp">
 GridDefaults defaultSet1 = new GridDefaults()
