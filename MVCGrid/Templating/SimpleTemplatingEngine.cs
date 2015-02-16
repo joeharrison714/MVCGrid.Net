@@ -99,34 +99,42 @@ namespace MVCGrid.Templating
 
         private object EvaluateParameter(string name, Models.TemplateModel model)
         {
-            int dotPos = name.IndexOf(".");
-
-            if (dotPos == -1)
-            {
-                throw new FormatException("Format item missing prefix: " + name);
-            }
-
-            string prefix = name.Substring(0, dotPos).Trim().ToLower();
-            string suffix = name.Substring(dotPos + 1);
-
             object val = "";
 
-            switch (prefix)
+            if (String.Compare(name, "value", true) == 0)
             {
-                case "model":
-                    val = ReflectPropertyValue(model.Item, suffix);
-                    break;
-                case "row":
-                    if (!model.Row.Cells.ContainsKey(suffix))
-                    {
-                        throw new Exception("Cannot access cell '" + suffix + "' in current row. It does not exist or has not yet been evailauted");
-                    }
-                    val = model.Row.Cells[suffix].HtmlText;
-                    break;
-                default:
-                    throw new Exception("Invalid prefix in format string: " + prefix);
+                val = model.Value;
             }
-            
+            else
+            {
+                int dotPos = name.IndexOf(".");
+
+                if (dotPos == -1)
+                {
+                    throw new FormatException("Format item missing prefix: " + name);
+                }
+
+                string prefix = name.Substring(0, dotPos).Trim().ToLower();
+                string suffix = name.Substring(dotPos + 1);
+
+
+
+                switch (prefix)
+                {
+                    case "model":
+                        val = ReflectPropertyValue(model.Item, suffix);
+                        break;
+                    case "row":
+                        if (!model.Row.Cells.ContainsKey(suffix))
+                        {
+                            throw new Exception("Cannot access cell '" + suffix + "' in current row. It does not exist or has not yet been evailauted");
+                        }
+                        val = model.Row.Cells[suffix].HtmlText;
+                        break;
+                    default:
+                        throw new Exception("Invalid prefix in format string: " + prefix);
+                }
+            }
 
             return val;
         }

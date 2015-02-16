@@ -13,6 +13,8 @@ namespace MVCGrid.Models
         {
         }
 
+        public string Value { get; set; }
+
         public IMVCGridColumn GridColumn { get; set; }
         public dynamic Item { get; set; }
         public GridContext GridContext { get; set; }

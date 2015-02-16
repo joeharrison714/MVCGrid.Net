@@ -111,25 +111,25 @@ namespace MVCGrid.Models
                     Cell thisCell = new Cell();
                     thisRow.Cells.Add(col.ColumnName, thisCell);
 
+                    thisCell.HtmlText = "";
+
                     if (col.ValueExpression != null)
                     {
                         thisCell.HtmlText = col.ValueExpression(item, context);
                     }
-                    else if (!String.IsNullOrWhiteSpace(col.ValueTemplate))
+                    
+                    if (!String.IsNullOrWhiteSpace(col.ValueTemplate))
                     {
                         var templateModel = new TemplateModel()
                         {
                             Item = item,
                             GridContext = context,
                             GridColumn = col,
-                            Row= thisRow
+                            Row = thisRow,
+                            Value = thisCell.HtmlText
                         };
 
                         thisCell.HtmlText = templatingEngine.Process(col.ValueTemplate, templateModel);
-                    }
-                    else
-                    {
-                        thisCell.HtmlText = "";
                     }
 
                     if (col.HtmlEncode)

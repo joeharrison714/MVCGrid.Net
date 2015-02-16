@@ -36,12 +36,12 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// Template for returning the cell value. Use this or ValueExpression.
+        /// Template for formatting cell value
         /// </summary>
         public string ValueTemplate { get; set; }
 
         /// <summary>
-        /// The expression for returning the cell value. Use this or ValueTemplate.
+        /// The expression for returning the cell value
         /// </summary>
         public Func<T1, GridContext, string> ValueExpression { get; set; }
 

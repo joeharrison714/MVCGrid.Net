@@ -58,7 +58,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// The expression for returning the cell value. Use this or ValueTemplate.
+        /// The expression for returning the cell value
         /// </summary>
         public GridColumnBuilder<T1> WithValueExpression(Func<T1, GridContext, string> expression)
         {
@@ -97,7 +97,7 @@ namespace MVCGrid.Models
 
 
         /// <summary>
-        /// Template for returning the cell value. Use this or ValueExpression.
+        /// Template for formatting cell value
         /// </summary>
         public GridColumnBuilder<T1> WithValueTemplate(string template)
         {
