@@ -1,0 +1,7 @@
+<configuration>
+	<system.webServer>
+		<handlers>
+		  <add name="MVCGridHandler" verb="*" path="MVCGridHandler.axd" type="MVCGrid.Web.MVCGridHandler, MVCGrid" />
+		</handlers>
+	</system.webServer>
+</configuration>

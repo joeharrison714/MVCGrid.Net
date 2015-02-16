@@ -19,5 +19,7 @@
   <files>
     <file src="bin\Release\MVCGrid.dll" target="lib\net40" />
     <file src="..\NuGetFiles\MVCGridConfig.cs.pp" target="Content\App_Start" />
+    <file src="..\NuGetFiles\web.config.transform" target="Content" />
+    <file src="..\NuGetFiles\readme.txt" target="" />
   </files>
 </package>
