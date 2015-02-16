@@ -13,6 +13,7 @@
     <tags>mvc grid</tags>
     <dependencies>
       <dependency id="Microsoft.AspNet.Mvc" version="3.0" />
+      <dependency id="WebActivatorEx" version="[2.0, 3.0)" />
     </dependencies>
   </metadata>
   <files>
