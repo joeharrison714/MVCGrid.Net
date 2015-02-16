@@ -38,6 +38,8 @@ namespace MVCGrid.Models
                 this.TemplatingEngine = gridDefaults.TemplatingEngine;
                 this.AdditionalSettings = gridDefaults.AdditionalSettings;
                 this.RenderingMode = gridDefaults.RenderingMode;
+                this.ViewPath = gridDefaults.ViewPath;
+                this.QueryStringPrefix = gridDefaults.ViewPath;
             }
         }
 
@@ -179,7 +181,7 @@ namespace MVCGrid.Models
 
         public Dictionary<string, string> AdditionalSettings { get; set; }
         public RenderingMode RenderingMode { get; set; }
-
+        public string ViewPath { get; set; }
     }
 
 }

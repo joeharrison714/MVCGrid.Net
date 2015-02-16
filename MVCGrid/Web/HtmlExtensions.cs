@@ -66,7 +66,7 @@ namespace MVCGrid.Web
             using (var sw = new StringWriter())
             {
                 var viewResult = ViewEngines.Engines.FindPartialView(controllerContext,
-                                                                         "~/Views/MVCGrid/_Grid.cshtml");
+                                                                         gridContext.GridDefinition.ViewPath);
                 var viewContext = new ViewContext(controllerContext, viewResult.View, vdd, tdd, sw);
                 viewResult.View.Render(viewContext, sw);
                 viewResult.ViewEngine.ReleaseView(controllerContext, viewResult.View);

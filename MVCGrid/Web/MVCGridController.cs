@@ -25,7 +25,7 @@ namespace MVCGrid.Web
             GridEngine engine = new GridEngine();
             var renderingModel = engine.GenerateModel(gridContext);
 
-            return PartialView("_grid", renderingModel);
+            return PartialView(grid.ViewPath, renderingModel);
         }
     }
 

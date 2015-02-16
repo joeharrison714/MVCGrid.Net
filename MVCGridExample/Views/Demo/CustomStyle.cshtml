@@ -1,6 +1,6 @@
 ﻿@using MVCGrid.Web
 @{
-    ViewBag.Title = "CustomStyle";
+    ViewBag.Title = "Custom Style";
 }
 
 @section head{
@@ -23,7 +23,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-<p>To use a custom style for your table, you will need to implement the <code>IMVCGridRenderingEngine</code> to create your table. Everything you need to populate your table will be given to you in the <code>RenderingModel</code> object.
+<p>To use a custom style for your table, you can implement the <code>IMVCGridRenderingEngine</code> to create your table. Everything you need to populate your table will be given to you in the <code>RenderingModel</code> object.
     Once you have the implementation, set the property on your grid definition to use your new rendering engine: <code>gridDef.DefaultRenderingEngine = typeof(CustomHtmlRenderingEngine);</code>.  This same method could also be used to create custom export formats.
     </p>
 

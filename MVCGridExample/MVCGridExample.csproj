@@ -271,6 +271,9 @@
     <Content Include="Views\Demo\Multiple.cshtml" />
     <Content Include="Views\Demo\CustomStyle.cshtml" />
     <Content Include="Views\MVCGrid\_Grid.cshtml" />
+    <Content Include="Views\Demo\CustomRazorView.cshtml" />
+    <Content Include="Views\MVCGrid\_Custom.cshtml" />
+    <Content Include="Views\Demo\CustomStyleMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

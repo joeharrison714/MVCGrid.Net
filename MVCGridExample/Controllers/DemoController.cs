@@ -75,7 +75,17 @@ namespace MVCGrid.Web.Controllers
             return View();
         }
 
+        public ActionResult CustomStyleMenu()
+        {
+            return View();
+        }
+
         public ActionResult CustomStyle()
+        {
+            return View();
+        }
+
+        public ActionResult CustomRazorView()
         {
             return View();
         }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MVCGrid.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace MVCGrid.Models
 {
-    public class GridDefaults
+    public class GridDefaults : IMVCGridDefinition
     {
         public GridDefaults()
         {
@@ -22,6 +23,7 @@ namespace MVCGrid.Models
             TemplatingEngine = typeof(MVCGrid.Templating.SimpleTemplatingEngine);
             AdditionalSettings = new Dictionary<string, string>();
             RenderingMode = Models.RenderingMode.RenderingEngine;
+            ViewPath = "~/Views/MVCGrid/_Grid.cshtml";
         }
 
         public bool PreloadData { get; set; }
@@ -37,5 +39,14 @@ namespace MVCGrid.Models
         public Type TemplatingEngine { get; set; }
         public Dictionary<string, string> AdditionalSettings { get; set; }
         public RenderingMode RenderingMode { get; set; }
+        public string ViewPath { get; set; }
+        public string QueryStringPrefix { get; set; }
+
+        public IEnumerable<IMVCGridColumn> GetColumns()
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

@@ -1,0 +1,58 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Custom Razor View";
+}
+@section head{
+    <style type="text/css">
+        table.customStyleTable {
+            width: 100%;
+        }
+            /*table.customStyleTable tr th{
+            background-color: blue;
+        }*/
+            table.customStyleTable tr:nth-child(odd) {
+                background-color: #fff;
+            }
+
+            table.customStyleTable tr:nth-child(even) {
+                background-color: #9cf;
+            }
+
+            table.customStyleTable thead th {
+                background: #fc9;
+            }
+
+        .pageItem {
+            display: inline;
+            float: left;
+            margin: 2px;
+        }
+    </style>
+}
+
+<h2>@ViewBag.Title</h2>
+<p>To prepare to use your own View, follow these steps:</p>
+<ol>
+    <li>Add the MVCGrid controller to your Routes
+<pre class="brush: csharp;">
+routes.MapRoute(
+    "MVCGrid",
+    "mvcgrid/{action}",
+    new { controller = "MVCGrid" },
+    new[] { "MVCGrid.Web" }
+);
+</pre>
+    </li>
+    <li>Add a new Partial View to your project. Example: <code>/Views/MVCGrid/_Custom.cshtml</code>.</li>
+    <li>Everything you need to populate your table will be given to you in the <code>RenderingModel</code> object. <code>@@model MVCGrid.Models.RenderingModel</code>
+    </li>
+
+    <li>On your grid definition or in the defaults, set <code>RenderingMode = RenderingMode.Controller;</code> and the <code>ViewPath = "~/Views/MVCGrid/_Custom.cshtml";</code></li>
+</ol>
+
+@Html.MVCGrid("CustomRazorView")
+
+<br /><br />
+
+<h3>Code</h3>
+

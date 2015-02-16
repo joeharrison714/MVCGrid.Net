@@ -668,6 +668,58 @@ namespace MVCGridExample
             );
 
 
+            MVCGridDefinitionTable.Add("CustomRazorView", new MVCGridBuilder<Person>()
+                .WithRenderingMode(RenderingMode.Controller)
+                .WithViewPath("~/Views/MVCGrid/_Custom.cshtml")
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) =>
+                        {
+                            return String.Format("<a href='{0}'>{1}</a>",
+                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
+                        })
+                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add().WithColumnName("Status")
+                        .WithSortColumnData("Active")
+                        .WithHeaderText("Status")
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                })
+                .WithRenderingEngine(typeof(CustomHtmlRenderingEngine))
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(20)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string sortColumn = options.GetSortColumnData<string>();
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+
             var docsReturnTypeColumn = new GridColumn<MethodDocItem>()
             {
                 ColumnName = "ReturnType",

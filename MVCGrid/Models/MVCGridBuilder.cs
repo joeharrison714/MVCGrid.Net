@@ -160,6 +160,10 @@ namespace MVCGrid.Models
             return this;
         }
 
-        
+        public MVCGridBuilder<T1> WithViewPath(string viewPath)
+        {
+            GridDefinition.ViewPath = viewPath;
+            return this;
+        }
     }
 }
