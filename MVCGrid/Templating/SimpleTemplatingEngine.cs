@@ -127,7 +127,7 @@ namespace MVCGrid.Templating
                     case "row":
                         if (!model.Row.Cells.ContainsKey(suffix))
                         {
-                            throw new Exception("Cannot access cell '" + suffix + "' in current row. It does not exist or has not yet been evailauted");
+                            throw new Exception("Cannot access cell '" + suffix + "' in current row. It does not exist or has not yet been evaluated");
                         }
                         val = model.Row.Cells[suffix].HtmlText;
                         break;

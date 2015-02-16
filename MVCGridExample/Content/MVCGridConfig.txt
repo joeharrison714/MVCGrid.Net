@@ -714,6 +714,66 @@ namespace MVCGridExample
                 })
             );
 
+
+            MVCGridDefinitionTable.Add("ValueTemplate", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add().WithColumnName("Id")
+                        .WithSorting(false)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
+                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                    cols.Add().WithColumnName("FirstName")
+                        .WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add().WithColumnName("LastName")
+                        .WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add().WithColumnName("Edit")
+                        .WithHtmlEncoding(false)
+                        .WithSorting(false)
+                        .WithHeaderText(" ")
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}' class='btn btn-primary' role='button'>Edit</a>");
+                    cols.Add().WithColumnName("Delete")
+                        .WithHtmlEncoding(false)
+                        .WithSorting(false)
+                        .WithHeaderText(" ")
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}' class='btn btn-danger' role='button'>Delete</a>");
+                    cols.Add().WithColumnName("Example")
+                        .WithHtmlEncoding(false)
+                        .WithSorting(false)
+                        .WithHeaderText("Example")
+                        .WithValueExpression((p, c) => p.Active ? "label-success" : "label-danger")
+                        .WithValueTemplate("You can access any of the item's properties: <strong>{Model.FirstName}</strong> <br />or the current column value: <span class='label {Value}'>{Model.Active}</span>");
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(20)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string sortColumn = options.GetSortColumnData<string>();
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
             MVCGridDefinitionTable.Add("UsageExample", new MVCGridBuilder<YourModelItem>()
                 .AddColumns(cols =>
                 {

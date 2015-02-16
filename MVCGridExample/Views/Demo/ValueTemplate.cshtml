@@ -1,0 +1,23 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Value Template";
+}
+
+<h2>Value Template</h2>
+
+<p>You can use the value template on the column to more-easily specify formatting for the cell contents, espically when a lot of HTML is involved.</p>
+
+<p>Here is the value template for the example column below:</p>
+
+<pre>
+ValueTemplate = &quot;You can access any of the item&#39;s properties: &lt;strong&gt;{Model.FirstName}&lt;/strong&gt; &lt;br /&gt;or the current column value: &lt;span class=&#39;label {Value}&#39;&gt;{Model.Active}&lt;/span&gt;&quot;;
+</pre>
+
+@Html.MVCGrid("ValueTemplate")
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("ValueTemplate")</pre>
+    </div>
+</div>

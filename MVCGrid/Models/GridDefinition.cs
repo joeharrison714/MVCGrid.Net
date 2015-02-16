@@ -39,7 +39,7 @@ namespace MVCGrid.Models
                 this.AdditionalSettings = gridDefaults.AdditionalSettings;
                 this.RenderingMode = gridDefaults.RenderingMode;
                 this.ViewPath = gridDefaults.ViewPath;
-                this.QueryStringPrefix = gridDefaults.ViewPath;
+                this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
             }
         }
 
