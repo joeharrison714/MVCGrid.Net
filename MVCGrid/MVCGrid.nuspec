@@ -17,5 +17,6 @@
   </metadata>
   <files>
     <file src="bin\Release\MVCGrid.dll" target="lib\net40" />
+    <file src="..\NuGetFiles\MVCGridConfig.cs.pp" target="Content\App_Start" />
   </files>
 </package>
