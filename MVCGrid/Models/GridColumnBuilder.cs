@@ -148,7 +148,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// Object to pass to QueryOptions when this coumn is sorted on. Only specify if different from ColumnName
+        /// Object to pass to QueryOptions when this column is sorted on. Only specify if different from ColumnName
         /// </summary>
         public GridColumnBuilder<T1> WithSortColumnData(object sortColumnData)
         {

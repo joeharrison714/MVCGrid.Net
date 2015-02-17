@@ -35,7 +35,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// Arbitrary settings for this conext
+        /// Arbitrary settings for this context
         /// </summary>
         public Dictionary<string, object> Items { get; set; }
     }

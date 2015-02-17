@@ -11,7 +11,7 @@ namespace MVCGrid.Interfaces
         IEnumerable<IMVCGridColumn> GetColumns();
 
         /// <summary>
-        /// A prefix to add to all query string paramters for this grid, for when there are more than 1 grids on the same page
+        /// A prefix to add to all query string parameters for this grid, for when there are more than 1 grids on the same page
         /// </summary>
         string QueryStringPrefix { get; }
 
@@ -80,7 +80,7 @@ namespace MVCGrid.Interfaces
         string ViewPath { get; set; }
 
         /// <summary>
-        /// HTML to display in place of the grid when an error occures
+        /// HTML to display in place of the grid when an error occurs
         /// </summary>
         string ErrorMessageHtml { get; set; }
     }

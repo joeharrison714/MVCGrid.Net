@@ -40,7 +40,7 @@ namespace MVCGrid.Interfaces
         bool Visible { get; }
 
         /// <summary>
-        /// Object to pass to QueryOptions when this coumn is sorted on. Only specify if different from ColumnName
+        /// Object to pass to QueryOptions when this column is sorted on. Only specify if different from ColumnName
         /// </summary>
         object SortColumnData { get; }
     }

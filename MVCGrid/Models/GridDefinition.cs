@@ -168,7 +168,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// A prefix to add to all query string paramters for this grid, for when there are more than 1 grids on the same page
+        /// A prefix to add to all query string parameters for this grid, for when there are more than 1 grids on the same page
         /// </summary>
         public string QueryStringPrefix { get; set; }
 
@@ -236,7 +236,7 @@ namespace MVCGrid.Models
         public string ViewPath { get; set; }
 
         /// <summary>
-        /// HTML to display in place of the grid when an error occures
+        /// HTML to display in place of the grid when an error occurs
         /// </summary>
         public string ErrorMessageHtml { get; set; }
     }

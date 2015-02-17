@@ -75,7 +75,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// A prefix to add to all query string paramters for this grid, for when there are more than 1 grids on the same page
+        /// A prefix to add to all query string parameters for this grid, for when there are more than 1 grids on the same page
         /// </summary>
         public MVCGridBuilder<T1> WithQueryStringPrefix(string prefix)
         {
@@ -216,7 +216,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// HTML to display in place of the grid when an error occures
+        /// HTML to display in place of the grid when an error occurs
         /// </summary>
         public MVCGridBuilder<T1> WithErrorMessageHtml(string errorMessageHtml)
         {
