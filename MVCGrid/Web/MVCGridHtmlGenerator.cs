@@ -52,6 +52,16 @@ namespace MVCGrid.Web
 
             sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_JsonData' value='{1}' />", gridName, sbJson.ToString());
 
+            sbHtml.AppendFormat("<div id='MVCGrid_ErrorMessage_{0}' style='display: none;'>", gridName);
+            if (String.IsNullOrWhiteSpace(def.ErrorMessageHtml))
+            {
+                sbHtml.Append("An error has occured.");
+            }
+            else
+            {
+                sbHtml.Append(def.ErrorMessageHtml);
+            }
+            sbHtml.Append("</div>");
 
 
             sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);

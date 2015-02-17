@@ -130,6 +130,7 @@ var MVCGrid = new function () {
     this.reloadGrid = function(mvcGridName){
         var tableHolderHtmlId = 'MVCGridTableHolder_' + mvcGridName;
         var loadingHtmlId = 'MVCGrid_Loading_' + mvcGridName;
+        var errorHtmlId = 'MVCGrid_ErrorMessage_' + mvcGridName;
 
         var gridDef = findGridDef(mvcGridName);;
 
@@ -156,7 +157,7 @@ var MVCGrid = new function () {
                 $('#' + tableHolderHtmlId).html(result);
             },
             error: function (request, status, error) {
-                var errorhtml = '<div class="alert alert-warning" role="alert">There was a problem loading the grid.</div>'
+                var errorhtml = $('#' + errorHtmlId).html();
                 $('#' + tableHolderHtmlId).html(errorhtml);
             },
             complete: function() {

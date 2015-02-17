@@ -26,5 +26,7 @@ namespace MVCGrid.Interfaces
         Dictionary<string, string> AdditionalSettings { get; set; }
         RenderingMode RenderingMode { get; set; }
         string ViewPath { get; set; }
+
+        string ErrorMessageHtml { get; set; }
     }
 }

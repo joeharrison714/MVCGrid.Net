@@ -40,6 +40,7 @@ namespace MVCGrid.Models
                 this.RenderingMode = gridDefaults.RenderingMode;
                 this.ViewPath = gridDefaults.ViewPath;
                 this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
+                this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
             }
         }
 
@@ -182,6 +183,9 @@ namespace MVCGrid.Models
         public Dictionary<string, string> AdditionalSettings { get; set; }
         public RenderingMode RenderingMode { get; set; }
         public string ViewPath { get; set; }
+
+
+        public string ErrorMessageHtml { get; set; }
     }
 
 }

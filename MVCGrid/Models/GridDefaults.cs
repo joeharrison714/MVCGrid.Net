@@ -24,6 +24,7 @@ namespace MVCGrid.Models
             AdditionalSettings = new Dictionary<string, string>();
             RenderingMode = Models.RenderingMode.RenderingEngine;
             ViewPath = "~/Views/MVCGrid/_Grid.cshtml";
+            ErrorMessageHtml= @"<div class=""alert alert-warning"" role=""alert"">There was a problem loading the grid.</div>";
         }
 
         public bool PreloadData { get; set; }
@@ -47,6 +48,6 @@ namespace MVCGrid.Models
             throw new NotImplementedException();
         }
 
-        
+        public string ErrorMessageHtml { get; set; }
     }
 }

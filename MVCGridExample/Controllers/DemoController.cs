@@ -94,5 +94,10 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult CustomErrorMessage()
+        {
+            return View();
+        }
     }
 }

@@ -165,5 +165,11 @@ namespace MVCGrid.Models
             GridDefinition.ViewPath = viewPath;
             return this;
         }
+
+        public MVCGridBuilder<T1> WithErrorMessageHtml(string errorMessageHtml)
+        {
+            GridDefinition.ErrorMessageHtml = errorMessageHtml;
+            return this;
+        }
     }
 }

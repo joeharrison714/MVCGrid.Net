@@ -275,6 +275,7 @@
     <Content Include="Views\MVCGrid\_Custom.cshtml" />
     <Content Include="Views\Demo\CustomStyleMenu.cshtml" />
     <Content Include="Views\Demo\ValueTemplate.cshtml" />
+    <Content Include="Views\Demo\CustomErrorMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

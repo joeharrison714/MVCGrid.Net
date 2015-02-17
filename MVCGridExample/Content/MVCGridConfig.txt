@@ -480,8 +480,7 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("Multiple1", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
@@ -686,6 +685,57 @@ namespace MVCGridExample
                         Items = items,
                         TotalRecords = totalRecords
                     };
+                })
+            );
+
+
+            MVCGridDefinitionTable.Add("CustomErrorMessage", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithErrorMessageHtml(@"<div class=""alert alert-danger"" role=""alert"">OH NO!!!</div>")
+                .WithSorting(true)
+                .WithPaging(true)
+                .WithDefaultSortColumn("LastName")
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    var result = new QueryResult<Person>();
+
+                    using (var db = new SampleDatabaseEntities())
+                    {
+                        var query = db.People.AsQueryable();
+
+                        result.TotalRecords = query.Count();
+
+                        if (!String.IsNullOrWhiteSpace(options.SortColumnName))
+                        {
+                            switch (options.SortColumnName.ToLower())
+                            {
+                                case "firstname":
+                                    throw new Exception("Test exception");
+                                case "lastname":
+                                    query = query.OrderBy(p => p.LastName, options.SortDirection);
+                                    break;
+                            }
+                        }
+
+                        if (options.GetLimitOffset().HasValue)
+                        {
+                            query = query.Skip(options.GetLimitOffset().Value).Take(options.GetLimitRowcount().Value);
+                        }
+
+                        result.Items = query.ToList();
+                    }
+
+                    return result;
                 })
             );
 
