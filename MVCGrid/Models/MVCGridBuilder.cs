@@ -55,72 +55,109 @@ namespace MVCGrid.Models
             return this;
         }
 
+
+        /// <summary>
+        /// This is the method that will actually query the data to populate the grid. Use entity framework, a module from you IoC container, direct SQL queries, etc. to get the data. Inside the providee GridContext there is a QueryOptions object which will be populated with the currently requested sorting, paging, and filtering options which you must take into account. See the QueryOptions documentation below. You must return a QueryResult object which takes an enumerable of your type and a count of the total number of records which must be provided if paging is enabled.
+        /// </summary>
         public MVCGridBuilder<T1> WithRetrieveDataMethod(Func<GridContext, QueryResult<T1>> retrieveData)
         {
             GridDefinition.RetrieveData = retrieveData;
             return this;
         }
 
+        /// <summary>
+        /// Use this to specify a custom css class based on data for the current row
+        /// </summary>
         public MVCGridBuilder<T1> WithRowCssClassExpression(Func<T1, GridContext, string> rowCssClassExpression)
         {
             GridDefinition.RowCssClassExpression = rowCssClassExpression;
             return this;
         }
 
+        /// <summary>
+        /// A prefix to add to all query string paramters for this grid, for when there are more than 1 grids on the same page
+        /// </summary>
         public MVCGridBuilder<T1> WithQueryStringPrefix(string prefix)
         {
             GridDefinition.QueryStringPrefix = prefix;
             return this;
         }
 
+        /// <summary>
+        /// Enables data loading when the page is first loaded so that the initial ajax request can be skipped.
+        /// </summary>
         public MVCGridBuilder<T1> WithPreloadData(bool preload)
         {
             GridDefinition.PreloadData = preload;
             return this;
         }
 
+        /// <summary>
+        /// Enables paging on the grid
+        /// </summary>
         public MVCGridBuilder<T1> WithPaging(bool paging)
         {
             GridDefinition.Paging = paging;
             return this;
         }
 
+        /// <summary>
+        /// Number of items to display on each page
+        /// </summary>
         public MVCGridBuilder<T1> WithItemsPerPage(int itemsPerPage)
         {
             GridDefinition.ItemsPerPage = itemsPerPage;
             return this;
         }
 
+        /// <summary>
+        /// Enables sorting on the grid. Note, sorting must also be enabled on each column where sorting is wanted
+        /// </summary>
         public MVCGridBuilder<T1> WithSorting(bool sorting)
         {
             GridDefinition.Sorting = sorting;
             return this;
         }
 
+        /// <summary>
+        /// The default column to sort by when no sort is specified
+        /// </summary>
         public MVCGridBuilder<T1> WithDefaultSortColumn(string defaultSortColumn)
         {
             GridDefinition.DefaultSortColumn = defaultSortColumn;
             return this;
         }
 
+        /// <summary>
+        /// Text to display when there are no results.
+        /// </summary>
         public MVCGridBuilder<T1> WithNoResultsMessage(string noResultsMessage)
         {
             GridDefinition.NoResultsMessage = noResultsMessage;
             return this;
         }
 
+        /// <summary>
+        /// Name of function to call before ajax call begins
+        /// </summary>
         public MVCGridBuilder<T1> WithClientSideLoadingMessageFunctionName(string name)
         {
             GridDefinition.ClientSideLoadingMessageFunctionName = name;
             return this;
         }
 
+        /// <summary>
+        /// Name of function to call before ajax call ends
+        /// </summary>
         public MVCGridBuilder<T1> WithClientSideLoadingCompleteFunctionName(string name)
         {
             GridDefinition.ClientSideLoadingCompleteFunctionName = name;
             return this;
         }
 
+        /// <summary>
+        /// Enables filtering on the grid. Note, filtering must also be enabled on each column where filtering is wanted
+        /// </summary>
         public MVCGridBuilder<T1> WithFiltering(bool filtering)
         {
             GridDefinition.Filtering = filtering;
@@ -139,12 +176,18 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// Add an arbitrary additional settings
+        /// </summary>
         public MVCGridBuilder<T1> WithAdditionalSetting(string name, string value)
         {
             GridDefinition.AdditionalSettings[name] = value;
             return this;
         }
 
+        /// <summary>
+        /// Remove an additional setting
+        /// </summary>
         public MVCGridBuilder<T1> WithoutAdditionalSetting(string name)
         {
             if (GridDefinition.AdditionalSettings.ContainsKey(name))
@@ -154,18 +197,27 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// The rendering mode to use for this grid. By default it will use the RenderingEngine rendering mode. If you want to use a custom Razor view to display your grid, change this to Controller
+        /// </summary>
         public MVCGridBuilder<T1> WithRenderingMode(RenderingMode mode)
         {
             GridDefinition.RenderingMode = mode;
             return this;
         }
 
+        /// <summary>
+        /// When RenderingMode is set to Controller, this is the path to the razor view to use.
+        /// </summary>
         public MVCGridBuilder<T1> WithViewPath(string viewPath)
         {
             GridDefinition.ViewPath = viewPath;
             return this;
         }
 
+        /// <summary>
+        /// HTML to display in place of the grid when an error occures
+        /// </summary>
         public MVCGridBuilder<T1> WithErrorMessageHtml(string errorMessageHtml)
         {
             GridDefinition.ErrorMessageHtml = errorMessageHtml;

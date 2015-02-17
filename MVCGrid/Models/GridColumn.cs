@@ -100,7 +100,7 @@ namespace MVCGrid.Models
 
 
         /// <summary>
-        /// Gets a value indicating whether column is visible.
+        /// Indicates whether column is visible.
         /// </summary>
         public bool Visible { get; set; }
 

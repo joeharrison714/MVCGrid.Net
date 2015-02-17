@@ -9,24 +9,79 @@ namespace MVCGrid.Interfaces
     internal interface IMVCGridDefinition
     {
         IEnumerable<IMVCGridColumn> GetColumns();
+
+        /// <summary>
+        /// A prefix to add to all query string paramters for this grid, for when there are more than 1 grids on the same page
+        /// </summary>
         string QueryStringPrefix { get; }
+
+
+        /// <summary>
+        /// Enables data loading when the page is first loaded so that the initial ajax request can be skipped.
+        /// </summary>
         bool PreloadData { get; }
+
+        /// <summary>
+        /// Enables paging on the grid
+        /// </summary>
         bool Paging { get; set; }
+
+        /// <summary>
+        /// Number of items to display on each page
+        /// </summary>
         int ItemsPerPage { get; set; }
+
+        /// <summary>
+        /// Enables sorting on the grid. Note, sorting must also be enabled on each column where sorting is wanted
+        /// </summary>
         bool Sorting { get; set; }
+
+        /// <summary>
+        /// The default column to sort by when no sort is specified
+        /// </summary>
         string DefaultSortColumn { get; set; }
+
+        /// <summary>
+        /// Text to display when there are no results.
+        /// </summary>
         string NoResultsMessage { get; set; }
+
+        /// <summary>
+        /// Name of function to call before ajax call begins
+        /// </summary>
         string ClientSideLoadingMessageFunctionName { get; set; }
+
+        /// <summary>
+        /// Name of function to call before ajax call ends
+        /// </summary>
         string ClientSideLoadingCompleteFunctionName { get; set; }
+
+        /// <summary>
+        /// Enables filtering on the grid. Note, filtering must also be enabled on each column where filtering is wanted
+        /// </summary>
         bool Filtering { get; set; }
 
         Type RenderingEngine { get; set; }
         Type TemplatingEngine { get; set; }
 
+        /// <summary>
+        /// Arbitrary additional settings
+        /// </summary>
         Dictionary<string, string> AdditionalSettings { get; set; }
+
+        /// <summary>
+        /// The rendering mode to use for this grid. By default it will use the RenderingEngine rendering mode. If you want to use a custom Razor view to display your grid, change this to Controller
+        /// </summary>
         RenderingMode RenderingMode { get; set; }
+
+        /// <summary>
+        /// When RenderingMode is set to Controller, this is the path to the razor view to use.
+        /// </summary>
         string ViewPath { get; set; }
 
+        /// <summary>
+        /// HTML to display in place of the grid when an error occures
+        /// </summary>
         string ErrorMessageHtml { get; set; }
     }
 }

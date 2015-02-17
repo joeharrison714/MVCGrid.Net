@@ -52,24 +52,38 @@ namespace MVCGrid.Models
 
         public GridColumn<T1> GridColumn { get; set; }
 
+
+        /// <summary>
+        /// A unique name for this column
+        /// </summary>
         public GridColumnBuilder<T1> WithColumnName(string name)
         {
             GridColumn.ColumnName = name;
             return this;
         }
 
+        /// <summary>
+        /// Header text to display for the current column, if different from ColumnName.
+        /// </summary>
         public GridColumnBuilder<T1> WithHeaderText(string text)
         {
             GridColumn.HeaderText = text;
             return this;
         }
 
+
+        /// <summary>
+        /// Enables sorting on this column
+        /// </summary>
         public GridColumnBuilder<T1> WithSorting(bool enableSorting)
         {
             GridColumn.EnableSorting = enableSorting;
             return this;
         }
 
+        /// <summary>
+        /// Disables html encoding on the data for the current cell. Turn this off if your ValueExpression or ValueTemplate returns HTML.
+        /// </summary>
         public GridColumnBuilder<T1> WithHtmlEncoding(bool htmlEncode)
         {
             GridColumn.HtmlEncode = htmlEncode;
@@ -77,7 +91,7 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// The expression for returning the cell value
+        /// This is how to specify the contents of the current cell. If this contains HTML, set HTMLEncode to false
         /// </summary>
         public GridColumnBuilder<T1> WithValueExpression(Func<T1, GridContext, string> expression)
         {
@@ -87,7 +101,7 @@ namespace MVCGrid.Models
 
 
         /// <summary>
-        /// Optional. Only needed if different from ValueExpression
+        /// This is how to specify the contents of the current cell when used in an export file, if different that ValueExpression
         /// </summary>
         public GridColumnBuilder<T1> WithPlainTextValueExpression(Func<T1, GridContext, string> expression)
         {
@@ -95,18 +109,27 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// Use this to return a custom css class based on data for the current cell
+        /// </summary>
         public GridColumnBuilder<T1> WithCellCssClassExpression(Func<T1, GridContext, string> expression)
         {
             GridColumn.CellCssClassExpression = expression;
             return this;
         }
 
+        /// <summary>
+        /// Enables filtering on this column
+        /// </summary>
         public GridColumnBuilder<T1> WithFiltering(bool enableFiltering)
         {
             GridColumn.EnableFiltering = enableFiltering;
             return this;
         }
 
+        /// <summary>
+        /// Indicates whether column is visible.
+        /// </summary>
         public GridColumnBuilder<T1> WithVisibility(bool visible)
         {
             GridColumn.Visible = visible;

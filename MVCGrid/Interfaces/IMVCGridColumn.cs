@@ -35,7 +35,7 @@ namespace MVCGrid.Interfaces
         bool EnableFiltering { get; }
 
         /// <summary>
-        /// Gets a value indicating whether column is visible.
+        /// Indicates whether column is visible.
         /// </summary>
         bool Visible { get; }
 

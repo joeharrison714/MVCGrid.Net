@@ -77,7 +77,14 @@ namespace MVCGrid.Models
 
         private List<GridColumn<T1>> Columns { get; set; }
 
+        /// <summary>
+        /// This is the method that will actually query the data to populate the grid. Use entity framework, a module from you IoC container, direct SQL queries, etc. to get the data. Inside the providee GridContext there is a QueryOptions object which will be populated with the currently requested sorting, paging, and filtering options which you must take into account. See the QueryOptions documentation below. You must return a QueryResult object which takes an enumerable of your type and a count of the total number of records which must be provided if paging is enabled.
+        /// </summary>
         public Func<GridContext, QueryResult<T1>> RetrieveData { get; set; }
+
+        /// <summary>
+        /// Use this to specify a custom css class based on data for the current row
+        /// </summary>
         public Func<T1, GridContext, string> RowCssClassExpression { get; set; }
 
         internal override List<Row> GetData(GridContext context, out int? totalRecords)
@@ -161,30 +168,76 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// Prefix for query string names. Only needed if there is more than 1 grid on the same page.
+        /// A prefix to add to all query string paramters for this grid, for when there are more than 1 grids on the same page
         /// </summary>
         public string QueryStringPrefix { get; set; }
 
+        /// <summary>
+        /// Enables data loading when the page is first loaded so that the initial ajax request can be skipped.
+        /// </summary>
         public bool PreloadData { get; set; }
 
+        /// <summary>
+        /// Enables paging on the grid
+        /// </summary>
         public bool Paging { get; set; }
+
+        /// <summary>
+        /// Number of items to display on each page
+        /// </summary>
         public int ItemsPerPage { get; set; }
+
+        /// <summary>
+        /// Enables sorting on the grid. Note, sorting must also be enabled on each column where sorting is wanted
+        /// </summary>
         public bool Sorting { get; set; }
+
+        /// <summary>
+        /// The default column to sort by when no sort is specified
+        /// </summary>
         public string DefaultSortColumn { get; set; }
+
+        /// <summary>
+        /// Enables filtering on the grid. Note, filtering must also be enabled on each column where filtering is wanted
+        /// </summary>
         public bool Filtering { get; set; }
+
+        /// <summary>
+        /// Text to display when there are no results.
+        /// </summary>
         public string NoResultsMessage { get; set; }
 
+        /// <summary>
+        /// Name of function to call before ajax call begins
+        /// </summary>
         public string ClientSideLoadingMessageFunctionName { get; set; }
+
+        /// <summary>
+        /// Name of function to call before ajax call ends
+        /// </summary>
         public string ClientSideLoadingCompleteFunctionName { get; set; }
 
         public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
 
+        /// <summary>
+        /// Arbitrary additional settings
+        /// </summary>
         public Dictionary<string, string> AdditionalSettings { get; set; }
+
+        /// <summary>
+        /// The rendering mode to use for this grid. By default it will use the RenderingEngine rendering mode. If you want to use a custom Razor view to display your grid, change this to Controller
+        /// </summary>
         public RenderingMode RenderingMode { get; set; }
+
+        /// <summary>
+        /// When RenderingMode is set to Controller, this is the path to the razor view to use.
+        /// </summary>
         public string ViewPath { get; set; }
 
-
+        /// <summary>
+        /// HTML to display in place of the grid when an error occures
+        /// </summary>
         public string ErrorMessageHtml { get; set; }
     }
 
