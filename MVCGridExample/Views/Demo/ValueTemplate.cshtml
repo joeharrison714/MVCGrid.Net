@@ -13,6 +13,21 @@
 ValueTemplate = &quot;You can access any of the item&#39;s properties: &lt;strong&gt;{Model.FirstName}&lt;/strong&gt; &lt;br /&gt;or the current column value: &lt;span class=&#39;label {Value}&#39;&gt;{Model.Active}&lt;/span&gt;&quot;;
 </pre>
 
+<h2>Format String</h2>
+<p>The ValueTemplate format string is like a String.Format string, but you can access data from the current row.</p>
+
+<ul>
+    <li>
+        <code>Model.PropertyName</code> - Use this to access propeties on the current row's generic object
+    </li>
+    <li>
+        <code>Row.ColumnName</code> - Use this to get the value of the specified column name
+    </li>
+    <li>
+        <code>Value</code> - Use this to get the evaluated value of the current cell
+    </li>
+</ul>
+
 @Html.MVCGrid("ValueTemplate")
 
 <div class="panel panel-default">
