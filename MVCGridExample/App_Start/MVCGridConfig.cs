@@ -18,33 +18,23 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(true)
+                    cols.Add("Id").WithSorting(true)
                         .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) =>
-                        {
-                            return String.Format("<a href='{0}'>{1}</a>",
-                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
-                        })
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("StartDate")
-                        .WithHeaderText("Start Date")
+                    cols.Add("StartDate").WithHeaderText("Start Date")
                         .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
                         .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger");
-                    cols.Add().WithColumnName("Gender")
-                        .WithValueExpression((p, c) => p.Gender);
-                    cols.Add().WithColumnName("Url")
-                        .WithVisibility(false)
+                    cols.Add("Gender").WithValueExpression((p, c) => p.Gender);
+                    cols.Add("Url").WithVisibility(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
                     //                    cols.Add().WithColumnName("Button")  //Templating demo
                     //                        .WithHtmlEncoding(false)
@@ -85,13 +75,10 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("EmployeeGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("Id").WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithRetrieveDataMethod((options) =>
@@ -110,14 +97,11 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("SortableGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithSorting(true)
@@ -154,14 +138,11 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("PagingGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithSorting(true)
@@ -208,14 +189,11 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("DIGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithSorting(true)
@@ -243,27 +221,19 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("FormattingGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("StartDate")
-                        .WithHeaderText("Start Date")
+                    cols.Add("StartDate").WithHeaderText("Start Date")
                         .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
-                    cols.Add().WithColumnName("ViewLink")
-                        .WithSorting(false)
+                    cols.Add("ViewLink").WithSorting(false)
                         .WithHeaderText("")
                         .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) =>
-                        {
-                            return String.Format("<a href='{0}'>View</a>",
-                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
-                        });
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>View</a>");
                 })
                 .WithSorting(true)
                 .WithDefaultSortColumn("LastName")
@@ -291,34 +261,25 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("StyledGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("StartDate")
-                        .WithHeaderText("Start Date")
+                    cols.Add("StartDate").WithHeaderText("Start Date")
                         .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
-                    cols.Add().WithColumnName("Gender")
-                        .WithValueExpression((p, c) => p.Gender)
+                    cols.Add("Gender").WithValueExpression((p, c) => p.Gender)
                         .WithCellCssClassExpression((p, c) => p.Gender == "Female" ? "danger" : "warning");
                     cols.Add().WithColumnName("ViewLink")
                         .WithSorting(false)
                         .WithHeaderText("")
                         .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) =>
-                        {
-                            return String.Format("<a href='{0}'>View</a>",
-                                c.UrlHelper.Action("detail", new { id = p.Id }));
-                        });
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>View</a>");
                 })
                 .WithRowCssClassExpression((p, c) => p.Active ? "success" : "")
                 .WithSorting(true)
@@ -348,14 +309,11 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("Preloading", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithPreloadData(false)
@@ -384,14 +342,12 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("CustomLoading", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
+                    cols.Add("FirstName")
                         .WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithSorting(true)
@@ -424,19 +380,15 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("Filtering", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName)
                         .WithFiltering(true);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName)
                         .WithFiltering(true);
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
                         .WithFiltering(true);
@@ -457,14 +409,7 @@ namespace MVCGridExample
                     string fa = options.GetFilterString("Status");
                     if (!String.IsNullOrWhiteSpace(fa))
                     {
-                        if (String.Compare(fa, "active", true) == 0)
-                        {
-                            active = true;
-                        }
-                        else
-                        {
-                            active = false;
-                        }
+                        active = (String.Compare(fa, "active", true) == 0);
                     }
 
                     string sortColumn = options.GetSortColumnData<string>();
@@ -497,14 +442,11 @@ namespace MVCGridExample
                                 c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
                         })
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
                 })
@@ -538,23 +480,16 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("Multiple1", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) =>
-                        {
-                            return String.Format("<a href='{0}'>{1}</a>",
-                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
-                        })
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
                 })
@@ -587,12 +522,9 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("Multiple2", new MVCGridBuilder<TestItem>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Col1")
-                        .WithValueExpression((p, c) => p.Col1);
-                    cols.Add().WithColumnName("Col2")
-                        .WithValueExpression((p, c) => p.Col2);
-                    cols.Add().WithColumnName("Col3")
-                        .WithValueExpression((p, c) => p.Col3);
+                    cols.Add("Col1").WithValueExpression((p, c) => p.Col1);
+                    cols.Add("Col2").WithValueExpression((p, c) => p.Col2);
+                    cols.Add("Col3").WithValueExpression((p, c) => p.Col3);
                 })
                 .WithSorting(true)
                 .WithDefaultSortColumn("Col1")
@@ -619,23 +551,16 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("CustomStyle", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) =>
-                        {
-                            return String.Format("<a href='{0}'>{1}</a>",
-                                c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
-                        })
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
                 })
@@ -671,20 +596,16 @@ namespace MVCGridExample
                 .WithViewPath("~/Views/MVCGrid/_Custom.cshtml")
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("Status")
-                        .WithSortColumnData("Active")
+                    cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
                 })
@@ -717,32 +638,26 @@ namespace MVCGridExample
             MVCGridDefinitionTable.Add("ValueTemplate", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
-                    cols.Add().WithColumnName("Id")
-                        .WithSorting(false)
+                    cols.Add("Id").WithSorting(false)
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
-                    cols.Add().WithColumnName("FirstName")
-                        .WithHeaderText("First Name")
+                    cols.Add("FirstName").WithHeaderText("First Name")
                         .WithValueExpression((p, c) => p.FirstName);
-                    cols.Add().WithColumnName("LastName")
-                        .WithHeaderText("Last Name")
+                    cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
-                    cols.Add().WithColumnName("Edit")
-                        .WithHtmlEncoding(false)
+                    cols.Add("Edit").WithHtmlEncoding(false)
                         .WithSorting(false)
                         .WithHeaderText(" ")
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}' class='btn btn-primary' role='button'>Edit</a>");
-                    cols.Add().WithColumnName("Delete")
-                        .WithHtmlEncoding(false)
+                    cols.Add("Delete").WithHtmlEncoding(false)
                         .WithSorting(false)
                         .WithHeaderText(" ")
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}' class='btn btn-danger' role='button'>Delete</a>");
-                    cols.Add().WithColumnName("Example")
-                        .WithHtmlEncoding(false)
+                    cols.Add("Example").WithHtmlEncoding(false)
                         .WithSorting(false)
                         .WithHeaderText("Example")
                         .WithValueExpression((p, c) => p.Active ? "label-success" : "label-danger")
@@ -777,8 +692,7 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     // Add your columns here
-                    cols.Add().WithColumnName("UniqueColumnName")
-                        .WithHeaderText("Any Header")
+                    cols.Add("UniqueColumnName").WithHeaderText("Any Header")
                         .WithValueExpression((i, c) => i.YourProperty); // use the Value Expression to return the cell text for this column
                 })
                 .WithRetrieveDataMethod((context) =>

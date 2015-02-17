@@ -11,15 +11,25 @@ namespace MVCGrid.Models
         private string _headerText = null;
 
         public GridColumn()
-            : this(null)
+            : this(null, null, null)
         {
         }
 
-        public GridColumn(string columnName)
+        public GridColumn(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
         {
             if (!String.IsNullOrWhiteSpace(columnName))
             {
                 this.ColumnName = columnName;
+            }
+
+            if (!String.IsNullOrWhiteSpace(headerText))
+            {
+                this.HeaderText = headerText;
+            }
+
+            if (valueExpression != null)
+            {
+                this.ValueExpression = valueExpression;
             }
 
             EnableSorting = true;

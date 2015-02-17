@@ -16,7 +16,17 @@ namespace MVCGrid.Models
 
         public GridColumnBuilder<T1> Add()
         {
-            GridColumnBuilder<T1> col = new GridColumnBuilder<T1>();
+            return Add(null, null, null);
+        }
+
+        public GridColumnBuilder<T1> Add(string columnName)
+        {
+            return Add(columnName, null, null);
+        }
+
+        public GridColumnBuilder<T1> Add(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
+        {
+            GridColumnBuilder<T1> col = new GridColumnBuilder<T1>(columnName, headerText, valueExpression);
 
             ColumnBuilders.Add(col);
 
@@ -26,9 +36,18 @@ namespace MVCGrid.Models
 
     public class GridColumnBuilder<T1>
     {
-        public GridColumnBuilder()
+        public GridColumnBuilder():this(null,null,null)
         {
-            GridColumn = new GridColumn<T1>();
+        }
+
+        public GridColumnBuilder(string columnName)
+            : this(columnName, null, null)
+        {
+        }
+
+        public GridColumnBuilder(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
+        {
+            GridColumn = new GridColumn<T1>(columnName, headerText, valueExpression);
         }
 
         public GridColumn<T1> GridColumn { get; set; }
