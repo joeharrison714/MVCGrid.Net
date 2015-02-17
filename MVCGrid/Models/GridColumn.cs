@@ -28,8 +28,14 @@ namespace MVCGrid.Models
             Visible = true;
         }
 
+        /// <summary>
+        /// A unique name for this column
+        /// </summary>
         public string ColumnName { get; set; }
 
+        /// <summary>
+        /// Header text to display for the current column, if different from ColumnName.
+        /// </summary>
         public string HeaderText
         {
             get
@@ -51,20 +57,41 @@ namespace MVCGrid.Models
         public string ValueTemplate { get; set; }
 
         /// <summary>
-        /// The expression for returning the cell value
+        /// This is how to specify the contents of the current cell. If this contains HTML, set HTMLEncode to false
         /// </summary>
         public Func<T1, GridContext, string> ValueExpression { get; set; }
 
         /// <summary>
-        /// Optional. Only needed if different from ValueExpression
+        /// This is how to specify the contents of the current cell when used in an export file, if different that ValueExpression
         /// </summary>
         public Func<T1, GridContext, string> PlainTextValueExpression { get; set; }
 
+        /// <summary>
+        /// Use this to return a custom css class based on data for the current cell
+        /// </summary>
         public Func<T1, GridContext, string> CellCssClassExpression { get; set; }
 
+        /// <summary>
+        /// Enables sorting on this column
+        /// </summary>
         public bool EnableSorting { get; set; }
+
+
+        /// <summary>
+        /// Disables html encoding on the data for the current cell. Turn this off if your ValueExpression or ValueTemplate returns HTML.
+        /// </summary>
         public bool HtmlEncode { get; set; }
+
+
+        /// <summary>
+        /// Enables filtering on this column
+        /// </summary>
         public bool EnableFiltering { get; set; }
+
+
+        /// <summary>
+        /// Gets a value indicating whether column is visible.
+        /// </summary>
         public bool Visible { get; set; }
 
         /// <summary>
