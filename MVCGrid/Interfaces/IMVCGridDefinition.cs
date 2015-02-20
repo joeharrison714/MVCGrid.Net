@@ -83,5 +83,10 @@ namespace MVCGrid.Interfaces
         /// HTML to display in place of the grid when an error occurs
         /// </summary>
         string ErrorMessageHtml { get; set; }
+
+        /// <summary>
+        /// Names of additional parameters that can be passed from client to server side
+        /// </summary>
+        HashSet<string> AdditionalQueryOptionNames { get; set; }
     }
 }

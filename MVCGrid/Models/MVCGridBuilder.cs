@@ -223,5 +223,26 @@ namespace MVCGrid.Models
             GridDefinition.ErrorMessageHtml = errorMessageHtml;
             return this;
         }
+
+        /// <summary>
+        /// Add a name to additional query options which are additional parameters that can be passed from client to server side
+        /// </summary>
+        public MVCGridBuilder<T1> WithAdditionalQueryOptionName(string name)
+        {
+            GridDefinition.AdditionalQueryOptionNames.Add(name);
+            return this;
+        }
+
+        /// <summary>
+        /// Names of additional parameters that can be passed from client to server side
+        /// </summary>
+        public MVCGridBuilder<T1> WithAdditionalQueryOptionNames(params string[] names)
+        {
+            foreach (var name in names)
+            {
+                GridDefinition.AdditionalQueryOptionNames.Add(name);
+            }
+            return this;
+        }
     }
 }

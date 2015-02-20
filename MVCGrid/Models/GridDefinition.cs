@@ -41,6 +41,7 @@ namespace MVCGrid.Models
                 this.ViewPath = gridDefaults.ViewPath;
                 this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
                 this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
+                this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
             }
         }
 
@@ -239,6 +240,11 @@ namespace MVCGrid.Models
         /// HTML to display in place of the grid when an error occurs
         /// </summary>
         public string ErrorMessageHtml { get; set; }
+
+        /// <summary>
+        /// Names of additional parameters that can be passed from client to server side
+        /// </summary>
+        public HashSet<string> AdditionalQueryOptionNames { get; set; }
     }
 
 }

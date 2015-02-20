@@ -11,17 +11,24 @@ namespace MVCGrid.Web
 {
     internal class QueryStringParser
     {
+        // NOTE: when adding a new suffix, add code to MVCGridDefinitionTable to verify there is no conflict
+        public const string QueryStringSuffix_Page = "page";
+        public const string QueryStringSuffix_Sort = "sort";
+        public const string QueryStringSuffix_SortDir = "dir";
+        public const string QueryStringSuffix_Engine = "engine";
+
         public static QueryOptions ParseOptions(IMVCGridDefinition grid, HttpRequest httpRequest)
         {
-            string qsKeyPage = grid.QueryStringPrefix + "page";
-            string qsKeySort = grid.QueryStringPrefix + "sort";
-            string qsKeyDirection = grid.QueryStringPrefix + "dir";
+            string qsKeyPage = grid.QueryStringPrefix + QueryStringSuffix_Page;
+            string qsKeySort = grid.QueryStringPrefix + QueryStringSuffix_Sort;
+            string qsKeyDirection = grid.QueryStringPrefix + QueryStringSuffix_SortDir;
+            string qsKeyEngine = grid.QueryStringPrefix + QueryStringSuffix_Engine;
 
             var options = new QueryOptions();
 
-            if (httpRequest.QueryString["engine"] != null)
+            if (httpRequest.QueryString[qsKeyEngine] != null)
             {
-                string re = httpRequest.QueryString["engine"];
+                string re = httpRequest.QueryString[qsKeyEngine];
                 options.RenderingEngineName = re;
             }
 
@@ -122,6 +129,22 @@ namespace MVCGrid.Web
                     {
                         options.SortDirection = SortDirection.Dsc;
                     }
+                }
+            }
+
+            if (grid.AdditionalQueryOptionNames.Count > 0)
+            {
+                foreach (var aqon in grid.AdditionalQueryOptionNames)
+                {
+                    string qsKeyAQO = grid.QueryStringPrefix + aqon;
+                    string val = "";
+
+                    if (httpRequest.QueryString[qsKeyAQO] != null)
+                    {
+                        val = httpRequest.QueryString[qsKeyAQO];
+                    }
+
+                    options.AdditionalQueryOptions.Add(aqon, val);
                 }
             }
 

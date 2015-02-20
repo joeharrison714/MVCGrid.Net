@@ -12,7 +12,10 @@ namespace MVCGrid.Models
         public QueryOptions()
         {
             Filters = new Dictionary<string, string>();
+            AdditionalQueryOptions = new Dictionary<string, string>();
         }
+
+        public Dictionary<string, string> AdditionalQueryOptions { get; set; }
 
         public string RenderingEngineName { get; set; }
 
@@ -71,7 +74,34 @@ namespace MVCGrid.Models
             {
                 return null;
             }
+            string val = Filters[columnName].Trim();
+
+            if (String.IsNullOrWhiteSpace(val))
+            {
+                return null;
+            }
+
             return Filters[columnName];
+        }
+
+        public string GetAdditionalQueryOptionString(string name)
+        {
+            if (!AdditionalQueryOptions.ContainsKey(name))
+            {
+                return null;
+            }
+            if (AdditionalQueryOptions[name] == null)
+            {
+                return null;
+            }
+            string val = AdditionalQueryOptions[name].Trim();
+
+            if (String.IsNullOrWhiteSpace(val))
+            {
+                return null;
+            }
+
+            return val;
         }
     }
 }

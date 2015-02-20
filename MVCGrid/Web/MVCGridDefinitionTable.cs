@@ -40,6 +40,31 @@ namespace MVCGrid.Web
                     String.Format("Grid '{0}': When sorting is enabled, a default sort column must be specified", name));
             }
 
+            if (mapping.AdditionalQueryOptionNames.Count > 0)
+            {
+                // TODO: dynamically get names
+                HashSet<string> forbiddenNames = new HashSet<string>();
+                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Page);
+                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Sort);
+                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_SortDir);
+                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Engine);
+
+                foreach (var col in mapping.GetColumns())
+                {
+                    forbiddenNames.Add(col.ColumnName);
+
+                }
+
+                foreach (var forbiddenName in forbiddenNames)
+                {
+                    if (mapping.AdditionalQueryOptionNames.Contains(forbiddenName, StringComparer.InvariantCultureIgnoreCase))
+                    {
+                        throw new Exception(String.Format("Grid '{0}': Invalid additional query option name: '{1}'. Cannot be column name or reserved keyword.",
+                            name, forbiddenName));
+                    }
+                }
+            }
+            
             _table.Add(name, mapping);
 
         }
