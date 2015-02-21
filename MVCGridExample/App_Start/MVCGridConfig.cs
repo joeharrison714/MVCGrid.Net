@@ -778,6 +778,8 @@ namespace MVCGridExample
                 .WithDefaultSortColumn("LastName")
                 .WithPaging(true)
                 .WithItemsPerPage(10)
+                .WithAllowChangingPageSize(true)
+                .WithMaxItemsPerPage(100)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
