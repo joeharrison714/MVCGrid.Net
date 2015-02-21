@@ -15,10 +15,11 @@
             });
 
             $('#filterButton').click(function () {
-                MVCGrid.setFilters('Filtering',
-                    [
-                        { "columnName": "LastName", "value": "Smith" }
-                    ])
+                MVCGrid.setFilters('Filtering', { LastName: 'Smith' })
+            });
+
+            $('#pageSizeButton').click(function () {
+                MVCGrid.setPageSize('Filtering', 50);
             });
         });
 
@@ -32,6 +33,7 @@
         <button class="btn btn-default" id="sortButton">Sort by FirstName</button>
         <button class="btn btn-default" id="pageButton">Goto Page 3</button>
         <button class="btn btn-default" id="filterButton">Filter for Smith</button>
+        <button class="btn btn-default" id="pageSizeButton">Page Size to 50</button>
     </div>
 </div>
 <p>&nbsp;</p>
@@ -54,11 +56,11 @@
 			MVCGrid.setPage(&#39;Filtering&#39;, 3)
 		});
 		$(&#39;#filterButton&#39;).click(function () {
-			MVCGrid.setFilters(&#39;Filtering&#39;,
-				[
-					{ &quot;columnName&quot;: &quot;LastName&quot;, &quot;value&quot;: &quot;Smith&quot; }
-				])
+            MVCGrid.setFilters(&#39;Filtering&#39;, { LastName: &#39;Smith&#39; })
 		});
+        $(&#39;#pageSizeButton&#39;).click(function () {
+            MVCGrid.setPageSize(&#39;Filtering&#39;, 50);
+        });
 	});
 &lt;/script&gt;
         </pre>

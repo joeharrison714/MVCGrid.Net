@@ -398,6 +398,8 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithFiltering(true)
+                .WithAllowChangingPageSize(true)
+                .WithMaxItemsPerPage(100)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
