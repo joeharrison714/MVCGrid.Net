@@ -796,6 +796,40 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("PageSizeGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithAllowChangingPageSize(true)
+                .WithMaxItemsPerPage(100)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumnName, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
 
 

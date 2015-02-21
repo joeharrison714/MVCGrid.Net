@@ -26,6 +26,8 @@ namespace MVCGrid.Models
             ViewPath = "~/Views/MVCGrid/_Grid.cshtml";
             ErrorMessageHtml= @"<div class=""alert alert-warning"" role=""alert"">There was a problem loading the grid.</div>";
             AdditionalQueryOptionNames = new HashSet<string>();
+            AllowChangingPageSize = false;
+            MaxItemsPerPage = null;
         }
 
         public bool PreloadData { get; set; }
@@ -53,5 +55,8 @@ namespace MVCGrid.Models
 
 
         public HashSet<string> AdditionalQueryOptionNames { get; set; }
+
+        public bool AllowChangingPageSize { get; set; }
+        public int? MaxItemsPerPage { get; set; }
     }
 }

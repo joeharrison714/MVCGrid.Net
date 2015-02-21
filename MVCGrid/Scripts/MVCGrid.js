@@ -114,7 +114,15 @@ var MVCGrid = new function () {
         var newUrl = window.location.href;
         newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'page', pageNumber);
         setURLAndReload(mvcGridName, newUrl);
+    };
 
+    this.setPageSize = function (mvcGridName, pageSize) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = window.location.href;
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'pagesize', pageSize);
+        setURLAndReload(mvcGridName, newUrl);
     };
 
     this.setAdditionalQueryOptions = function (mvcGridName, obj) {

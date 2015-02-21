@@ -1,0 +1,45 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Page Size";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#selPageSize').click(function () {
+            MVCGrid.setPageSize('PageSizeGrid', $('#selPageSize').val());
+        });
+    </script>
+}
+
+Page Size: <select id="selPageSize" name="selPageSize">
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+</select>
+
+@Html.MVCGrid("PageSizeGrid")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+&lt;script type=&quot;text/javascript&quot;&gt;
+    $(&#39;#selPageSize&#39;).click(function () {
+        MVCGrid.setPageSize(&#39;PageSizeGrid&#39;, $(&#39;#selPageSize&#39;).val());
+    });
+&lt;/script&gt;
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("PageSizeGrid")</pre>
+    </div>
+</div>

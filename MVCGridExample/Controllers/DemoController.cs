@@ -104,5 +104,10 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult PageSizeDemo()
+        {
+            return View();
+        }
     }
 }

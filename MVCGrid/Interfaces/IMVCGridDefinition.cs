@@ -88,5 +88,15 @@ namespace MVCGrid.Interfaces
         /// Names of additional parameters that can be passed from client to server side
         /// </summary>
         HashSet<string> AdditionalQueryOptionNames { get; set; }
+
+        /// <summary>
+        /// Allows changing of page size from client-side
+        /// </summary>
+        bool AllowChangingPageSize { get; set; }
+
+        /// <summary>
+        /// Sets the maximum of items per page allowed when AllowChangingPageSize is enabled
+        /// </summary>
+        int? MaxItemsPerPage { get; set; }
     }
 }

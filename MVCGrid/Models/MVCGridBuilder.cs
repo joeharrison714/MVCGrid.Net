@@ -244,5 +244,23 @@ namespace MVCGrid.Models
             }
             return this;
         }
+
+        /// <summary>
+        /// Allows changing of page size from client-side
+        /// </summary>
+        public MVCGridBuilder<T1> WithAllowChangingPageSize(bool allow)
+        {
+            GridDefinition.AllowChangingPageSize = allow;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the maximum of items per page allowed when AllowChangingPageSize is enabled
+        /// </summary>
+        public MVCGridBuilder<T1> WithMaxItemsPerPage(int maxItems)
+        {
+            GridDefinition.MaxItemsPerPage = maxItems;
+            return this;
+        }
     }
 }

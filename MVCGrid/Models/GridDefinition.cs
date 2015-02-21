@@ -42,6 +42,8 @@ namespace MVCGrid.Models
                 this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
                 this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
                 this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
+                this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
+                this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
             }
         }
 
@@ -245,6 +247,16 @@ namespace MVCGrid.Models
         /// Names of additional parameters that can be passed from client to server side
         /// </summary>
         public HashSet<string> AdditionalQueryOptionNames { get; set; }
+
+        /// <summary>
+        /// Allows changing of page size from client-side
+        /// </summary>
+        public bool AllowChangingPageSize { get; set; }
+
+        /// <summary>
+        /// Sets the maximum of items per page allowed when AllowChangingPageSize is enabled
+        /// </summary>
+        public int? MaxItemsPerPage { get; set; }
     }
 
 }

@@ -16,7 +16,7 @@ namespace MVCGrid.Web
         public const string QueryStringSuffix_Sort = "sort";
         public const string QueryStringSuffix_SortDir = "dir";
         public const string QueryStringSuffix_Engine = "engine";
-        public const string QueryStringSuffix_ItemsPerPage = "rows";
+        public const string QueryStringSuffix_ItemsPerPage = "pagesize";
 
         public static QueryOptions ParseOptions(IMVCGridDefinition grid, HttpRequest httpRequest)
         {
@@ -24,6 +24,7 @@ namespace MVCGrid.Web
             string qsKeySort = grid.QueryStringPrefix + QueryStringSuffix_Sort;
             string qsKeyDirection = grid.QueryStringPrefix + QueryStringSuffix_SortDir;
             string qsKeyEngine = grid.QueryStringPrefix + QueryStringSuffix_Engine;
+            string qsKeyPageSize = grid.QueryStringPrefix + QueryStringSuffix_ItemsPerPage;
 
             var options = new QueryOptions();
 
@@ -41,6 +42,23 @@ namespace MVCGrid.Web
             else
             {
                 options.ItemsPerPage = grid.ItemsPerPage;
+
+                if (grid.AllowChangingPageSize)
+                {
+                    if (httpRequest.QueryString[qsKeyPageSize] != null)
+                    {
+                        int pageSize;
+                        if (Int32.TryParse(httpRequest.QueryString[qsKeyPageSize], out pageSize))
+                        {
+                            options.ItemsPerPage = pageSize;
+                        }
+                    }
+
+                    if (grid.MaxItemsPerPage.HasValue && grid.MaxItemsPerPage.Value < options.ItemsPerPage)
+                    {
+                        options.ItemsPerPage = grid.MaxItemsPerPage.Value;
+                    }
+                }
 
                 if (options.ItemsPerPage <= 0)
                 {
