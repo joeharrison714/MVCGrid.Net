@@ -785,7 +785,7 @@ namespace MVCGridExample
 
                     string globalSearch = options.GetAdditionalQueryOptionString("GlobalSearch");
 
-                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                    var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
                         options.SortColumnName, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()

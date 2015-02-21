@@ -16,6 +16,7 @@ namespace MVCGrid.Web
         public const string QueryStringSuffix_Sort = "sort";
         public const string QueryStringSuffix_SortDir = "dir";
         public const string QueryStringSuffix_Engine = "engine";
+        public const string QueryStringSuffix_ItemsPerPage = "rows";
 
         public static QueryOptions ParseOptions(IMVCGridDefinition grid, HttpRequest httpRequest)
         {

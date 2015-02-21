@@ -8,12 +8,23 @@ namespace MVCGrid.Web.Models
 {
     public interface IPersonRepository
     {
+        IEnumerable<Person> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
         IEnumerable<Person> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
         IEnumerable<Person> GetData(out int totalRecords, string filterFirstName, string filterLastName, bool? filterActive, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
     }
     public class PersonRepository : IPersonRepository
     {
         public IEnumerable<Person> GetData(out int totalRecords, string filterFirstName, string filterLastName, bool? filterActive, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        {
+            return GetData(out totalRecords, null, filterFirstName, filterLastName, filterActive, limitOffset, limitRowCount, orderBy, desc);
+        }
+
+        public IEnumerable<Person> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        {
+            return GetData(out totalRecords, globalSearch, null, null, null, limitOffset, limitRowCount, orderBy, desc);
+        }
+
+        public IEnumerable<Person> GetData(out int totalRecords, string globalSearch, string filterFirstName, string filterLastName, bool? filterActive, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
             using (var db = new SampleDatabaseEntities())
             {
@@ -30,6 +41,11 @@ namespace MVCGrid.Web.Models
                 if (filterActive.HasValue)
                 {
                     query = query.Where(p => p.Active == filterActive.Value);
+                }
+
+                if (!String.IsNullOrWhiteSpace(globalSearch))
+                {
+                    query = query.Where(p => (p.FirstName + " " + p.LastName).Contains(globalSearch));
                 }
 
                 totalRecords = query.Count();

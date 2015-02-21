@@ -48,12 +48,9 @@ namespace MVCGrid.Web
                 forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Sort);
                 forbiddenNames.Add(QueryStringParser.QueryStringSuffix_SortDir);
                 forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Engine);
+                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_ItemsPerPage);
 
-                foreach (var col in mapping.GetColumns())
-                {
-                    forbiddenNames.Add(col.ColumnName);
-
-                }
+                mapping.GetColumns().ToList().ForEach(col => forbiddenNames.Add(col.ColumnName));
 
                 foreach (var forbiddenName in forbiddenNames)
                 {
