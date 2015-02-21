@@ -5,4 +5,29 @@
 
 <h2>@ViewBag.Title</h2>
 
+@section Scripts{
+    <script type="text/javascript">
+        $('#btnSearch').click(function () {
+            MVCGrid.setAdditionalQueryOptions('GlobalSearchGrid',
+                { globalsearch: $('#txtGlobalSearch').val() }
+            );
+        });
+    </script>
+}
+
+<div class="well">
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="LastName">Search</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="txtGlobalSearch" name="txtGlobalSearch" type="text" value="">
+            </div>
+            <div class="col-sm-1">
+                <button type="button" id="btnSearch" class="btn btn-default">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @Html.MVCGrid("GlobalSearchGrid")

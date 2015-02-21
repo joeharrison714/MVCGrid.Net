@@ -7,11 +7,11 @@
     <script type="text/javascript">
         $('#btnFilter').click(function(){
             MVCGrid.setFilters('Filtering',
-                [
-                    { "columnName": "FirstName", "value": $('#FirstName').val() },
-                    { "columnName": "LastName", "value": $('#LastName').val() },
-                    { "columnName": "Status", "value": $('#Status').val() }
-                ])
+                {
+                    FirstName: $('#FirstName').val(),
+                    LastName: $('#LastName').val(),
+                    Status: $('#Status').val()
+                })
         });
     </script>
 }
@@ -63,14 +63,14 @@
     <div class="panel-body">
         <pre class="brush: js">
 &lt;script type=&quot;text/javascript&quot;&gt;
-	$(&#39;#btnFilter&#39;).click(function(){
-		MVCGrid.setFilters(&#39;Filtering&#39;,
-			[
-				{ &quot;columnName&quot;: &quot;FirstName&quot;, &quot;value&quot;: $(&#39;#FirstName&#39;).val() },
-				{ &quot;columnName&quot;: &quot;LastName&quot;, &quot;value&quot;: $(&#39;#LastName&#39;).val() },
-				{ &quot;columnName&quot;: &quot;Status&quot;, &quot;value&quot;: $(&#39;#Status&#39;).val() }
-			])
-	});
+    $(&#39;#btnFilter&#39;).click(function(){
+        MVCGrid.setFilters(&#39;Filtering&#39;,
+            {
+                FirstName: $(&#39;#FirstName&#39;).val(),
+                LastName: $(&#39;#LastName&#39;).val(),
+                Status: $(&#39;#Status&#39;).val()
+            })
+    });
 &lt;/script&gt;
         </pre>
     </div>

@@ -40,6 +40,9 @@ var MVCGrid = new function () {
     };
 
     var updateURLParameter = function (url, param, paramVal) {
+
+        param = param.toLowerCase();
+
         var TheAnchor = null;
         var newAdditionalURL = "";
         var tempArray = url.split("?");
@@ -79,16 +82,15 @@ var MVCGrid = new function () {
         return baseURL + "?" + newAdditionalURL + rows_txt;
     };
 
-    this.setFilters = function (mvcGridName, filters) {
+    this.setFilters = function (mvcGridName, obj) {
 
         var gridDef = findGridDef(mvcGridName);
 
         var newUrl = window.location.href;
 
-        for (var i = 0; i < filters.length; i++) {
-            var obj = filters[i];
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + obj.columnName, obj.value);
-        }
+        $.each(obj, function (k, v) {
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
+        });
 
         setURLAndReload(mvcGridName, newUrl);
     }
@@ -114,6 +116,19 @@ var MVCGrid = new function () {
         setURLAndReload(mvcGridName, newUrl);
 
     };
+
+    this.setAdditionalQueryOptions = function (mvcGridName, obj) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = window.location.href;
+
+        $.each(obj, function (k, v) {
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
+        });
+
+        setURLAndReload(mvcGridName, newUrl);
+    }
 
     var setURLAndReload = function (mvcGridName, newUrl) {
 
