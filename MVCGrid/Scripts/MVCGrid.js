@@ -10,10 +10,10 @@ var MVCGrid = new function () {
 
             var mvcGridName = $("#" + this.id).find("input[name='MVCGridName']").val();
 
-            var jsonData = $('#' + 'MVCGrid_' + mvcGridName + '_JsonData').val();
+            var jsonData = $('#' + 'MVCGrid_' + mvcGridName + '_JsonData').html();
 
             currentGrids.push(
-                JSON.parse(jsonData)
+                $.parseJSON(jsonData)
             );
         });
 

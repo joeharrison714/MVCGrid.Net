@@ -21,26 +21,7 @@ namespace MVCGrid.Web
     {
         internal static string GenerateBasePageHtml(string gridName, IMVCGridDefinition def)
         {
-            StringBuilder sbJson = new StringBuilder();
-
-            sbJson.Append("{");
-            sbJson.AppendFormat("\"name\": \"{0}\"", gridName);
-            sbJson.Append(",");
-            sbJson.AppendFormat("\"qsPrefix\": \"{0}\"", def.QueryStringPrefix);
-            sbJson.Append(",");
-            sbJson.AppendFormat("\"preloaded\": {0}", def.PreloadData.ToString().ToLower());
-
-            sbJson.Append(",");
-            sbJson.AppendFormat("\"clientLoading\": \"{0}\"", def.ClientSideLoadingMessageFunctionName);
-
-            sbJson.Append(",");
-            sbJson.AppendFormat("\"clientLoadingComplete\": \"{0}\"", def.ClientSideLoadingCompleteFunctionName);
-
-            sbJson.Append(",");
-            sbJson.AppendFormat("\"renderingMode\": \"{0}\"", def.RenderingMode.ToString().ToLower());
-
-            sbJson.Append("}");
-            //mvcGridName, qsPrefix: qsPrefix, preloaded: preload }
+            string definitionJson = GenerateClientDefinitionJson(gridName, def);
 
             StringBuilder sbHtml = new StringBuilder();
 
@@ -50,7 +31,8 @@ namespace MVCGrid.Web
             //sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_Prefix' value='{1}' />", gridName, def.QueryStringPrefix);
             //sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_Preload' value='{1}' />", gridName, def.PreloadData.ToString().ToLower());
 
-            sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_JsonData' value='{1}' />", gridName, sbJson.ToString());
+            //sbHtml.AppendFormat("<input type='hidden' id='MVCGrid_{0}_JsonData' value='{1}' />", gridName, sbJson.ToString());
+            sbHtml.AppendFormat("<div id='MVCGrid_{0}_JsonData' style='display: none'>{1}</div>", gridName, definitionJson);
 
             sbHtml.AppendFormat("<div id='MVCGrid_ErrorMessage_{0}' style='display: none;'>", gridName);
             if (String.IsNullOrWhiteSpace(def.ErrorMessageHtml))
@@ -78,6 +60,30 @@ namespace MVCGrid.Web
             sbHtml.AppendLine("</div>");
 
             return sbHtml.ToString();
+        }
+
+        private static string GenerateClientDefinitionJson(string gridName, IMVCGridDefinition def)
+        {
+            StringBuilder sbJson = new StringBuilder();
+
+            sbJson.Append("{");
+            sbJson.AppendFormat("\"name\": \"{0}\"", gridName);
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"qsPrefix\": \"{0}\"", def.QueryStringPrefix);
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"preloaded\": {0}", def.PreloadData.ToString().ToLower());
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"clientLoading\": \"{0}\"", def.ClientSideLoadingMessageFunctionName);
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"clientLoadingComplete\": \"{0}\"", def.ClientSideLoadingCompleteFunctionName);
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"renderingMode\": \"{0}\"", def.RenderingMode.ToString().ToLower());
+
+            sbJson.Append("}");
+            return sbJson.ToString();
         }
     }
 }
