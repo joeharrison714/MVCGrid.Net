@@ -24,7 +24,7 @@
         });
 
         $('#txtGlobalSearch').keyup(function () {
-            MVCGrid.setFilters('GlobalSearchGrid', { globalsearch: $('#txtGlobalSearch').val() });
+            MVCGrid.setAdditionalQueryOptions('GlobalSearchGrid', { globalsearch: $('#txtGlobalSearch').val() });
         });
     </script>
 }
@@ -64,7 +64,7 @@ $(&#39;#selPageSize&#39;).click(function () {
     MVCGrid.setPageSize(&#39;GlobalSearchGrid&#39;, $(&#39;#selPageSize&#39;).val());
 });
 $(&#39;#txtGlobalSearch&#39;).keyup(function () {
-    MVCGrid.setFilters(&#39;GlobalSearchGrid&#39;, { globalsearch: $(&#39;#txtGlobalSearch&#39;).val() });
+    MVCGrid.setAdditionalQueryOptions(&#39;GlobalSearchGrid&#39;, { globalsearch: $(&#39;#txtGlobalSearch&#39;).val() });
 });
         </pre>
     </div>
