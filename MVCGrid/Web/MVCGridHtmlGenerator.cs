@@ -60,15 +60,27 @@ namespace MVCGrid.Web
 
         private static string GenerateClientJsonVisibility(GridContext gridContext)
         {
+            var gridColumns = gridContext.GridDefinition.GetColumns();
+
             StringBuilder sb = new StringBuilder();
 
             foreach (var cv in gridContext.QueryOptions.ColumnVisibility)
             {
+                var gridColumn = gridColumns.SingleOrDefault(p => p.ColumnName == cv.ColumnName);
+
                 if (sb.Length > 0)
                 {
                     sb.Append(",");
                 }
-                sb.AppendFormat("\"{0}\": {1}", cv.ColumnName, cv.Visible.ToString().ToLower());
+
+                sb.AppendFormat("\"{0}\": {{", cv.ColumnName);
+
+                sb.AppendFormat("\"{0}\": \"{1}\"", "headerText", gridColumn.HeaderText);
+                sb.Append(",");
+                sb.AppendFormat("\"{0}\": {1}", "visible", cv.Visible.ToString().ToLower());
+                sb.Append(",");
+                sb.AppendFormat("\"{0}\": {1}", "allow", gridColumn.AllowChangeVisibility.ToString().ToLower());
+                sb.Append("}");
             }
             return sb.ToString();
         }
