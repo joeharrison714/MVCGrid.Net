@@ -5,13 +5,19 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $('#btnFilter').click(function(){
-            MVCGrid.setFilters('Filtering',
-                {
-                    FirstName: $('#FirstName').val(),
-                    LastName: $('#LastName').val(),
-                    Status: $('#Status').val()
-                })
+        $(function () {
+            $('#btnFilter').click(function(){
+                MVCGrid.setFilters('Filtering',
+                    {
+                        FirstName: $('#FirstName').val(),
+                        LastName: $('#LastName').val(),
+                        Status: $('#Status').val()
+                    })
+            });
+
+            $('#FirstName').val(MVCGrid.getFilters('Filtering').FirstName);
+            $('#LastName').val(MVCGrid.getFilters('Filtering').LastName);
+            $('#Status').val(MVCGrid.getFilters('Filtering').Status);
         });
     </script>
 }

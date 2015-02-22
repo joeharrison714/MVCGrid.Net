@@ -72,6 +72,8 @@ namespace MVCGrid.Rendering
 
             RenderPaging(model, sbHtml);
 
+            sbHtml.Append(model.ClientDataTransferHtmlBlock);
+
             outputStream.Write(sbHtml.ToString());
         }
 

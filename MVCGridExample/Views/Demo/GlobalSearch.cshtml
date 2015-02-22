@@ -19,13 +19,22 @@
 @section Scripts{
     <script type="text/javascript">
 
-        $('#selPageSize').click(function () {
-            MVCGrid.setPageSize('GlobalSearchGrid', $('#selPageSize').val());
+        $(function () {
+
+            $('#selPageSize').click(function () {
+                MVCGrid.setPageSize('GlobalSearchGrid', $('#selPageSize').val());
+            });
+
+            $('#txtGlobalSearch').keyup(function () {
+                MVCGrid.setAdditionalQueryOptions('GlobalSearchGrid', { globalsearch: $('#txtGlobalSearch').val() });
+            });
+
+            $('#selPageSize').val(MVCGrid.getPageSize('GlobalSearchGrid'));
+            $('#txtGlobalSearch').val(MVCGrid.getAdditionalQueryOptions('GlobalSearchGrid').GlobalSearch);
+
         });
 
-        $('#txtGlobalSearch').keyup(function () {
-            MVCGrid.setAdditionalQueryOptions('GlobalSearchGrid', { globalsearch: $('#txtGlobalSearch').val() });
-        });
+
     </script>
 }
 

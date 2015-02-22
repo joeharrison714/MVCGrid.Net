@@ -26,6 +26,12 @@ var MVCGrid = new function () {
         }
     }
 
+    var getClientData = function (mvcGridName){
+        var jsonData = $('#' + 'MVCGrid_' + mvcGridName + '_ContextJsonData').html();
+
+        return $.parseJSON(jsonData);
+    };
+
     var findGridDef = function (mvcGridName) {
         var gridDef;
         for (var i = 0; i < currentGrids.length; i++) {
@@ -82,6 +88,11 @@ var MVCGrid = new function () {
         return baseURL + "?" + newAdditionalURL + rows_txt;
     };
 
+    this.getFilters = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.filters;
+    }
+
     this.setFilters = function (mvcGridName, obj) {
 
         var gridDef = findGridDef(mvcGridName);
@@ -93,6 +104,16 @@ var MVCGrid = new function () {
         });
 
         setURLAndReload(mvcGridName, newUrl);
+    }
+
+    this.getSortColumn = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.sortColumn;
+    }
+
+    this.getSortDirection = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.sortDirection;
     }
 
     this.setSort = function (mvcGridName, sortColumn, sortDirection) {
@@ -107,6 +128,11 @@ var MVCGrid = new function () {
         setURLAndReload(mvcGridName, newUrl);
     };
 
+    this.getPage = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.pageNumber;
+    }
+
     this.setPage = function (mvcGridName, pageNumber) {
 
         var gridDef = findGridDef(mvcGridName);
@@ -116,6 +142,11 @@ var MVCGrid = new function () {
         setURLAndReload(mvcGridName, newUrl);
     };
 
+    this.getPageSize = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.itemsPerPage;
+    }
+
     this.setPageSize = function (mvcGridName, pageSize) {
 
         var gridDef = findGridDef(mvcGridName);
@@ -124,6 +155,11 @@ var MVCGrid = new function () {
         newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'pagesize', pageSize);
         setURLAndReload(mvcGridName, newUrl);
     };
+
+    this.getAdditionalQueryOptions = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.additionalQueryOptions;
+    }
 
     this.setAdditionalQueryOptions = function (mvcGridName, obj) {
 

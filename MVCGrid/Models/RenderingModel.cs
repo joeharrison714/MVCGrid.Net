@@ -59,6 +59,8 @@ namespace MVCGrid.Models
         /// Paging data. Will be null if paging should not be displayed
         /// </summary>
         public PagingModel PagingModel { get; set; }
+
+        public string ClientDataTransferHtmlBlock { get; set; }
     }
 
     public class Cell

@@ -45,7 +45,7 @@
         onclick = pagingModel.PageLinks[pagingModel.CurrentPage + 1] + "; ";
     }
 
-    <li@(Html.Raw(attr))>
+    <li@(html.raw(attr))>
         <a href='#' aria-label='Next' onclick='@(Html.Raw(onclick))return false;'><span aria-hidden='true'>Next &raquo;</span></a>
         </li>
 }
@@ -62,9 +62,9 @@
         onclick = pagingModel.PageLinks[pagingModel.CurrentPage - 1] + "; ";
     }
 
-    <li@(Html.Raw(attr))>
+    <li@(html.raw(attr))>
         <a href='#' aria-label='Previous' onclick='@(Html.Raw(onclick))return false;'><span aria-hidden='true'>&laquo; Previous</span></a>
-    </li>
+        </li>
 }
 
 @functions {
@@ -96,7 +96,7 @@
         <tr>
             @foreach (var col in Model.Columns)
             {
-                <th@(Html.Raw(HeaderAttributes(col)))>
+                <th@(html.raw(headerattributes(col)))>
                     @col.HeaderText @(SortImage(col))</th>
             }
     </tr>
@@ -104,11 +104,11 @@
 <tbody>
     @foreach (var row in Model.Rows)
     {
-        <tr@(Html.Raw(AppendCssAttribute(row.CalculatedCssClass)))>
+        <tr@(html.raw(appendcssattribute(row.calculatedcssclass)))>
             @foreach (var col in Model.Columns)
             {
                 var cell = row.Cells[col.Name];
-                <td@(Html.Raw(AppendCssAttribute(cell.CalculatedCssClass)))>
+                <td@(html.raw(appendcssattribute(cell.calculatedcssclass)))>
                     @Html.Raw(cell.HtmlText)</td>
             }
             </tr>
@@ -139,3 +139,5 @@
         </div>
     </div>
 }
+
+@Html.Raw(Model.ClientDataTransferHtmlBlock)

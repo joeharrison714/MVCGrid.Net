@@ -101,6 +101,9 @@ namespace MVCGrid.Engine
                     model.PagingModel.PageLinks.Add(i, HtmlUtility.MakeGotoPageLink(gridContext.GridName, i));
                 }
             }
+
+            model.ClientDataTransferHtmlBlock = MVCGrid.Web.MVCGridHtmlGenerator.GenerateClientDataTransferHtml(gridContext);
+
             return model;
         }
         private void PrepColumns(Models.GridContext gridContext, RenderingModel model)
