@@ -908,21 +908,27 @@ namespace MVCGridExample
             };
 
             MVCGridDefinitionTable.Add("GridDefinition", new MVCGridBuilder<MethodDocItem>()
-                .AddColumn(docsReturnTypeColumn)
                 .AddColumn(docsNameColumn)
+                .AddColumn(docsReturnTypeColumn)
                 .AddColumn(docsDescriptionColumn)
                 .WithRetrieveDataMethod(docsLoadData)
             );
 
             MVCGridDefinitionTable.Add("GridColumn", new MVCGridBuilder<MethodDocItem>()
-                .AddColumn(docsReturnTypeColumn)
                 .AddColumn(docsNameColumn)
+                .AddColumn(docsReturnTypeColumn)
                 .AddColumn(docsDescriptionColumn)
                 .WithRetrieveDataMethod(docsLoadData)
             );
 
             MVCGridDefinitionTable.Add("QueryOptions", new MVCGridBuilder<MethodDocItem>()
+                .AddColumn(docsNameColumn)
                 .AddColumn(docsReturnTypeColumn)
+                .AddColumn(docsDescriptionColumn)
+                .WithRetrieveDataMethod(docsLoadData)
+            );
+
+            MVCGridDefinitionTable.Add("ClientSide", new MVCGridBuilder<MethodDocItem>()
                 .AddColumn(docsNameColumn)
                 .AddColumn(docsDescriptionColumn)
                 .WithRetrieveDataMethod(docsLoadData)

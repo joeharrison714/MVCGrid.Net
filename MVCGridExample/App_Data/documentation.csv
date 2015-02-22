@@ -13,6 +13,10 @@ GridDefinition,12,"Func<T1, GridContext, string>",RowCssClassExpression,Use this
 GridDefinition,13,"Dictionary<string, string>",AdditionalSettings,Arbitrary additional settings for this grid
 GridDefinition,14,RenderingMode,RenderingMode,"The rendering mode to use for this grid. By default it will use the RenderingEngine rendering mode. If you want to use a custom Razor view to display your grid, change this to Controller"
 GridDefinition,15,string,ViewPath,"When RenderingMode is set to Controller, this is the path to the razor view to use."
+GridDefinition,16,string,ErrorMessageHtml,"HTML to display in place of the grid when an error occurs"
+GridDefinition,17,HashSet<string>,AdditionalQueryOptionNames,"Names of additional parameters that can be passed from client to server side"
+GridDefinition,18,bool,AllowChangingPageSize,"Allows changing of page size from client-side"
+GridDefinition,19,int?,MaxItemsPerPage,Sets the maximum of items per page allowed when AllowChangingPageSize is enabled
 GridColumn,2,string,ColumnName,A unique name for this column
 GridColumn,3,string,HeaderText,"Header text to display for the current column, if different from ColumnName"
 GridColumn,4,"Func<T1, GridContext, string>",ValueExpression,"This is how to specify the contents of the current cell. If this contains HTML, set HTMLEncode to false"
@@ -30,3 +34,15 @@ QueryOptions,3,int?,ItemsPerPage,Set to null if paging is disabled. Otherwise it
 QueryOptions,4,"Dictionary<string, string>",Filters,"Set to an empty dictionary if filtering is disabled. If filtering is enabled, the requested filters are validated against the list of column names and the key is set to the column name if the column name is valid and filtering is enabled on that column.  The filter dictionaty item is not added if the value is null or empty."
 QueryOptions,5,string,GetFilterString(string columnName),Use this to check for a filter on a coluln.  Will return null if the column has no filter specified.
 QueryOptions,6,object,SortColumnData,"The object from the ColumnDefinition of the currently sorted coumn, if different from the ColumnName"
+QueryOptions,7,"Dictionary<string,string>",AdditionalQueryOptions,"additional parameters that can be passed from client to server side"
+ClientSide,1,"obj",MVCGrid.getFilters(mvcGridName),
+ClientSide,2,"","MVCGrid.setFilters(mvcGridName, obj)",
+ClientSide,3,"","MVCGrid.setSort(mvcGridName, sortColumn, sortDirection)",
+ClientSide,4,"","MVCGrid.getSortColumn(mvcGridName)",
+ClientSide,5,"",MVCGrid.getSortDirection(mvcGridName),
+ClientSide,6,"",MVCGrid.getPage(mvcGridName),
+ClientSide,7,"","MVCGrid.setPage(mvcGridName, page)",
+ClientSide,8,"",MVCGrid.getPageSize(mvcGridName),
+ClientSide,9,"","MVCGrid.setPageSize(mvcGridName, pageSize)",
+ClientSide,10,"obj",MVCGrid.getAdditionalQueryOptions(mvcGridName),
+ClientSide,11,"","MVCGrid.setAdditionalQueryOptions(mvcGridName, obj)",
