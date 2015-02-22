@@ -930,7 +930,6 @@ namespace MVCGridExample
 
             MVCGridDefinitionTable.Add("ClientSide", new MVCGridBuilder<MethodDocItem>()
                 .AddColumn(docsNameColumn)
-                .AddColumn(docsReturnTypeColumn)
                 .AddColumn(docsDescriptionColumn)
                 .WithRetrieveDataMethod(docsLoadData)
             );

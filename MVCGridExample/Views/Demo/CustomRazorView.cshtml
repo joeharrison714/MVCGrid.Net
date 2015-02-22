@@ -48,6 +48,7 @@ routes.MapRoute(
     </li>
 
     <li>On your grid definition or in the defaults, set <code>RenderingMode = RenderingMode.Controller;</code> and the <code>ViewPath = "~/Views/MVCGrid/_Custom.cshtml";</code></li>
+    <li>You must include the following line at the bottom of your view: <code>@@Html.Raw(Model.ClientDataTransferHtmlBlock)</code></li>
 </ol>
 
 @Html.MVCGrid("CustomRazorView")
