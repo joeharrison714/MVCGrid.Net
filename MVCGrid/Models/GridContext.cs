@@ -23,12 +23,34 @@ namespace MVCGrid.Models
         {
             List<IMVCGridColumn> visibleColumns = new List<IMVCGridColumn>();
 
-            foreach (var col in this.GridDefinition.GetColumns())
+            var gridColumns = this.GridDefinition.GetColumns();
+
+            if (QueryOptions.ColumnVisibility == null || QueryOptions.ColumnVisibility.Count == 0)
             {
-                if (col.Visible)
+                foreach (var col in gridColumns)
                 {
-                    visibleColumns.Add(col);
+                    if (col.Visible)
+                    {
+                        visibleColumns.Add(col);
+                    }
                 }
+            }
+            else
+            {
+                foreach (var colVis in QueryOptions.ColumnVisibility)
+                {
+                    var gridColumn = gridColumns.SingleOrDefault(p => p.ColumnName == colVis.ColumnName);
+
+                    if (colVis.Visible)
+                    {
+                        visibleColumns.Add(gridColumn);
+                    }
+                }
+            }
+
+            if (visibleColumns.Count == 0)
+            {
+                visibleColumns.Add(this.GridDefinition.GetColumns().ElementAt(0));
             }
 
             return visibleColumns;

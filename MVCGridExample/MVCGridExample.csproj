@@ -278,6 +278,7 @@
     <Content Include="Views\Demo\CustomErrorMessage.cshtml" />
     <Content Include="Views\Demo\GlobalSearch.cshtml" />
     <Content Include="Views\Demo\PageSizeDemo.cshtml" />
+    <Content Include="Views\Demo\ColumnVisibilityDemo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

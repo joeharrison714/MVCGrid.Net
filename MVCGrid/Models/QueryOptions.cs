@@ -13,6 +13,7 @@ namespace MVCGrid.Models
         {
             Filters = new Dictionary<string, string>();
             AdditionalQueryOptions = new Dictionary<string, string>();
+            ColumnVisibility = new List<ColumnVisibility>();
         }
 
         public Dictionary<string, string> AdditionalQueryOptions { get; set; }
@@ -103,5 +104,7 @@ namespace MVCGrid.Models
 
             return val;
         }
+
+        public List<ColumnVisibility> ColumnVisibility { get; set; }
     }
 }

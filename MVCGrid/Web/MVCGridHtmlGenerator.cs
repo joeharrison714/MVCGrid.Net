@@ -33,9 +33,71 @@ namespace MVCGrid.Web
             sb.AppendFormat("\"pageNumber\": {0}", gridContext.QueryOptions.PageIndex + 1);
             sb.Append(",");
 
+            sb.Append("\"columnVisibility\": {");
+            sb.Append(GenerateClientJsonVisibility(gridContext));
+            sb.Append("}");
+
+            sb.Append(",");
 
             sb.Append("\"filters\": {");
-            bool hasFilter = false;
+            sb.Append(GenerateClientJsonFilter(gridContext));
+            sb.Append("}");
+
+            sb.Append(",");
+
+            sb.Append("\"additionalQueryOptions\": {");
+            sb.Append(GenerateClientJsonAdditional(gridContext));
+            sb.Append("}");
+
+
+
+            sb.Append("}");
+
+            sb.Append("</div>");
+
+            return sb.ToString();
+        }
+
+        private static string GenerateClientJsonVisibility(GridContext gridContext)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var cv in gridContext.QueryOptions.ColumnVisibility)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(",");
+                }
+                sb.AppendFormat("\"{0}\": {1}", cv.ColumnName, cv.Visible.ToString().ToLower());
+            }
+            return sb.ToString();
+        }
+
+        private static string GenerateClientJsonAdditional(GridContext gridContext)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var aqon in gridContext.GridDefinition.AdditionalQueryOptionNames)
+            {
+                string val = "";
+                if (gridContext.QueryOptions.AdditionalQueryOptions.ContainsKey(aqon))
+                {
+                    val = gridContext.QueryOptions.AdditionalQueryOptions[aqon];
+                }
+
+                if (sb.Length > 0)
+                {
+                    sb.Append(",");
+                }
+                sb.AppendFormat("\"{0}\": \"{1}\"", aqon, val);
+            }
+            return sb.ToString();
+        }
+
+        private static string GenerateClientJsonFilter(GridContext gridContext)
+        {
+            StringBuilder sb = new StringBuilder();
+
             var filterableColumns = gridContext.GridDefinition.GetColumns().Where(p => p.EnableFiltering);
             foreach (var col in filterableColumns)
             {
@@ -45,42 +107,12 @@ namespace MVCGrid.Web
                     val = gridContext.QueryOptions.Filters[col.ColumnName];
                 }
 
-                if (hasFilter)
+                if (sb.Length > 0)
                 {
                     sb.Append(",");
                 }
                 sb.AppendFormat("\"{0}\": \"{1}\"", col.ColumnName, val);
-                hasFilter = true;
             }
-            sb.Append("}");
-
-            sb.Append(",");
-
-            sb.Append("\"additionalQueryOptions\": {");
-            bool hasAdditionalQueryOptions = false;
-            foreach (var aqon in gridContext.GridDefinition.AdditionalQueryOptionNames)
-            {
-                string val = "";
-                if (gridContext.QueryOptions.AdditionalQueryOptions.ContainsKey(aqon))
-                {
-                    val = gridContext.QueryOptions.AdditionalQueryOptions[aqon];
-                }
-
-                if (hasAdditionalQueryOptions)
-                {
-                    sb.Append(",");
-                }
-                sb.AppendFormat("\"{0}\": \"{1}\"", aqon, val);
-                hasAdditionalQueryOptions = true;
-            }
-            sb.Append("}");
-
-
-
-            sb.Append("}");
-
-            sb.Append("</div>");
-
             return sb.ToString();
         }
 

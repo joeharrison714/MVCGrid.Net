@@ -155,5 +155,15 @@ namespace MVCGrid.Models
             GridColumn.SortColumnData = sortColumnData;
             return this;
         }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the column visibility can be changed.
+        /// </summary>
+        public GridColumnBuilder<T1> WithAllowChangeVisibility(bool allow)
+        {
+            GridColumn.AllowChangeVisibility = allow;
+            return this;
+        }
     }
 }

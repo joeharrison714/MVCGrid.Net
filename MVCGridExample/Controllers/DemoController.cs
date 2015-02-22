@@ -109,5 +109,10 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult ColumnVisibilityDemo()
+        {
+            return View();
+        }
     }
 }

@@ -834,6 +834,49 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("ColumnVisibilityGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                    cols.Add("StartDate").WithHeaderText("Start Date")
+                        .WithVisibility(false).WithAllowChangeVisibility(true)
+                        .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                    cols.Add("Status").WithSortColumnData("Active")
+                        .WithHeaderText("Status")
+                        .WithVisibility(false).WithAllowChangeVisibility(true)
+                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
+                        .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger");
+                    cols.Add("Gender")
+                        .WithVisibility(false).WithAllowChangeVisibility(true)
+                        .WithValueExpression((p, c) => p.Gender);
+                })
+                .WithSorting(true)
+                .WithDefaultSortColumn("LastName")
+                .WithPaging(true)
+                .WithItemsPerPage(10)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumnName, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
 
 

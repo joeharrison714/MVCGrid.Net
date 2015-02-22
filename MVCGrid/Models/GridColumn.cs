@@ -108,5 +108,10 @@ namespace MVCGrid.Models
         /// Object to pass to QueryOptions when this column is sorted on. Only specify if different from ColumnName
         /// </summary>
         public object SortColumnData { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the column visibility can be changed.
+        /// </summary>
+        public bool AllowChangeVisibility { get; set; }
     }
 }

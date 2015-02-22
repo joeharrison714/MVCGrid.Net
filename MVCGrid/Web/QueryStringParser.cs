@@ -17,6 +17,7 @@ namespace MVCGrid.Web
         public const string QueryStringSuffix_SortDir = "dir";
         public const string QueryStringSuffix_Engine = "engine";
         public const string QueryStringSuffix_ItemsPerPage = "pagesize";
+        public const string QueryStringSuffix_Columns = "cols";
 
         public static QueryOptions ParseOptions(IMVCGridDefinition grid, HttpRequest httpRequest)
         {
@@ -25,6 +26,7 @@ namespace MVCGrid.Web
             string qsKeyDirection = grid.QueryStringPrefix + QueryStringSuffix_SortDir;
             string qsKeyEngine = grid.QueryStringPrefix + QueryStringSuffix_Engine;
             string qsKeyPageSize = grid.QueryStringPrefix + QueryStringSuffix_ItemsPerPage;
+            string qsColumns = grid.QueryStringPrefix + QueryStringSuffix_Columns;
 
             var options = new QueryOptions();
 
@@ -104,6 +106,7 @@ namespace MVCGrid.Web
             if (!grid.Sorting)
             {
                 options.SortColumnName = null;
+                options.SortColumnData = null;
                 options.SortDirection = SortDirection.Unspecified;
             }
             else
@@ -121,23 +124,23 @@ namespace MVCGrid.Web
                     sortColName = grid.DefaultSortColumn;
                 }
 
+                string thisSortColName = sortColName.Trim().ToLower();
+
                 // validate SortColumn
-                var colDef = grid.GetColumns().SingleOrDefault(p => p.ColumnName == sortColName);
+                var colDef = grid.GetColumns().SingleOrDefault(p => p.ColumnName.ToLower() == thisSortColName);
 
-                if (colDef == null)
-                {
-                    sortColName = null;
-                }
-                else
-                {
-                    if (!colDef.EnableSorting)
-                    {
-                        sortColName = null;
-                    }
-                }
 
-                options.SortColumnName = sortColName;
-                options.SortColumnData = colDef.SortColumnData;
+                if (colDef != null && !colDef.EnableSorting)
+                {
+                    colDef = null;
+                }
+                
+
+                if (colDef != null)
+                {
+                    options.SortColumnName = colDef.ColumnName;
+                    options.SortColumnData = colDef.SortColumnData;
+                }
                 
 
                 options.SortDirection = SortDirection.Asc;
@@ -166,6 +169,68 @@ namespace MVCGrid.Web
                     options.AdditionalQueryOptions.Add(aqon, val);
                 }
             }
+
+
+            var gridColumns = grid.GetColumns();
+            List<ColumnVisibility> requestedColumns = new List<ColumnVisibility>();
+            if (httpRequest.QueryString[qsColumns] == null)
+            {
+                foreach (var gridColumn in gridColumns)
+                {
+                    requestedColumns.Add(
+                        new ColumnVisibility() {
+                            ColumnName = gridColumn.ColumnName,
+                            Visible = gridColumn.Visible
+                        });
+                }
+            }
+            else
+            {
+                string cols = httpRequest.QueryString[qsColumns];
+
+                string[] colParts = cols.Split(',', ';');
+
+                foreach (var colPart in colParts)
+                {
+                    if (String.IsNullOrWhiteSpace(colPart))
+                    {
+                        continue;
+                    }
+                    string thisColPart = colPart.ToLower().Trim();
+
+                    var gridColumn = gridColumns.SingleOrDefault(p => p.ColumnName.ToLower() == thisColPart);
+
+                    if (gridColumn != null)
+                    {
+                        if (requestedColumns.SingleOrDefault(p=>p.ColumnName== gridColumn.ColumnName) == null)
+                        {
+                            requestedColumns.Add(
+                                new ColumnVisibility()
+                                {
+                                    ColumnName = gridColumn.ColumnName,
+                                    Visible = true
+                                });
+                        }
+                    }
+                }
+            }
+
+            foreach (var gridColumn in gridColumns)
+            {
+                var requestedCol = requestedColumns.SingleOrDefault(p => p.ColumnName == gridColumn.ColumnName);
+
+                if (requestedCol == null)
+                {
+                    requestedCol = new ColumnVisibility() { ColumnName = gridColumn.ColumnName, Visible = false };
+                    requestedColumns.Add(requestedCol);
+                }
+
+                if (!gridColumn.AllowChangeVisibility && !requestedCol.Visible)
+                {
+                    requestedCol.Visible = true;
+                }
+            }
+            options.ColumnVisibility.AddRange(requestedColumns);
 
             return options;
         }

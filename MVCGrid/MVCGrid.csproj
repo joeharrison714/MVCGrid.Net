@@ -53,6 +53,7 @@
     <Compile Include="Engine\GridEngine.cs" />
     <Compile Include="Interfaces\IMVCGridRenderingEngine.cs" />
     <Compile Include="Interfaces\IMVCGridTemplatingEngine.cs" />
+    <Compile Include="Models\ColumnVisibility.cs" />
     <Compile Include="Models\MVCGridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />
