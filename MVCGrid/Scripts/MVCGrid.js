@@ -88,6 +88,32 @@ var MVCGrid = new function () {
         return baseURL + "?" + newAdditionalURL + rows_txt;
     };
 
+    this.getColumnVisibility = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.columnVisibility;
+    }
+
+    this.setColumnVisibility = function (mvcGridName, obj) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var colString = '';
+        $.each(obj, function (k, v) {
+            if (v) {
+                if (colString != '') colString += ',';
+                colString += k;
+            }
+        });
+
+        var newUrl = window.location.href;
+
+        $.each(obj, function (k, v) {
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'cols', colString);
+        });
+
+        setURLAndReload(mvcGridName, newUrl);
+    }
+
     this.getFilters = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.filters;
