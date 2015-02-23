@@ -225,7 +225,7 @@ namespace MVCGrid.Web
                     requestedColumns.Add(requestedCol);
                 }
 
-                if (!gridColumn.AllowChangeVisibility && !requestedCol.Visible)
+                if (!requestedCol.Visible && gridColumn.Visible && !gridColumn.AllowChangeVisibility)
                 {
                     requestedCol.Visible = true;
                 }
