@@ -6,6 +6,7 @@
     <style type="text/css">
         .sortable ul{
             list-style-type:none;
+            list-style:none;
         }
         .sortable li{
             list-style: none;
@@ -28,7 +29,7 @@
 
             var colVis = MVCGrid.getColumnVisibility('ColumnVisibilityGrid');
 
-            html += '<ul class="sortable">';
+            html += '<ul class="sortable" style="padding-left:0;">';
 
             @*<div class="input-group">
   <span class="input-group-addon" id="basic-addon1">@</span>
