@@ -15,6 +15,7 @@ namespace MVCGrid.Models
             ItemsPerPage = 20;
             Sorting = false;
             DefaultSortColumn = null;
+            DefaultSortDirection = SortDirection.Unspecified;
             NoResultsMessage = "No results.";
             ClientSideLoadingMessageFunctionName = null;
             ClientSideLoadingCompleteFunctionName = null;
@@ -35,6 +36,7 @@ namespace MVCGrid.Models
         public int ItemsPerPage { get; set; }
         public bool Sorting { get; set; }
         public string DefaultSortColumn { get; set; }
+        public SortDirection DefaultSortDirection { get; set; }
         public string NoResultsMessage { get; set; }
         public string ClientSideLoadingMessageFunctionName { get; set; }
         public string ClientSideLoadingCompleteFunctionName { get; set; }

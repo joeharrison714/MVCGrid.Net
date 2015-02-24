@@ -129,6 +129,15 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// The default order to sort by when no sort is specified
+        /// </summary>
+        public MVCGridBuilder<T1> WithDefaultSortDirection(SortDirection sortDirection)
+        {
+            GridDefinition.DefaultSortDirection = sortDirection;
+            return this;
+        }
+
+        /// <summary>
         /// Text to display when there are no results.
         /// </summary>
         public MVCGridBuilder<T1> WithNoResultsMessage(string noResultsMessage)

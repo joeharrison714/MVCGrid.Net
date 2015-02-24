@@ -48,6 +48,7 @@ namespace MVCGridExample
                 //.WithAdditionalSetting(MVCGrid.Rendering.BootstrapRenderingEngine.SettingNameTableClass, "notreal") // Excample of changing table css class
                 .WithSorting(true)
                 .WithDefaultSortColumn("Id")
+                .WithDefaultSortDirection(SortDirection.Dsc)
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithPreloadData(true)

@@ -42,6 +42,11 @@ namespace MVCGrid.Interfaces
         string DefaultSortColumn { get; set; }
 
         /// <summary>
+        /// The default order to sort by when no sort is specified
+        /// </summary>
+        SortDirection DefaultSortDirection { get; set; }
+
+        /// <summary>
         /// Text to display when there are no results.
         /// </summary>
         string NoResultsMessage { get; set; }

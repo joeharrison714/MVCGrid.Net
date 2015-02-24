@@ -143,13 +143,17 @@ namespace MVCGrid.Web
                 }
                 
 
-                options.SortDirection = SortDirection.Asc;
+                options.SortDirection = grid.DefaultSortDirection;
                 if (httpRequest.QueryString[qsKeyDirection] != null)
                 {
                     string sortDir = httpRequest.QueryString[qsKeyDirection];
                     if (String.Compare(sortDir, "dsc", true) == 0)
                     {
                         options.SortDirection = SortDirection.Dsc;
+                    }
+                    else if (String.Compare(sortDir, "asc", true) == 0)
+                    {
+                        options.SortDirection = SortDirection.Asc;
                     }
                 }
             }

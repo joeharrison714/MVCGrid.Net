@@ -201,6 +201,11 @@ namespace MVCGrid.Models
         public string DefaultSortColumn { get; set; }
 
         /// <summary>
+        /// The default order to sort by when no sort is specified
+        /// </summary>
+        public SortDirection DefaultSortDirection { get; set; }
+
+        /// <summary>
         /// Enables filtering on the grid. Note, filtering must also be enabled on each column where filtering is wanted
         /// </summary>
         public bool Filtering { get; set; }
