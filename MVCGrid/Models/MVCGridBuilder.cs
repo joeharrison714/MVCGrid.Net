@@ -179,7 +179,7 @@ namespace MVCGrid.Models
         /// <summary>
         /// Add an arbitrary additional settings
         /// </summary>
-        public MVCGridBuilder<T1> WithAdditionalSetting(string name, string value)
+        public MVCGridBuilder<T1> WithAdditionalSetting(string name, object value)
         {
             GridDefinition.AdditionalSettings[name] = value;
             return this;

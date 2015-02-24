@@ -4,11 +4,12 @@
 }
 @section head{
     <style type="text/css">
-        .mgfilter{
+        .mgfilter {
             float: right;
             text-align: right;
         }
-        .mgPageSize{
+
+        .mgPageSize {
             float: left;
         }
     </style>
@@ -48,27 +49,53 @@
 
 <p>&nbsp;</p>
 
-<div class="mgPageSize">
-    <label>
-        Show <select id="selPageSize">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select> entries
-    </label>
-</div>
-<div class="mgfilter">
-    <label>Search:<input type="search" id="txtGlobalSearch" placeholder=""></label>
-</div>
-@Html.MVCGrid("GlobalSearchGrid")
+@*<div class="mgPageSize">
+        <label>
+            Show <select id="selPageSize">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select> entries
+        </label>
+    </div>
+    <div class="mgfilter">
+        <label>Search:<input type="search" id="txtGlobalSearch" placeholder=""></label>
+    </div>*@
 
-<h3>Code</h3>
+
 
 <div class="panel panel-default">
-    <div class="panel-heading">Javascript in View</div>
     <div class="panel-body">
-        <pre class="brush: js">
+
+        <div class="row">
+            <div class="col-md-8">
+<label>
+    Show <select id="selPageSize">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select> entries
+</label>
+            </div>
+            <div class="col-md-4"><label class="pull-right">Search: <input type="search" id="txtGlobalSearch" placeholder=""></label></div>
+        </div>
+
+        @Html.MVCGrid("GlobalSearchGrid")
+    </div>
+</div>
+
+
+
+
+
+        <h3>Code</h3>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Javascript in View</div>
+            <div class="panel-body">
+                <pre class="brush: js">
 $(&#39;#selPageSize&#39;).click(function () {
     MVCGrid.setPageSize(&#39;GlobalSearchGrid&#39;, $(&#39;#selPageSize&#39;).val());
 });
@@ -76,12 +103,12 @@ $(&#39;#txtGlobalSearch&#39;).keyup(function () {
     MVCGrid.setAdditionalQueryOptions(&#39;GlobalSearchGrid&#39;, { globalsearch: $(&#39;#txtGlobalSearch&#39;).val() });
 });
         </pre>
-    </div>
-</div>
+            </div>
+        </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
-    <div class="panel-body">
-        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("GlobalSearchGrid")</pre>
-    </div>
-</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+            <div class="panel-body">
+                <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("GlobalSearchGrid")</pre>
+            </div>
+        </div>

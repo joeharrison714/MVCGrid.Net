@@ -21,7 +21,7 @@ namespace MVCGrid.Models
             Filtering = false;
             RenderingEngine = typeof(MVCGrid.Rendering.BootstrapRenderingEngine);
             TemplatingEngine = typeof(MVCGrid.Templating.SimpleTemplatingEngine);
-            AdditionalSettings = new Dictionary<string, string>();
+            AdditionalSettings = new Dictionary<string, object>();
             RenderingMode = Models.RenderingMode.RenderingEngine;
             ViewPath = "~/Views/MVCGrid/_Grid.cshtml";
             ErrorMessageHtml= @"<div class=""alert alert-warning"" role=""alert"">There was a problem loading the grid.</div>";
@@ -41,7 +41,7 @@ namespace MVCGrid.Models
         public bool Filtering { get; set; }
         public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
-        public Dictionary<string, string> AdditionalSettings { get; set; }
+        public Dictionary<string, object> AdditionalSettings { get; set; }
         public RenderingMode RenderingMode { get; set; }
         public string ViewPath { get; set; }
         public string QueryStringPrefix { get; set; }
@@ -58,5 +58,11 @@ namespace MVCGrid.Models
 
         public bool AllowChangingPageSize { get; set; }
         public int? MaxItemsPerPage { get; set; }
+
+
+        public T GetAdditionalSetting<T>(string name, T defaultValue)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

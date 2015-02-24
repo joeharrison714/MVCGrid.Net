@@ -14,6 +14,8 @@ namespace MVCGrid.Web
     //Show/hide fields
     internal class MVCGridHtmlGenerator
     {
+        private const string RenderLoadingDivSettingName = "RenderLoadingDiv";
+
         internal static string GenerateClientDataTransferHtml(GridContext gridContext)
         {
             StringBuilder sb = new StringBuilder();
@@ -150,11 +152,15 @@ namespace MVCGrid.Web
             }
             sbHtml.Append("</div>");
 
+            bool renderLoadingDiv = def.GetAdditionalSetting<bool>(RenderLoadingDivSettingName, true);
 
-            sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);
-            sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='Processing' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath());
-            sbHtml.Append("Processing...");
-            sbHtml.Append("</div>");
+            if (renderLoadingDiv)
+            {
+                sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);
+                sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='Processing' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath());
+                sbHtml.Append("Processing...");
+                sbHtml.Append("</div>");
+            }
 
             sbHtml.AppendFormat("<div id='{0}'>", HtmlUtility.GetTableHolderHtmlId(gridName));
             sbHtml.Append("%%PRELOAD%%");

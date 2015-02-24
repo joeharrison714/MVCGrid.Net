@@ -40,11 +40,7 @@ namespace MVCGrid.Rendering
             HtmlImageSortDsc = String.Format("<img src='{0}/sortdown.png' class='pull-right' />", model.HandlerPath);
             HtmlImageSort = String.Format("<img src='{0}/sort.png' class='pull-right' />", model.HandlerPath);
 
-            string tableCss = DefaultTableCss;
-            if (gridContext.GridDefinition.AdditionalSettings.ContainsKey(SettingNameTableClass))
-            {
-                tableCss = gridContext.GridDefinition.AdditionalSettings[SettingNameTableClass];
-            }
+            string tableCss = gridContext.GridDefinition.GetAdditionalSetting<string>(SettingNameTableClass, DefaultTableCss);
 
             StringBuilder sbHtml = new StringBuilder();
 

@@ -67,7 +67,7 @@ namespace MVCGrid.Interfaces
         /// <summary>
         /// Arbitrary additional settings
         /// </summary>
-        Dictionary<string, string> AdditionalSettings { get; set; }
+        Dictionary<string, object> AdditionalSettings { get; set; }
 
         /// <summary>
         /// The rendering mode to use for this grid. By default it will use the RenderingEngine rendering mode. If you want to use a custom Razor view to display your grid, change this to Controller
@@ -98,5 +98,7 @@ namespace MVCGrid.Interfaces
         /// Sets the maximum of items per page allowed when AllowChangingPageSize is enabled
         /// </summary>
         int? MaxItemsPerPage { get; set; }
+
+        T GetAdditionalSetting<T>(string name, T defaultValue);
     }
 }
