@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MVCGrid.Models;
+using MVCGrid.Web.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -113,6 +115,34 @@ namespace MVCGrid.Web.Controllers
         public ActionResult ColumnVisibilityDemo()
         {
             return View();
+        }
+    }
+
+    public class DemoControllerGrids : GridRegistration
+    {
+        public override void RegisterGrids()
+        {
+            MVCGridDefinitionTable.Add("AnotherGrid", new MVCGridBuilder<Person>()
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression((p, c) => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression((p, c) => p.LastName);
+                })
+                .WithRetrieveDataMethod((options) =>
+                {
+                    var result = new QueryResult<Person>();
+
+                    using (var db = new SampleDatabaseEntities())
+                    {
+                        result.Items = db.People.Where(p => p.Employee).ToList();
+                    }
+
+                    return result;
+                })
+            );
         }
     }
 }

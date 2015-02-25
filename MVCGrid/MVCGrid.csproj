@@ -66,6 +66,7 @@
     <Compile Include="Templating\SimpleTemplatingEngine.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />
     <Compile Include="Utility\HtmlUtility.cs" />
+    <Compile Include="Web\GridRegistration.cs" />
     <Compile Include="Web\HtmlExtensions.cs" />
     <Compile Include="Interfaces\IMVCGridColumn.cs" />
     <Compile Include="Interfaces\IMVCGridDefinition.cs" />
