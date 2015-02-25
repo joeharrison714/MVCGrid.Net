@@ -16,34 +16,51 @@ namespace MVCGridExample
         public static void RegisterGrids()
         {
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
+                .WithAllowChangingPageSize(true)
+                .WithMaxItemsPerPage(100)
                 .AddColumns(cols =>
                 {
-                    cols.Add("Id").WithSorting(true)
-                        .WithHtmlEncoding(false)
-                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
-                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
-                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                    cols.Add(new GridColumn<Person>()
+                    {
+                        ColumnName = "Id",
+                        EnableSorting = true,
+                        HtmlEncode = false,
+                        ValueExpression = (p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }),
+                        ValueTemplate = "<a href='{Value}'>{Model.Id}</a>",
+                        PlainTextValueExpression = (p, c) => p.Id.ToString()
+                    });
                     cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithSorting(true)
+                        .WithAllowChangeVisibility(true)
                         .WithValueExpression((p, c) => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithSorting(true)
+                        .WithAllowChangeVisibility(true)
                         .WithValueExpression((p, c) => p.LastName);
+                    cols.Add("FullName").WithHeaderText("Full Name")
+                        .WithValueTemplate("{Model.FirstName} {Model.LastName}")
+                        .WithVisibility(false)
+                        .WithAllowChangeVisibility(true)
+                        .WithSorting(false);
                     cols.Add("StartDate").WithHeaderText("Start Date")
+                        .WithSorting(true)
+                        .WithAllowChangeVisibility(true)
                         .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
-                    cols.Add("Status").WithSortColumnData("Active")
+                    cols.Add("Status")
+                        .WithSortColumnData("Active")
+                        .WithSorting(true)
+                        .WithAllowChangeVisibility(true)
                         .WithHeaderText("Status")
                         .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
                         .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger");
-                    cols.Add("Gender").WithValueExpression((p, c) => p.Gender);
+                    cols.Add("Gender").WithValueExpression((p, c) => p.Gender)
+                        .WithAllowChangeVisibility(true);
+                    cols.Add("Email")
+                        .WithVisibility(false)
+                        .WithAllowChangeVisibility(true)
+                        .WithValueExpression((p, c) => p.Email);
                     cols.Add("Url").WithVisibility(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
-                    //                    cols.Add().WithColumnName("Button")  //Templating demo
-                    //                        .WithHtmlEncoding(false)
-                    //                        .WithValueTemplate(@"
-                    //<a class='btn btn-default' href='{Row.Url}' role='button'>
-                    //    {Model.FirstName}
-                    //</a>
-                    //");
-
                 })
                 //.WithAdditionalSetting(MVCGrid.Rendering.BootstrapRenderingEngine.SettingNameTableClass, "notreal") // Excample of changing table css class
                 .WithSorting(true)
@@ -52,6 +69,7 @@ namespace MVCGridExample
                 .WithPaging(true)
                 .WithItemsPerPage(10)
                 .WithPreloadData(true)
+                .WithAdditionalQueryOptionNames("search")
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -59,9 +77,11 @@ namespace MVCGridExample
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
+                    string globalSearch = options.GetAdditionalQueryOptionString("search");
+
                     string sortColumn = options.GetSortColumnData<string>();
 
-                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                    var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
                         sortColumn, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()

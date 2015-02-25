@@ -72,7 +72,6 @@
             $('#colVisUpdateButton').click(function () {
                 var jsonData = {};
                 $("input:checkbox[name='cols']:checked").each(function () {
-
                     var columnName = $(this).val();
                     jsonData[columnName] = true;
                 });

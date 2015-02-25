@@ -32,6 +32,14 @@ namespace MVCGrid.Models
 
             return col;
         }
+
+        public GridColumnBuilder<T1> Add(GridColumn<T1> column)
+        {
+            GridColumnBuilder<T1> col = new GridColumnBuilder<T1>();
+            col.GridColumn = column;
+            ColumnBuilders.Add(col);
+            return col;
+        }
     }
 
     public class GridColumnBuilder<T1>

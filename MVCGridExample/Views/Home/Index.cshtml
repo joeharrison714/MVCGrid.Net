@@ -2,6 +2,58 @@
 @{
     ViewBag.Title = "Home Page";
 }
+@section head{
+    <style type="text/css">
+        .dropdown-menu input {margin-top: -4px;}
+        .dropdown-menu label {margin: 0;}
+    </style>
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var colVis = MVCGrid.getColumnVisibility('TestGrid');
+            $.each(colVis, function (colName, col) {
+
+                if (!col.visible && !col.allow) {
+                    return true;
+                }
+                var html = '<li><a><label><input type="checkbox" name="cols" value="' + colName + '"';
+                if (col.visible) {
+                    html += ' checked';
+                }
+                if (!col.allow) {
+                    html += ' disabled';
+                }
+                html += '> ' + col.headerText + '</label></a></div></li>';
+                $("#columnList").append(html);
+            });
+
+            $("input:checkbox[name='cols']").change(function() {
+                var jsonData = {};
+                $("input:checkbox[name='cols']:checked").each(function () {
+                    var columnName = $(this).val();
+                    jsonData[columnName] = true;
+                });
+                MVCGrid.setColumnVisibility('TestGrid', jsonData);
+            });
+
+            $('#selPageSize').change(function () {
+                MVCGrid.setPageSize('TestGrid', $('#selPageSize').val());
+            });
+
+            $('#globalSearchText').keyup(function () {
+                MVCGrid.setAdditionalQueryOptions('TestGrid', { search: $('#globalSearchText').val() });
+            });
+
+            $('#selPageSize').val(MVCGrid.getPageSize('TestGrid'));
+            $('#txtGlobalSearch').val(MVCGrid.getAdditionalQueryOptions('TestGrid').GlobalSearch);
+
+            $('li').click(function (event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
+}
 
 <h1>MVCGrid.Net</h1>
 <p>A grid for ASP.NET MVC and Bootstrap with ajax paging and sorting. Also has filtering support, export to csv, back button support, and graceful degradation.</p>
@@ -15,15 +67,47 @@
     <li>Filtering support with minimal client-side code</li>
 </ul>
 
+
 <h2>Example</h2>
-<div class="container">
-    <div class="row">
-        <button class="btn btn-default pull-right" id="exportButton" onclick="location.href = MVCGrid.getExportUrl('TestGrid');">
-            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
-        </button>
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>
+                    Page Size: <select id="selPageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </label>
+            </div>
+            <div class="col-md-5">
+                <div class="pull-right">
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Fields
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="columnList"></ul>
+                    </div>
+                    &nbsp;
+                    <button class="btn btn-default pull-right" id="exportButton" onclick="location.href = MVCGrid.getExportUrl('TestGrid');">
+                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+                    </button>
+
+
+                </div>
+            </div>
+            <div class="col-md-3"><label class="pull-right">Search: <input type="search" id="globalSearchText" placeholder=""></label></div>
+        </div>
+
+        @Html.MVCGrid("TestGrid")
     </div>
 </div>
-@(Html.MVCGrid("TestGrid"))
 
 @*<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />
 <input type="button" value="Export" onclick="location.href = MVCGrid.getExportUrl('TestMapping');" />*@

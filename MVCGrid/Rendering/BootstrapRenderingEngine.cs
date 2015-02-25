@@ -69,6 +69,7 @@ namespace MVCGrid.Rendering
             RenderPaging(model, sbHtml);
 
             outputStream.Write(sbHtml.ToString());
+            outputStream.Write(model.ClientDataTransferHtmlBlock);
         }
 
         private void AppendCssAttribute(string classString, StringBuilder sbHtml)

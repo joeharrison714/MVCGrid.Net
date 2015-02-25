@@ -32,7 +32,7 @@ namespace MVCGrid.Models
                 this.ValueExpression = valueExpression;
             }
 
-            EnableSorting = true;
+            EnableSorting = false;
             HtmlEncode = true;
             EnableFiltering = false;
             Visible = true;

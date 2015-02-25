@@ -43,8 +43,6 @@ namespace MVCGrid.Engine
             var model = GenerateModel(gridContext);
 
             renderingEngine.Render(model, gridContext, outputStream);
-
-            outputStream.Write(model.ClientDataTransferHtmlBlock);
         }
 
         public RenderingModel GenerateModel(GridContext gridContext)
