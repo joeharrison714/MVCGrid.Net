@@ -225,5 +225,11 @@ namespace MVCGrid.Rendering
             sbHtml.Append("</div>");
             sbHtml.Append("</div>");
         }
+
+
+        public void RenderContainer(Models.ContainerRenderingModel model, TextWriter outputStream)
+        {
+            outputStream.Write(model.InnerHtmlBlock);
+        }
     }
 }

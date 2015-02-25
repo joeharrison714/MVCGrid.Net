@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MVCGrid.Interfaces
 {
-    internal interface IMVCGridDefinition
+    public interface IMVCGridDefinition
     {
         IEnumerable<IMVCGridColumn> GetColumns();
 

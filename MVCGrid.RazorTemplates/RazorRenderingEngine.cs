@@ -160,5 +160,11 @@ namespace MVCGrid.RazorTemplates
             outputStream.Write(result);
 
         }
+
+
+        public void RenderContainer(Models.ContainerRenderingModel model, TextWriter outputStream)
+        {
+            outputStream.Write(model.InnerHtmlBlock);
+        }
     }
 }

@@ -73,5 +73,11 @@ namespace MVCGrid.Rendering
 
             return String.Format("\"{0}\"", esc);
         }
+
+
+        public void RenderContainer(Models.ContainerRenderingModel model, TextWriter outputStream)
+        {
+            throw new NotImplementedException("Csv Rendering Engine has no container");
+        }
     }
 }

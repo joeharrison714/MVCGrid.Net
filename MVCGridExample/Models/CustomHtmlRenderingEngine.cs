@@ -98,5 +98,11 @@ namespace MVCGrid.Web.Models
             outputStream.Write(sb.ToString());
 
         }
+
+
+        public void RenderContainer(MVCGrid.Models.ContainerRenderingModel model, TextWriter outputStream)
+        {
+            outputStream.Write(model.InnerHtmlBlock);
+        }
     }
 }

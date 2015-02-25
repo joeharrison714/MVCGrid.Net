@@ -188,7 +188,7 @@ namespace MVCGrid.Web
 
             GridEngine engine = new GridEngine();
 
-            IMVCGridRenderingEngine renderingEngine = engine.GetRenderingEngine(gridContext);
+            IMVCGridRenderingEngine renderingEngine = GridEngine.GetRenderingEngine(gridContext);
 
             renderingEngine.PrepareResponse(context.Response);
             engine.Run(renderingEngine, gridContext, context.Response.Output);
