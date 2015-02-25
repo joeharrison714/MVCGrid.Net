@@ -11,11 +11,17 @@ namespace MVCGrid.Models
         private string _headerText = null;
 
         public GridColumn()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public GridColumn(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
+            :this(columnName, headerText, valueExpression, null)
+        {
+
+        }
+
+        public GridColumn(string columnName, string headerText, Func<T1, GridContext, string> valueExpression, ColumnDefaults columnDefaults)
         {
             if (!String.IsNullOrWhiteSpace(columnName))
             {
@@ -32,10 +38,18 @@ namespace MVCGrid.Models
                 this.ValueExpression = valueExpression;
             }
 
-            EnableSorting = false;
-            HtmlEncode = true;
-            EnableFiltering = false;
-            Visible = true;
+            if (columnDefaults == null)
+            {
+                columnDefaults = new ColumnDefaults();
+            }
+
+            EnableSorting = columnDefaults.EnableSorting;
+            HtmlEncode = columnDefaults.HtmlEncode;
+            EnableFiltering = columnDefaults.EnableFiltering;
+            Visible = columnDefaults.Visible;
+            SortColumnData = columnDefaults.SortColumnData;
+            AllowChangeVisibility = columnDefaults.AllowChangeVisibility;
+
         }
 
         /// <summary>

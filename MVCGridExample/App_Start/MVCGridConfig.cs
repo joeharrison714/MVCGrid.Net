@@ -115,7 +115,12 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("SortableGrid", new MVCGridBuilder<Person>()
+            ColumnDefaults colDefauls = new ColumnDefaults()
+            {
+                EnableSorting = true
+            };
+
+            MVCGridDefinitionTable.Add("SortableGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -156,7 +161,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("PagingGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("PagingGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -207,7 +212,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("DIGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("DIGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -239,7 +244,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("FormattingGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("FormattingGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -279,7 +284,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("StyledGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("StyledGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -327,7 +332,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("Preloading", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("Preloading", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -360,7 +365,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("CustomLoading", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("CustomLoading", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -398,7 +403,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("Filtering", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("Filtering", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -453,7 +458,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("ExportGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("ExportGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -500,7 +505,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("Multiple1", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("Multiple1", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -542,7 +547,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("Multiple2", new MVCGridBuilder<TestItem>()
+            MVCGridDefinitionTable.Add("Multiple2", new MVCGridBuilder<TestItem>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Col1").WithValueExpression((p, c) => p.Col1);
@@ -571,7 +576,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("CustomStyle", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("CustomStyle", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -614,7 +619,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("CustomRazorView", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("CustomRazorView", new MVCGridBuilder<Person>(colDefauls)
                 .WithRenderingMode(RenderingMode.Controller)
                 .WithViewPath("~/Views/MVCGrid/_Custom.cshtml")
                 .AddColumns(cols =>
@@ -658,7 +663,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("ValueTemplate", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("ValueTemplate", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -712,7 +717,7 @@ namespace MVCGridExample
             );
 
 
-            MVCGridDefinitionTable.Add("CustomErrorMessage", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("CustomErrorMessage", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -784,7 +789,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("GlobalSearchGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("GlobalSearchGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -822,7 +827,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("PageSizeGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("PageSizeGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -856,7 +861,7 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("ColumnVisibilityGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("ColumnVisibilityGrid", new MVCGridBuilder<Person>(colDefauls)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)

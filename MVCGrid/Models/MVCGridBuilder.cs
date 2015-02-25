@@ -8,14 +8,28 @@ namespace MVCGrid.Models
 {
     public class MVCGridBuilder<T1>
     {
+        ColumnDefaults _columnDefaults = null;
+
         public MVCGridBuilder()
         {
             GridDefinition = new GridDefinition<T1>();
         }
 
         public MVCGridBuilder(GridDefaults gridDefaults)
+            : this(gridDefaults, null)
+        {
+        }
+
+        public MVCGridBuilder(ColumnDefaults columnDefaults)
+            : this(null, columnDefaults)
+        {
+        }
+
+        public MVCGridBuilder(GridDefaults gridDefaults, ColumnDefaults columnDefaults)
         {
             GridDefinition = new GridDefinition<T1>(gridDefaults);
+
+            _columnDefaults = columnDefaults;
         }
 
         public GridDefinition<T1> GridDefinition { get; set; }
@@ -38,7 +52,7 @@ namespace MVCGrid.Models
 
         public MVCGridBuilder<T1> AddColumns(Action<GridColumnListBuilder<T1>> columns)
         {
-            GridColumnListBuilder<T1> cols=new GridColumnListBuilder<T1>();
+            GridColumnListBuilder<T1> cols = new GridColumnListBuilder<T1>(_columnDefaults);
             columns.Invoke(cols);
 
             foreach (var col in cols.ColumnBuilders)

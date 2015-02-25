@@ -15,36 +15,39 @@ namespace MVCGrid.Models
 
     public class GridDefinition<T1> : GridDefinitionBase, IMVCGridDefinition
     {
-        public GridDefinition() : this(new GridDefaults())
+        public GridDefinition() : this(null)
         {
         }
 
-        public GridDefinition(GridDefaults gridDefaults):base()
+        public GridDefinition(GridDefaults gridDefaults)
+            : base()
         {
             Columns = new List<GridColumn<T1>>();
 
-            if (gridDefaults != null)
+            if (gridDefaults == null)
             {
-                this.PreloadData = gridDefaults.PreloadData;
-                this.Paging = gridDefaults.Paging;
-                this.ItemsPerPage = gridDefaults.ItemsPerPage;
-                this.Sorting = gridDefaults.Sorting;
-                this.DefaultSortColumn = gridDefaults.DefaultSortColumn;
-                this.NoResultsMessage = gridDefaults.NoResultsMessage;
-                this.ClientSideLoadingMessageFunctionName = gridDefaults.ClientSideLoadingMessageFunctionName;
-                this.ClientSideLoadingCompleteFunctionName = gridDefaults.ClientSideLoadingCompleteFunctionName;
-                this.Filtering = gridDefaults.Filtering;
-                this.RenderingEngine = gridDefaults.RenderingEngine;
-                this.TemplatingEngine = gridDefaults.TemplatingEngine;
-                this.AdditionalSettings = gridDefaults.AdditionalSettings;
-                this.RenderingMode = gridDefaults.RenderingMode;
-                this.ViewPath = gridDefaults.ViewPath;
-                this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
-                this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
-                this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
-                this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
-                this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
+                gridDefaults = new GridDefaults();
             }
+            this.PreloadData = gridDefaults.PreloadData;
+            this.Paging = gridDefaults.Paging;
+            this.ItemsPerPage = gridDefaults.ItemsPerPage;
+            this.Sorting = gridDefaults.Sorting;
+            this.DefaultSortColumn = gridDefaults.DefaultSortColumn;
+            this.NoResultsMessage = gridDefaults.NoResultsMessage;
+            this.ClientSideLoadingMessageFunctionName = gridDefaults.ClientSideLoadingMessageFunctionName;
+            this.ClientSideLoadingCompleteFunctionName = gridDefaults.ClientSideLoadingCompleteFunctionName;
+            this.Filtering = gridDefaults.Filtering;
+            this.RenderingEngine = gridDefaults.RenderingEngine;
+            this.TemplatingEngine = gridDefaults.TemplatingEngine;
+            this.AdditionalSettings = gridDefaults.AdditionalSettings;
+            this.RenderingMode = gridDefaults.RenderingMode;
+            this.ViewPath = gridDefaults.ViewPath;
+            this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
+            this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
+            this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
+            this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
+            this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
+
         }
 
         public IEnumerable<IMVCGridColumn> GetColumns()

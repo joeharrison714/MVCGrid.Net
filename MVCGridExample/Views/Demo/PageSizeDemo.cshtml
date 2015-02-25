@@ -7,8 +7,15 @@
 
 @section Scripts{
     <script type="text/javascript">
-        $('#selPageSize').click(function () {
-            MVCGrid.setPageSize('PageSizeGrid', $('#selPageSize').val());
+        $(function () {
+
+            $('#selPageSize').change(function () {
+                MVCGrid.setPageSize('PageSizeGrid', $('#selPageSize').val());
+            });
+
+            // set value of dropdown to grid setting
+            $('#selPageSize').val(MVCGrid.getPageSize('PageSizeGrid'));
+
         });
     </script>
 }
@@ -29,8 +36,12 @@ Page Size: <select id="selPageSize" name="selPageSize">
     <div class="panel-body">
         <pre class="brush: js">
 &lt;script type=&quot;text/javascript&quot;&gt;
-    $(&#39;#selPageSize&#39;).click(function () {
-        MVCGrid.setPageSize(&#39;PageSizeGrid&#39;, $(&#39;#selPageSize&#39;).val());
+    $(function () {
+        $(&#39;#selPageSize&#39;).change(function () {
+            MVCGrid.setPageSize(&#39;PageSizeGrid&#39;, $(&#39;#selPageSize&#39;).val());
+        });
+        // set value of dropdown to grid setting
+        $(&#39;#selPageSize&#39;).val(MVCGrid.getPageSize(&#39;PageSizeGrid&#39;));
     });
 &lt;/script&gt;
         </pre>

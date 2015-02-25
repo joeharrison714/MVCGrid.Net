@@ -7,9 +7,18 @@ namespace MVCGrid.Models
 {
     public class GridColumnListBuilder<T1>
     {
+        private ColumnDefaults _columnDefaults = null;
+
         public GridColumnListBuilder()
+            : this(null)
+        {
+        }
+
+        public GridColumnListBuilder(ColumnDefaults columnDefaults)
         {
             ColumnBuilders = new List<GridColumnBuilder<T1>>();
+
+            _columnDefaults = columnDefaults;
         }
 
         public List<GridColumnBuilder<T1>> ColumnBuilders { get; set; }
@@ -26,7 +35,7 @@ namespace MVCGrid.Models
 
         public GridColumnBuilder<T1> Add(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
         {
-            GridColumnBuilder<T1> col = new GridColumnBuilder<T1>(columnName, headerText, valueExpression);
+            GridColumnBuilder<T1> col = new GridColumnBuilder<T1>(columnName, headerText, valueExpression, _columnDefaults);
 
             ColumnBuilders.Add(col);
 
@@ -44,18 +53,25 @@ namespace MVCGrid.Models
 
     public class GridColumnBuilder<T1>
     {
-        public GridColumnBuilder():this(null,null,null)
+        public GridColumnBuilder()
+            : this(null, null, null, null)
         {
         }
 
         public GridColumnBuilder(string columnName)
-            : this(columnName, null, null)
+            : this(columnName, null, null, null)
         {
         }
 
         public GridColumnBuilder(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
+            :this(columnName, headerText, valueExpression, null)
         {
-            GridColumn = new GridColumn<T1>(columnName, headerText, valueExpression);
+
+        }
+
+        public GridColumnBuilder(string columnName, string headerText, Func<T1, GridContext, string> valueExpression, ColumnDefaults columnDefaults)
+        {
+            GridColumn = new GridColumn<T1>(columnName, headerText, valueExpression, columnDefaults);
         }
 
         public GridColumn<T1> GridColumn { get; set; }
