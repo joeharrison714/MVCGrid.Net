@@ -55,6 +55,7 @@
     <Compile Include="Interfaces\IMVCGridTemplatingEngine.cs" />
     <Compile Include="Models\ColumnDefaults.cs" />
     <Compile Include="Models\ColumnVisibility.cs" />
+    <Compile Include="Models\ContainerRenderingModel.cs" />
     <Compile Include="Models\MVCGridBuilder.cs" />
     <Compile Include="Models\GridColumnBuilder.cs" />
     <Compile Include="Models\GridContext.cs" />

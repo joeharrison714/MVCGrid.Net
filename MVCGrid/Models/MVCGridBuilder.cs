@@ -239,6 +239,15 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// When RenderingMode is set to Controller, this is the path to the container razor view to use.
+        /// </summary>
+        public MVCGridBuilder<T1> WithContainerViewPath(string containerViewPath)
+        {
+            GridDefinition.ContainerViewPath = containerViewPath;
+            return this;
+        }
+
+        /// <summary>
         /// HTML to display in place of the grid when an error occurs
         /// </summary>
         public MVCGridBuilder<T1> WithErrorMessageHtml(string errorMessageHtml)

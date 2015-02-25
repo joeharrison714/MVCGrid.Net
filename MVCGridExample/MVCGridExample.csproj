@@ -280,6 +280,8 @@
     <Content Include="Views\Demo\GlobalSearch.cshtml" />
     <Content Include="Views\Demo\PageSizeDemo.cshtml" />
     <Content Include="Views\Demo\ColumnVisibilityDemo.cshtml" />
+    <Content Include="Views\MVCGrid\_Container.cshtml" />
+    <Content Include="Views\Demo\ContainerDemo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

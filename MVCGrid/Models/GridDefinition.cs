@@ -42,6 +42,7 @@ namespace MVCGrid.Models
             this.AdditionalSettings = gridDefaults.AdditionalSettings;
             this.RenderingMode = gridDefaults.RenderingMode;
             this.ViewPath = gridDefaults.ViewPath;
+            this.ContainerViewPath = gridDefaults.ContainerViewPath;
             this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
             this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
             this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
@@ -245,6 +246,11 @@ namespace MVCGrid.Models
         /// When RenderingMode is set to Controller, this is the path to the razor view to use.
         /// </summary>
         public string ViewPath { get; set; }
+
+        /// <summary>
+        /// When RenderingMode is set to Controller, this is the path to the container razor view to use.
+        /// </summary>
+        public string ContainerViewPath { get; set; }
 
         /// <summary>
         /// HTML to display in place of the grid when an error occurs

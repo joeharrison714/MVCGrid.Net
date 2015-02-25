@@ -116,13 +116,18 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult ContainerDemo()
+        {
+            return View();
+        }
     }
 
     public class DemoControllerGrids : GridRegistration
     {
         public override void RegisterGrids()
         {
-            MVCGridDefinitionTable.Add("AnotherGrid", new MVCGridBuilder<Person>()
+            MVCGridDefinitionTable.Add("ContainerGrid", new MVCGridBuilder<Person>()
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithValueExpression((p, c) => p.Id.ToString());
@@ -131,6 +136,9 @@ namespace MVCGrid.Web.Controllers
                     cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression((p, c) => p.LastName);
                 })
+                .WithRenderingMode(RenderingMode.Controller)
+                .WithViewPath("~/Views/MVCGrid/_Custom.cshtml")
+                .WithContainerViewPath("~/Views/MVCGrid/_Container.cshtml")
                 .WithRetrieveDataMethod((options) =>
                 {
                     var result = new QueryResult<Person>();

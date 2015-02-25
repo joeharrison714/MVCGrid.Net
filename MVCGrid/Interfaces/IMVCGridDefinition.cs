@@ -85,6 +85,11 @@ namespace MVCGrid.Interfaces
         string ViewPath { get; set; }
 
         /// <summary>
+        /// When RenderingMode is set to Controller, this is the path to the container razor view to use.
+        /// </summary>
+        string ContainerViewPath { get; set; }
+
+        /// <summary>
         /// HTML to display in place of the grid when an error occurs
         /// </summary>
         string ErrorMessageHtml { get; set; }

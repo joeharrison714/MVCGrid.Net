@@ -25,6 +25,7 @@ namespace MVCGrid.Models
             AdditionalSettings = new Dictionary<string, object>();
             RenderingMode = Models.RenderingMode.RenderingEngine;
             ViewPath = "~/Views/MVCGrid/_Grid.cshtml";
+            ContainerViewPath = null;
             ErrorMessageHtml= @"<div class=""alert alert-warning"" role=""alert"">There was a problem loading the grid.</div>";
             AdditionalQueryOptionNames = new HashSet<string>();
             AllowChangingPageSize = false;
@@ -46,6 +47,7 @@ namespace MVCGrid.Models
         public Dictionary<string, object> AdditionalSettings { get; set; }
         public RenderingMode RenderingMode { get; set; }
         public string ViewPath { get; set; }
+        public string ContainerViewPath { get; set; }
         public string QueryStringPrefix { get; set; }
 
         public IEnumerable<IMVCGridColumn> GetColumns()
