@@ -34,10 +34,10 @@
 }
 @helper PageNextLink(int pageToEnd, PagingModel pagingModel)
 {
-    string attr = "";
+    string cls = "";
     if (pageToEnd == pagingModel.CurrentPage)
     {
-        attr = " class='disabled'";
+        cls = "disabled";
     }
     string onclick = "";
     if (pageToEnd > pagingModel.CurrentPage)
@@ -45,16 +45,16 @@
         onclick = pagingModel.PageLinks[pagingModel.CurrentPage + 1] + "; ";
     }
 
-    <li@(html.raw(attr))>
+    <li class="@Html.Raw(cls)">
         <a href='#' aria-label='Next' onclick='@(Html.Raw(onclick))return false;'><span aria-hidden='true'>Next &raquo;</span></a>
-        </li>
+    </li>
 }
 @helper PagePreviousLink(int pageToStart, PagingModel pagingModel)
 {
-    string attr = "";
+    string cls = "";
     if (pageToStart == pagingModel.CurrentPage)
     {
-        attr = " class='disabled'";
+        cls = "disabled";
     }
     string onclick = "";
     if (pageToStart < pagingModel.CurrentPage)
@@ -62,54 +62,69 @@
         onclick = pagingModel.PageLinks[pagingModel.CurrentPage - 1] + "; ";
     }
 
-    <li@(html.raw(attr))>
+    <li class="@Html.Raw(cls)">
         <a href='#' aria-label='Previous' onclick='@(Html.Raw(onclick))return false;'><span aria-hidden='true'>&laquo; Previous</span></a>
-        </li>
+    </li>
 }
 
 @functions {
-    // Pass a user name to this method.
-    string HeaderAttributes(Column col)
+    string ColumnOnClick(Column col)
     {
-        string str = "";
         if (col.Onclick != null)
         {
-            str = " style='cursor: pointer;'";
-            str += String.Format(" onclick='{0}'", col.Onclick);
+            return col.Onclick;
         }
-        return str;
+        else{
+            return "return false;";
+        }
     }
 
-    string AppendCssAttribute(string classString)
+    string ColumnStyle(Column col)
     {
-        if (!String.IsNullOrWhiteSpace(classString))
+        if (col.Onclick != null)
         {
-            return String.Format(" class='{0}'", classString);
+            return "cursor: pointer;";
+        }
+        return "";
+    }
+
+    string RowClass(Row row)
+    {
+        if (row.CalculatedCssClass != null)
+        {
+            return row.CalculatedCssClass;
+        }
+        return "";
+    }
+
+    string CellClass(Cell cell)
+    {
+        if (cell.CalculatedCssClass != null)
+        {
+            return cell.CalculatedCssClass;
         }
         return "";
     }
 
 }
-<div>Partial View!</div>
+<!--Partial View!-->
 <table id="@Model.TableHtmlId" class="table table-striped table-bordered">
     <thead>
         <tr>
             @foreach (var col in Model.Columns)
             {
-                <th@(html.raw(headerattributes(col)))>
-                    @col.HeaderText @(SortImage(col))</th>
+                <th onclick="@Html.Raw(ColumnOnClick(col))" style="@Html.Raw(ColumnStyle(col))">@col.HeaderText @(SortImage(col))</th>
             }
     </tr>
 </thead>
 <tbody>
     @foreach (var row in Model.Rows)
     {
-        <tr@(html.raw(appendcssattribute(row.calculatedcssclass)))>
+        <tr class="@Html.Raw(RowClass(row))">
             @foreach (var col in Model.Columns)
             {
                 var cell = row.Cells[col.Name];
-                <td@(html.raw(appendcssattribute(cell.calculatedcssclass)))>
-                    @Html.Raw(cell.HtmlText)</td>
+                <td class="@CellClass(cell)">@Html.Raw(cell.HtmlText)</td>
             }
             </tr>
     }

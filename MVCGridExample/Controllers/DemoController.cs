@@ -137,7 +137,7 @@ namespace MVCGrid.Web.Controllers
                         .WithValueExpression((p, c) => p.LastName);
                 })
                 .WithRenderingMode(RenderingMode.Controller)
-                .WithViewPath("~/Views/MVCGrid/_Custom.cshtml")
+                .WithViewPath("~/Views/MVCGrid/_Grid.cshtml")
                 .WithContainerViewPath("~/Views/MVCGrid/_Container.cshtml")
                 .WithRetrieveDataMethod((options) =>
                 {
