@@ -43,11 +43,19 @@ routes.MapRoute(
 );
 </pre>
     </li>
-    <li>Add a new Partial View to your project. Example: <code>/Views/MVCGrid/_Custom.cshtml</code>.</li>
+    <li>Add a new Partial View to your project. Example: <code>/Views/MVCGrid/_Custom.cshtml</code>.
+    
+        <br />
+        Here is a partial view to get you started:
+        <a href="~/Content/_Grid.cshtml.txt">_Grid.cshtml</a>
+
+    </li>
     <li>Everything you need to populate your table will be given to you in the <code>RenderingModel</code> object. <code>@@model MVCGrid.Models.RenderingModel</code>
     </li>
 
-    <li>On your grid definition or in the defaults, set <code>RenderingMode = RenderingMode.Controller;</code> and the <code>ViewPath = "~/Views/MVCGrid/_Custom.cshtml";</code></li>
+    <li>On your grid definition or in the defaults, set <code>RenderingMode = RenderingMode.Controller;</code> and the <code>ViewPath = "~/Views/MVCGrid/_Custom.cshtml";</code>
+    
+    </li>
     <li>You must include the following line at the bottom of your view: <code>@@Html.Raw(Model.ClientDataTransferHtmlBlock)</code></li>
 </ol>
 

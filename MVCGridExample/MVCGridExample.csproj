@@ -155,6 +155,7 @@
     <Compile Include="Controllers\GettingStartedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Data\Person.cs">
       <DependentUpon>SampleDB.tt</DependentUpon>
     </Compile>
@@ -282,6 +283,7 @@
     <Content Include="Views\Demo\ColumnVisibilityDemo.cshtml" />
     <Content Include="Views\MVCGrid\_Container.cshtml" />
     <Content Include="Views\Demo\ContainerDemo.cshtml" />
+    <Content Include="Views\Support\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />
@@ -328,7 +330,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)App_Start\MVCGridConfig.cs" "$(ProjectDir)Content\MVCGridConfig.txt"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(ProjectDir)App_Start\MVCGridConfig.cs" "$(ProjectDir)Content\MVCGridConfig.txt"
+copy /Y "$(ProjectDir)Views\MVCGrid\_Grid.cshtml" "$(ProjectDir)Content\_Grid.cshtml.txt"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
