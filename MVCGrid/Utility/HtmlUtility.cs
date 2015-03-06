@@ -67,7 +67,7 @@ namespace MVCGrid.Utility
 
         public static string GetHandlerPath()
         {
-            return "/MVCGridHandler.axd";
+            return System.Web.HttpContext.Current.Request.ApplicationPath + "/MVCGridHandler.axd";
         }
     }
 }
