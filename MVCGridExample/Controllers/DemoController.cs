@@ -121,6 +121,11 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult NestedObject()
+        {
+            return View();
+        }
     }
 
     public class DemoControllerGrids : GridRegistration

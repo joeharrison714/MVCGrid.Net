@@ -1,0 +1,26 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Custom Data Formatting";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>StartDate column is formatted to ShortDateTime and View is a link containing the ID.</p>
+
+@Html.MVCGrid("NextedObjectTest")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("NextedObjectTest")</pre>
+    </div>
+</div>
+@*
+    <div class="panel panel-default">
+        <div class="panel-heading">View</div>
+        <div class="panel-body">
+            <pre>@@Html.MVCGrid("FormattingGrid")</pre>
+        </div>
+    </div>*@

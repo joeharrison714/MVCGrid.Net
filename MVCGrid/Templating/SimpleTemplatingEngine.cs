@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace MVCGrid.Templating
@@ -141,7 +142,28 @@ namespace MVCGrid.Templating
 
         private static object ReflectPropertyValue(object source, string property)
         {
-            return source.GetType().GetProperty(property).GetValue(source, null);
+            object propValue = source;
+            foreach (string propName in property.Split('.'))
+            {
+                PropertyInfo propInfo = propValue.GetType().GetProperty(propName);
+
+                if (propInfo == null)
+                {
+                    throw new Exception(String.Format("Property {0} not found on object {1}", propName, source.GetType().ToString()));
+                }
+                else
+                {
+                    propValue = propInfo.GetValue(propValue, null);
+
+                    if (propValue == null)
+                    {
+                        propValue = null;
+                        break;
+                    }
+                }
+            }
+
+            return propValue;
         }
 
         private static void FormatError()

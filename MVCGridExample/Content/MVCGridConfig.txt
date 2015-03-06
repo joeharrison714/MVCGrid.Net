@@ -904,6 +904,35 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("NextedObjectTest", new MVCGridBuilder<Job>()
+                .WithPaging(true)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id", "Id", (row, context) => row.JobId.ToString());
+                    cols.Add("Name", "Name", (row, context) => row.Name);
+
+                    cols.Add("Contact")
+                        .WithHeaderText("Contact")
+                        .WithHtmlEncoding(false)
+                        .WithSorting(true)
+                        .WithValueExpression((p, c) => p.Contact != null ? c.UrlHelper.Action("Edit", "Contact", new { id = p.Contact.Id }) : "")
+                        .WithValueTemplate("<a href='{Value}'>{Model.Contact.FullName}</a>").WithPlainTextValueExpression((p, c) => p.Contact != null ? p.Contact.FullName : "");
+                })
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+                    JobRepo repo = new JobRepo();
+                    int totalRecords;
+                    var data = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), null, false);
+
+                    return new QueryResult<Job>()
+                    {
+                        Items = data,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
 
 
