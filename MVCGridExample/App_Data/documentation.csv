@@ -32,7 +32,7 @@ QueryOptions,1,string,SortColumn,"Set to null if sorting is disabled. If sorting
 QueryOptions,2,int?,PageIndex,"Set to null if paging is disabled. Parsed from the request and set to the requested page index. If less than 0, it is set to 0."
 QueryOptions,3,int?,ItemsPerPage,Set to null if paging is disabled. Otherwise it is set to the ItemPerPage specified in the grid
 QueryOptions,4,"Dictionary<string, string>",Filters,"Set to an empty dictionary if filtering is disabled. If filtering is enabled, the requested filters are validated against the list of column names and the key is set to the column name if the column name is valid and filtering is enabled on that column.  The filter dictionaty item is not added if the value is null or empty."
-QueryOptions,5,string,GetFilterString(string columnName),Use this to check for a filter on a coluln.  Will return null if the column has no filter specified.
+QueryOptions,5,string,GetFilterString(string columnName),Use this to check for a filter on a column.  Will return null if the column has no filter specified.
 QueryOptions,6,object,SortColumnData,"The object from the ColumnDefinition of the currently sorted coumn, if different from the ColumnName"
 QueryOptions,7,"Dictionary<string,string>",AdditionalQueryOptions,"additional parameters that can be passed from client to server side"
 ClientSide,1,"obj",MVCGrid.getFilters(mvcGridName),
