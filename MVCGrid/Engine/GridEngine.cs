@@ -157,7 +157,14 @@ namespace MVCGrid.Engine
             string preload = "";
             if (grid.PreloadData)
             {
-                preload = RenderPreloadedGridHtml(helper, grid, gridName);
+                try
+                {
+                    preload = RenderPreloadedGridHtml(helper, grid, gridName);
+                }
+                catch
+                {
+                    preload = grid.ErrorMessageHtml;
+                }
             }
 
             string baseGridHtml = MVCGridHtmlGenerator.GenerateBasePageHtml(gridName, grid);

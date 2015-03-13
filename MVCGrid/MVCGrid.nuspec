@@ -22,5 +22,6 @@
     <file src="..\NuGetFiles\MVCGridConfig.cs.pp" target="Content\App_Start" />
     <file src="..\NuGetFiles\web.config.transform" target="Content" />
     <file src="..\NuGetFiles\readme.txt" target="" />
+    <file src="..\NuGetFiles\Views\web.config.transform" tarfet="Content\Views" />
   </files>
 </package>
