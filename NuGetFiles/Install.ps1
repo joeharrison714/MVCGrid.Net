@@ -16,8 +16,9 @@ catch {
 }
 
 try{
-    If (Test-Path $appStartFolderPath){
-        Write-Host "File already exists ($appStartFolderPath)"
+    $targetPath = Join-Path $appStartFolderPath $codeFilename
+    If (Test-Path $targetPath){
+        Write-Host "File already exists ($targetPath)"
         exit
     }
 }
