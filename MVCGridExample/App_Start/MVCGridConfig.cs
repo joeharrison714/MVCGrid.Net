@@ -16,6 +16,7 @@ namespace MVCGridExample
         public static void RegisterGrids()
         {
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithAllowChangingPageSize(true)
                 .WithMaxItemsPerPage(100)
                 .AddColumns(cols =>
@@ -93,6 +94,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("EmployeeGrid", new MVCGridBuilder<Person>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithValueExpression((p, c) => p.Id.ToString());
@@ -120,6 +122,7 @@ namespace MVCGridExample
             };
 
             MVCGridDefinitionTable.Add("SortableGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -161,6 +164,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("PagingGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -212,6 +216,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("DIGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -244,6 +249,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("FormattingGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -284,6 +290,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("StyledGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -332,6 +339,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("Preloading", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -365,6 +373,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("CustomLoading", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -403,6 +412,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("Filtering", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -458,6 +468,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("ExportGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add().WithColumnName("Id")
@@ -505,6 +516,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("Multiple1", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -547,6 +559,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("Multiple2", new MVCGridBuilder<TestItem>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Col1").WithValueExpression((p, c) => p.Col1);
@@ -576,6 +589,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("CustomStyle", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -619,6 +633,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("CustomRazorView", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithRenderingMode(RenderingMode.Controller)
                 .WithViewPath("~/Views/MVCGrid/_Custom.cshtml")
                 .AddColumns(cols =>
@@ -663,6 +678,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("ValueTemplate", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -717,6 +733,7 @@ namespace MVCGridExample
 
 
             MVCGridDefinitionTable.Add("CustomErrorMessage", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -767,6 +784,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("UsageExample", new MVCGridBuilder<YourModelItem>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     // Add your columns here
@@ -789,6 +807,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("GlobalSearchGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -827,6 +846,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("PageSizeGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -861,6 +881,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("ColumnVisibilityGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
@@ -904,6 +925,7 @@ namespace MVCGridExample
             );
 
             MVCGridDefinitionTable.Add("NextedObjectTest", new MVCGridBuilder<Job>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithPaging(true)
                 .AddColumns(cols =>
                 {
