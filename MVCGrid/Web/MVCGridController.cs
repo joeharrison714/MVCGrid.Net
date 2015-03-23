@@ -23,6 +23,11 @@ namespace MVCGrid.Web
             var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
             GridEngine engine = new GridEngine();
+            if (!engine.CheckAuthorization(gridContext))
+            {
+                return new HttpStatusCodeResult(403, "Access denied");
+            }
+
             var renderingModel = engine.GenerateModel(gridContext);
 
             return PartialView(grid.ViewPath, renderingModel);

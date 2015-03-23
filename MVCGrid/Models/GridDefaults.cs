@@ -30,6 +30,7 @@ namespace MVCGrid.Models
             AdditionalQueryOptionNames = new HashSet<string>();
             AllowChangingPageSize = false;
             MaxItemsPerPage = null;
+            AuthorizationType = Models.AuthorizationType.AllowAnonymous;
         }
 
         public bool PreloadData { get; set; }
@@ -68,5 +69,7 @@ namespace MVCGrid.Models
         {
             throw new NotImplementedException();
         }
+
+        public AuthorizationType AuthorizationType { get; set; }
     }
 }

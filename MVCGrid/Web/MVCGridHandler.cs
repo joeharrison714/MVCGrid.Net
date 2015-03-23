@@ -187,6 +187,13 @@ namespace MVCGrid.Web
             var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
             GridEngine engine = new GridEngine();
+            if (!engine.CheckAuthorization(gridContext))
+            {
+                //Forbidden
+                context.Response.StatusCode = 403;
+                context.Response.End();
+                return;
+            }
 
             IMVCGridRenderingEngine renderingEngine = GridEngine.GetRenderingEngine(gridContext);
 

@@ -60,6 +60,8 @@
 
 <p>The primary goal of this project is to provide the core grid functionality, along with a very simple and easy-to-use client-side API to allow you to easily add the additional front-end interaction you need. You can add it to your project very easily and get it running with minimal effort, but it also has the extensibility to customize when needed.</p>
 
+<p>You configure your grids on app start, and provide a function callback to actually query your data.  The library will handle the ajax requests. It will parse and validate the requested options and then pass the QueryOptions to your function to retrieve the data. </p>
+
 <h2>Features</h2>
 <ul>
     <li>Uses your existing model objects</li>

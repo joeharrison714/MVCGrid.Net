@@ -294,5 +294,14 @@ namespace MVCGrid.Models
             GridDefinition.MaxItemsPerPage = maxItems;
             return this;
         }
+
+        /// <summary>
+        /// Indicated the authorization type. Anonymous access is the default.
+        /// </summary>
+        public MVCGridBuilder<T1> WithAuthorizationType(AuthorizationType authType)
+        {
+            GridDefinition.AuthorizationType = authType;
+            return this;
+        }
     }
 }

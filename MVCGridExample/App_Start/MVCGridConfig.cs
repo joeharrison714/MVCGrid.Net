@@ -68,7 +68,6 @@ namespace MVCGridExample
                 .WithDefaultSortDirection(SortDirection.Dsc)
                 .WithPaging(true)
                 .WithItemsPerPage(10)
-                .WithPreloadData(true)
                 .WithAdditionalQueryOptionNames("search")
                 .WithRetrieveDataMethod((context) =>
                 {

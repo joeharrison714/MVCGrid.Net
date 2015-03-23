@@ -291,5 +291,24 @@ namespace MVCGrid.Engine
                 return Encoding.ASCII.GetString(ms.ToArray());
             }
         }
+
+        public bool CheckAuthorization(GridContext gridContext)
+        {
+            bool allowAccess = false;
+
+            switch (gridContext.GridDefinition.AuthorizationType)
+            {
+                case AuthorizationType.AllowAnonymous:
+                    allowAccess = true;
+                    break;
+                case AuthorizationType.Authorized:
+                    allowAccess = (gridContext.CurrentHttpContext.User.Identity.IsAuthenticated);
+                    break;
+                default:
+                    throw new Exception("Unsupported AuthorizationType");
+            }
+
+            return allowAccess;
+        }
     }
 }

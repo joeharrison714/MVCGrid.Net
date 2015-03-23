@@ -110,5 +110,10 @@ namespace MVCGrid.Interfaces
         int? MaxItemsPerPage { get; set; }
 
         T GetAdditionalSetting<T>(string name, T defaultValue);
+
+        /// <summary>
+        /// Indicated the authorization type. Anonymous access is the default.
+        /// </summary>
+        AuthorizationType AuthorizationType { get; set; }
     }
 }

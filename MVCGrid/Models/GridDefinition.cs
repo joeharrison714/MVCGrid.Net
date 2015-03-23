@@ -48,7 +48,7 @@ namespace MVCGrid.Models
             this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
             this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
             this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
-
+            this.AuthorizationType = gridDefaults.AuthorizationType;
         }
 
         public IEnumerable<IMVCGridColumn> GetColumns()
@@ -284,6 +284,11 @@ namespace MVCGrid.Models
 
             return val;
         }
+
+        /// <summary>
+        /// Indicated the authorization type. Anonymous access is the default.
+        /// </summary>
+        public AuthorizationType AuthorizationType { get; set; }
     }
 
 }
