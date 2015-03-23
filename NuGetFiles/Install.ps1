@@ -28,7 +28,7 @@ catch{
     exit
 }
 
-$rootNamespace = $project.Properties["RootNamespace"]
+$rootNamespace = $project.Properties.Item("RootNamespace").Value.ToString()
 Write-Host "rootNamespace: ($rootNamespace)"
 
 try {
