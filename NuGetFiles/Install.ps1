@@ -28,6 +28,9 @@ catch{
     exit
 }
 
+$rootNamespace = $project.Properties["RootNamespace"]
+Write-Host "rootNamespace: ($rootNamespace)"
+
 try {
     $sourcePath = Join-Path $toolsPath $templateFilename
     Write-Host "sourcePath: ($sourcePath)"
