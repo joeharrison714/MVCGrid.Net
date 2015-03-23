@@ -1,5 +1,6 @@
  param($installPath, $toolsPath, $package, $project)
 
+ $templateFilename = "MVCGridConfig.tt"
  $codeFilename = "MVCGridConfig.cs"
 
 # Get the project item for the scripts folder
@@ -28,7 +29,7 @@ catch{
 }
 
 try {
-    $sourcePath = Join-Path $toolsPath $codeFilename
+    $sourcePath = Join-Path $toolsPath $templateFilename
     Write-Host "sourcePath: ($sourcePath)"
     $appStartFolderProjectItem.ProjectItems.AddFromTemplate($sourcePath, $codeFilename)
 }
