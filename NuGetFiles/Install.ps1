@@ -32,9 +32,9 @@ try {
     Write-Host "sourcePath: ($sourcePath)"
     $appStartFolderProjectItem.ProjectItems.AddFromTemplate($sourcePath)
 }
-catch [Exception] {
+catch {
     # No Scripts folder
-    Write-Host "Error adding file: $Exception.Message"
+    Write-Host "Error adding file: " + $_
     exit
 }
 
