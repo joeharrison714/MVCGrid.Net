@@ -30,7 +30,7 @@ catch{
 try {
     $sourcePath = Join-Path $toolsPath $codeFilename
     Write-Host "sourcePath: ($sourcePath)"
-    $appStartFolderProjectItem.ProjectItems.AddFromTemplate($sourcePath)
+    $appStartFolderProjectItem.ProjectItems.AddFromTemplate($sourcePath, $codeFilename)
 }
 catch {
     # No Scripts folder
