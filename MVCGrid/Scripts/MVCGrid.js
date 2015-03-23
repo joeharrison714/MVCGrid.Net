@@ -3,6 +3,7 @@ var MVCGrid = new function () {
 
     var handlerPath = '%%HANDLERPATH%%';
     var controllerPath = '%%CONTROLLERPATH%%';
+    var showErrorDetails = %%ERRORDETAILS%%;
     var currentGrids = [];
 
     this.init = function () {
@@ -243,7 +244,12 @@ var MVCGrid = new function () {
             },
             error: function (request, status, error) {
                 var errorhtml = $('#' + errorHtmlId).html();
-                $('#' + tableHolderHtmlId).html(errorhtml);
+
+                if (showErrorDetails){
+                    $('#' + tableHolderHtmlId).html(request.responseText);
+                }else{
+                    $('#' + tableHolderHtmlId).html(errorhtml);
+                }
             },
             complete: function() {
                 if (gridDef.clientLoadingComplete != '') {

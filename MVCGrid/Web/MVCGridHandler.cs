@@ -39,6 +39,10 @@ namespace MVCGrid.Web
                         var handlerPath = HttpContext.Current.Request.CurrentExecutionFilePath;
                         script = script.Replace("%%HANDLERPATH%%", handlerPath);
 
+                        bool showErrorDetails = ConfigUtility.GetShowErrorDetailsSetting();
+                        script = script.Replace("%%ERRORDETAILS%%", showErrorDetails.ToString().ToLower());
+                        
+
                         var controllerPath = HttpContext.Current.Request.ApplicationPath;
                         controllerPath += "mvcgrid/grid";
 

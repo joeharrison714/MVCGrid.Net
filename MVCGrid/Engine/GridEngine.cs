@@ -5,6 +5,8 @@ using MVCGrid.Utility;
 using MVCGrid.Web;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -161,9 +163,22 @@ namespace MVCGrid.Engine
                 {
                     preload = RenderPreloadedGridHtml(helper, grid, gridName);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    preload = grid.ErrorMessageHtml;
+                    bool showDetails = ConfigUtility.GetShowErrorDetailsSetting();
+
+                    if (showDetails)
+                    {
+                        string detail = "<div class='alert alert-danger'>";
+                        detail += HttpUtility.HtmlEncode(ex.ToString()).Replace("\r\n", "<br />");
+                        detail += "</div>";
+
+                        preload = detail;
+                    }
+                    else
+                    {
+                        preload = grid.ErrorMessageHtml;
+                    }
                 }
             }
 
@@ -310,5 +325,7 @@ namespace MVCGrid.Engine
 
             return allowAccess;
         }
+
+
     }
 }
