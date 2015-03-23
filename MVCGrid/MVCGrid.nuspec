@@ -23,5 +23,6 @@
     <file src="..\NuGetFiles\web.config.transform" target="Content" />
     <file src="..\NuGetFiles\readme.txt" target="" />
     <file src="..\NuGetFiles\Views\web.config.transform" target="Content\Views" />
+    <file src="..\NuGetFiles\Install.ps1" target="Tools" />
   </files>
 </package>
