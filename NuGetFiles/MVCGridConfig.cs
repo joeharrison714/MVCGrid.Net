@@ -1,6 +1,6 @@
-﻿[assembly: WebActivatorEx.PreApplicationStartMethod(typeof($rootnamespace$.App_Start.MVCGridConfig), "RegisterGrids")]
+﻿[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(<# System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint"); #>.App_Start.MVCGridConfig), "RegisterGrids")]
 
-namespace $rootnamespace$.App_Start
+namespace <# System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint"); #>
 {
     using System;
     using System.Web;
