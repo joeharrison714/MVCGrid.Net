@@ -43,8 +43,10 @@ try {
 
     $text = Get-Content $sourcePath -Raw
     $text = $text.replace("`$rootnamespace$",$rootNamespace)
+    #$text = $text.replace("`n","`r`n")
 
-    $text | set-content $targetPath
+    #$text | set-content $targetPath
+    [io.file]::writealltext($targetPath, $text)
 
     $appStartFolderProjectItem.ProjectItems.AddFromFile($targetPath)
 }
