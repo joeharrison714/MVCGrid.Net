@@ -182,6 +182,7 @@
     <Compile Include="Models\DocumentationRepository.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\JobRepo.cs" />
+    <Compile Include="Models\MVCGridToolbarModel.cs" />
     <Compile Include="Models\PersonRepository.cs" />
     <Compile Include="Models\TestItem.cs" />
     <Compile Include="Models\TestItemRepository.cs" />
