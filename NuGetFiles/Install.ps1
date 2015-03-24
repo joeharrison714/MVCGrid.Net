@@ -55,9 +55,6 @@ try {
     Remove-Item $tempFile
 }
 catch {
-    # No Scripts folder
     Write-Host "Error adding file: " + $_
     exit
 }
-
-#$toolsPath

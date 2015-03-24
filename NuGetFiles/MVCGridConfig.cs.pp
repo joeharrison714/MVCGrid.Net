@@ -4,19 +4,20 @@ namespace $rootnamespace$
 {
     using System;
     using System.Web;
-	using System.Web.Mvc;
-	using System.Linq;
-	using System.Collections.Generic;
+    using System.Web.Mvc;
+    using System.Linq;
+    using System.Collections.Generic;
 
-	using MVCGrid.Models;
-	using MVCGrid.Web;
+    using MVCGrid.Models;
+    using MVCGrid.Web;
 
     public static class MVCGridConfig 
     {
         public static void RegisterGrids()
         {
-			/*
+            /*
             MVCGridDefinitionTable.Add("UsageExample", new MVCGridBuilder<YourModelItem>()
+			    .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     // Add your columns here
@@ -26,8 +27,8 @@ namespace $rootnamespace$
                 })
                 .WithRetrieveDataMethod((context) =>
                 {
-                    // Query your data here. Obey Ordering, paging and filtering paramters given in the context.QueryOptions.
-                    // Use Entity Framwork, a module from your IoC Container, or any other method.
+                    // Query your data here. Obey Ordering, paging and filtering parameters given in the context.QueryOptions.
+                    // Use Entity Framework, a module from your IoC Container, or any other method.
                     // Return QueryResult object containing IEnumerable<YouModelItem>
 
                     return new QueryResult<YourModelItem>()
@@ -39,6 +40,6 @@ namespace $rootnamespace$
                 })
             );
             */
-		}
+        }
     }
 }
