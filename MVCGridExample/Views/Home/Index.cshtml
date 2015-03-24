@@ -79,7 +79,46 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
+
         <div class="row">
+            <div class="col-md-4">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>
+                            Page Size: <select id="selPageSize" class="form-control">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="btn-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Fields
+                        </button>
+                        <ul class="dropdown-menu" role="menu" id="columnList"></ul>
+                    </div>
+                    <button class="btn btn-default" id="exportButton" onclick="location.href = MVCGrid.getExportUrl('TestGrid');">
+                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-inline">
+                    <div class="form-group pull-right">
+                        <label>Search: <input type="search" id="globalSearchText" placeholder="Search" class="form-control"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="row">
             <div class="col-md-4">
                 <label>
                     Page Size: <select id="selPageSize">
@@ -108,10 +147,10 @@
                 </div>
             </div>
             <div class="col-md-3"><label class="pull-right">Search: <input type="search" id="globalSearchText" placeholder=""></label></div>
-        </div>
+        </div>*@
 
-        @Html.MVCGrid("TestGrid")
-    </div>
+            @Html.MVCGrid("TestGrid")
+        </div>
 </div>
 
 @*<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />
