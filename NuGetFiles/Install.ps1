@@ -42,7 +42,7 @@ try {
     Write-Host "sourcePath: ($sourcePath)"
 
     $text = Get-Content $sourcePath -Raw
-    $text.replace("`$rootnamespace$",$rootNamespace)
+    $text = $text.replace("`$rootnamespace$",$rootNamespace)
 
     $tempFile=[System.IO.Path]::GetTempFileName()
 
@@ -50,9 +50,9 @@ try {
 
     $text | Out-File $tempFile
 
-    $appStartFolderProjectItem.ProjectItems.Add($tempFile, $codeFilename)
+    $appStartFolderProjectItem.ProjectItems.AddFromTemplate($tempFile, $codeFilename)
 
-    #$rootnamespace$
+    Remove-Item $tempFile
 }
 catch {
     # No Scripts folder
