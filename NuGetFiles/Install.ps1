@@ -3,7 +3,7 @@
  $templateFilename = "MVCGridConfig.cs.pp"
  $codeFilename = "MVCGridConfig.cs"
 
-# Get the project item for the scripts folder
+
 try {
     $appStartFolderProjectItem = $project.ProjectItems.Item("App_Start")
     $appStartFolderPath = $appStartFolderProjectItem.FileNames(1)
@@ -44,15 +44,9 @@ try {
     $text = Get-Content $sourcePath -Raw
     $text = $text.replace("`$rootnamespace$",$rootNamespace)
 
-    $tempFile=[System.IO.Path]::GetTempFileName()
+    $text | Out-File $targetPath
 
-    Write-Host "temp file: $tempFile"
-
-    $text | Out-File $tempFile
-
-    $appStartFolderProjectItem.ProjectItems.AddFromTemplate($tempFile, $codeFilename)
-
-    Remove-Item $tempFile
+    $appStartFolderProjectItem.ProjectItems.AddFromFile($targetPath)
 }
 catch {
     Write-Host "Error adding file: " + $_
