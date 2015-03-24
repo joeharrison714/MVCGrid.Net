@@ -11,7 +11,7 @@ try {
     Write-Host "AppStart: ($appStartFolderPath)"
 }
 catch {
-    # No Scripts folder
+    # No App_Data folder
     Write-Host "No App_Data folder found"
     exit
 }
@@ -43,9 +43,8 @@ try {
 
     $text = Get-Content $sourcePath -Raw
     $text = $text.replace("`$rootnamespace$",$rootNamespace)
-    #$text = $text.replace("`n","`r`n")
 
-    #$text | set-content $targetPath
+    #this method doesn't add an extra line break
     [io.file]::writealltext($targetPath, $text)
 
     $appStartFolderProjectItem.ProjectItems.AddFromFile($targetPath)
