@@ -48,7 +48,7 @@ try {
 
     Write-Host "temp file: $tempFile"
 
-    $text | Out-File $file
+    $text | Out-File $tempFile
 
     $appStartFolderProjectItem.ProjectItems.Add($tempFile, $codeFilename)
 
