@@ -1,6 +1,6 @@
  param($installPath, $toolsPath, $package, $project)
 
- $templateFilename = "MVCGridConfig.tt"
+ $templateFilename = "MVCGridConfig.cs.pp"
  $codeFilename = "MVCGridConfig.cs"
 
 # Get the project item for the scripts folder
@@ -28,13 +28,31 @@ catch{
     exit
 }
 
-$rootNamespace = $project.Properties.Item("RootNamespace").Value.ToString()
-Write-Host "rootNamespace: ($rootNamespace)"
+try{
+    $rootNamespace = $project.Properties.Item("RootNamespace").Value.ToString()
+    Write-Host "rootNamespace: ($rootNamespace)"
+}
+catch{
+    Write-Host "Error getting root namespace"
+    exit
+}
 
 try {
     $sourcePath = Join-Path $toolsPath $templateFilename
     Write-Host "sourcePath: ($sourcePath)"
-    $appStartFolderProjectItem.ProjectItems.AddFromTemplate($sourcePath, $codeFilename)
+
+    $text = Get-Content $sourcePath -Raw
+    $text.replace("`$rootnamespace$",$rootNamespace)
+
+    $tempFile=[System.IO.Path]::GetTempFileName()
+
+    Write-Host "temp file: $tempFile"
+
+    $text | Out-File $file
+
+    $appStartFolderProjectItem.ProjectItems.Add($tempFile, $codeFilename)
+
+    #$rootnamespace$
 }
 catch {
     # No Scripts folder
