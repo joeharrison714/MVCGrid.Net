@@ -44,7 +44,7 @@ try {
     $text = Get-Content $sourcePath -Raw
     $text = $text.replace("`$rootnamespace$",$rootNamespace)
 
-    $text | Out-File $targetPath
+    $text | set-content $targetPath
 
     $appStartFolderProjectItem.ProjectItems.AddFromFile($targetPath)
 }
