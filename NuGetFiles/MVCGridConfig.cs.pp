@@ -17,7 +17,7 @@ namespace $rootnamespace$
         {
             /*
             MVCGridDefinitionTable.Add("UsageExample", new MVCGridBuilder<YourModelItem>()
-			    .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
                     // Add your columns here
