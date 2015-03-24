@@ -297,6 +297,7 @@
     <Content Include="Views\Demo\ContainerDemo.cshtml" />
     <Content Include="Views\Support\Index.cshtml" />
     <Content Include="Views\Demo\NestedObject.cshtml" />
+    <Content Include="Views\Shared\_MVCGridToolbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

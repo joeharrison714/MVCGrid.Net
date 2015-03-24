@@ -1,0 +1,40 @@
+﻿@{
+    string gridName = "TestGrid";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-inline">
+            <div class="form-group">
+                <label>
+                    Page Size: <select class="form-control" data-mvcgrid-type="pageSize" data-mvcgrid-name="@(gridName)">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Fields
+                </button>
+                <ul class="dropdown-menu" role="menu" data-mvcgrid-type="columnVisibilityList" data-mvcgrid-name="@(gridName)"></ul>
+            </div>
+            <button class="btn btn-default" data-mvcgrid-type="export" data-mvcgrid-name="@(gridName)">
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+            </button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-inline">
+            <div class="form-group pull-right">
+                <label>Search: <input type="search" placeholder="Search" class="form-control" data-mvcgrid-type="additionalQueryOption" data-mvcgrid-option="search" data-mvcgrid-name="@(gridName)"></label>
+            </div>
+        </div>
+    </div>
+</div>
