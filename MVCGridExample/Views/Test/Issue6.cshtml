@@ -1,0 +1,68 @@
+﻿@using MVCGrid.Web
+
+<br />
+<button id="btnDelete" class="btn btn-danger disabled">Delete</button>
+
+<div class="row">
+    <div class="col-md-8">
+        <label>
+            Show <select id="selPageSize">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select> entries
+        </label>
+    </div>
+    <div class="col-md-4"><label class="pull-right">Search: <input type="search" id="txtGlobalSearch" placeholder=""></label></div>
+</div>
+@Html.MVCGrid("Issue6Grid")
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+
+        $(function () {
+
+            $('#selPageSize').change(function () {
+                MVCGrid.setPageSize('Issue6Grid', $('#selPageSize').val());
+            });
+
+            $('#txtGlobalSearch').keyup(function () {
+                MVCGrid.setAdditionalQueryOptions('Issue6Grid', { globalsearch: $('#txtGlobalSearch').val() });
+            });
+
+            $('#selPageSize').val(MVCGrid.getPageSize('Issue6Grid'));
+            $('#txtGlobalSearch').val(MVCGrid.getAdditionalQueryOptions('Issue6Grid').GlobalSearch);
+
+        });
+
+        $(function () {
+            //Multi Select
+            $('body').on("click", ".select", function () {
+                $('#btnDelete').addClass('disabled');
+                $('.select:checked').each(function () {
+                    $('#btnDelete').removeClass('disabled');
+                });
+            });
+
+            $('body').on("click", "#chkselectall", function (e) {
+                if ($(this).is(':checked')) {
+                    //alert('test');
+                    $('.select').each(function () {
+                        $(this).prop('checked', true);
+                        $('#btnDelete').removeClass('disabled');
+                    });
+                }
+                else {
+                    $('.select').each(function () {
+                        $(this).prop('checked', false);
+                        $('#btnDelete').addClass('disabled');
+                    });
+                }
+            });
+        });
+    </script>
+}

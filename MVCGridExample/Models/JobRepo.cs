@@ -9,7 +9,7 @@ namespace MVCGrid.Web.Models
     {
         const string CacheKey = "JobRepo";
 
-        public IEnumerable<Job> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        public IEnumerable<Job> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
             if (HttpContext.Current.Cache[CacheKey] == null)
             {
@@ -37,35 +37,40 @@ namespace MVCGrid.Web.Models
             }
 
             List<Job> data = (List<Job>)HttpContext.Current.Cache[CacheKey];
-            totalRecords = data.Count;
+            
 
             var q = data.AsQueryable();
 
-            q = q.OrderBy(p => p.JobId);
+            if (!String.IsNullOrWhiteSpace(globalSearch))
+            {
+                q = q.Where(p => p.Name.Contains(globalSearch));
+            }
+
+            totalRecords = q.Count();
 
             if (!String.IsNullOrWhiteSpace(orderBy))
             {
-                //switch (orderBy.ToLower())
-                //{
-                //    case "col1":
-                //        if (!desc)
-                //            q = q.OrderBy(p => p.Col1);
-                //        else
-                //            q = q.OrderByDescending(p => p.Col1);
-                //        break;
-                //    case "col2":
-                //        if (!desc)
-                //            q = q.OrderBy(p => p.Col2);
-                //        else
-                //            q = q.OrderByDescending(p => p.Col2);
-                //        break;
-                //    case "col3":
-                //        if (!desc)
-                //            q = q.OrderBy(p => p.Col3);
-                //        else
-                //            q = q.OrderByDescending(p => p.Col3);
-                //        break;
-                //}
+                switch (orderBy.ToLower())
+                {
+                    case "id":
+                        if (!desc)
+                            q = q.OrderBy(p => p.JobId);
+                        else
+                            q = q.OrderByDescending(p => p.JobId);
+                        break;
+                    case "name":
+                        if (!desc)
+                            q = q.OrderBy(p => p.Name);
+                        else
+                            q = q.OrderByDescending(p => p.Name);
+                        break;
+                    case "contact":
+                        if (!desc)
+                            q = q.OrderBy(p => p.Contact.FullName);
+                        else
+                            q = q.OrderByDescending(p => p.Contact.FullName);
+                        break;
+                }
             }
 
             if (limitOffset.HasValue)

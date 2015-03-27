@@ -24,9 +24,9 @@ namespace MVCGrid.Web
 
             sb.Append("{");
 
-            sb.AppendFormat("\"name\": \"{0}\"", gridContext.GridName);
+            sb.AppendFormat("\"name\": \"{0}\"", HttpUtility.JavaScriptStringEncode(gridContext.GridName));
             sb.Append(",");
-            sb.AppendFormat("\"sortColumn\": \"{0}\"", gridContext.QueryOptions.SortColumnName);
+            sb.AppendFormat("\"sortColumn\": \"{0}\"", HttpUtility.JavaScriptStringEncode(gridContext.QueryOptions.SortColumnName));
             sb.Append(",");
             sb.AppendFormat("\"sortDirection\": \"{0}\"", gridContext.QueryOptions.SortDirection);
             sb.Append(",");
@@ -77,7 +77,7 @@ namespace MVCGrid.Web
 
                 sb.AppendFormat("\"{0}\": {{", cv.ColumnName);
 
-                sb.AppendFormat("\"{0}\": \"{1}\"", "headerText", gridColumn.HeaderText);
+                sb.AppendFormat("\"{0}\": \"{1}\"", "headerText", HttpUtility.JavaScriptStringEncode(gridColumn.HeaderText));
                 sb.Append(",");
                 sb.AppendFormat("\"{0}\": {1}", "visible", cv.Visible.ToString().ToLower());
                 sb.Append(",");
@@ -103,7 +103,7 @@ namespace MVCGrid.Web
                 {
                     sb.Append(",");
                 }
-                sb.AppendFormat("\"{0}\": \"{1}\"", aqon, val);
+                sb.AppendFormat("\"{0}\": \"{1}\"", aqon, HttpUtility.JavaScriptStringEncode(val));
             }
             return sb.ToString();
         }
@@ -125,7 +125,7 @@ namespace MVCGrid.Web
                 {
                     sb.Append(",");
                 }
-                sb.AppendFormat("\"{0}\": \"{1}\"", col.ColumnName, val);
+                sb.AppendFormat("\"{0}\": \"{1}\"", col.ColumnName, HttpUtility.JavaScriptStringEncode(val));
             }
             return sb.ToString();
         }

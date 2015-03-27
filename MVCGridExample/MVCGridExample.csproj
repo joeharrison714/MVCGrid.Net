@@ -156,6 +156,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Data\Person.cs">
       <DependentUpon>SampleDB.tt</DependentUpon>
     </Compile>
@@ -299,6 +300,7 @@
     <Content Include="Views\Support\Index.cshtml" />
     <Content Include="Views\Demo\NestedObject.cshtml" />
     <Content Include="Views\Shared\_MVCGridToolbar.cshtml" />
+    <Content Include="Views\Test\Issue6.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

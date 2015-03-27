@@ -944,7 +944,7 @@ namespace MVCGridExample
                     var options = context.QueryOptions;
                     JobRepo repo = new JobRepo();
                     int totalRecords;
-                    var data = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(), null, false);
+                    var data = repo.GetData(out totalRecords, null, options.GetLimitOffset(), options.GetLimitRowcount(), null, false);
 
                     return new QueryResult<Job>()
                     {

@@ -28,7 +28,7 @@ var MVCGrid = new function () {
         }
 
         bindToolbarEvents();
-    }
+    };
 
     var bindToolbarEvents = function (){
 
@@ -180,7 +180,7 @@ var MVCGrid = new function () {
     this.getColumnVisibility = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.columnVisibility;
-    }
+    };
 
     // public
     this.setColumnVisibility = function (mvcGridName, obj) {
@@ -202,13 +202,13 @@ var MVCGrid = new function () {
         });
 
         setURLAndReload(mvcGridName, newUrl);
-    }
+    };
 
     // public
     this.getFilters = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.filters;
-    }
+    };
 
     // public
     this.setFilters = function (mvcGridName, obj) {
@@ -222,19 +222,19 @@ var MVCGrid = new function () {
         });
 
         setURLAndReload(mvcGridName, newUrl);
-    }
+    };
 
     // public
     this.getSortColumn = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.sortColumn;
-    }
+    };
 
     // public
     this.getSortDirection = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.sortDirection;
-    }
+    };
 
     // public
     this.setSort = function (mvcGridName, sortColumn, sortDirection) {
@@ -253,7 +253,7 @@ var MVCGrid = new function () {
     this.getPage = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.pageNumber;
-    }
+    };
 
     // public
     this.setPage = function (mvcGridName, pageNumber) {
@@ -269,7 +269,7 @@ var MVCGrid = new function () {
     this.getPageSize = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.itemsPerPage;
-    }
+    };
 
     // public
     this.setPageSize = function (mvcGridName, pageSize) {
@@ -285,7 +285,7 @@ var MVCGrid = new function () {
     this.getAdditionalQueryOptions = function (mvcGridName) {
         var clientJson = getClientData(mvcGridName);
         return clientJson.additionalQueryOptions;
-    }
+    };
 
     // public
     this.setAdditionalQueryOptions = function (mvcGridName, obj) {
@@ -299,7 +299,7 @@ var MVCGrid = new function () {
         });
 
         setURLAndReload(mvcGridName, newUrl);
-    }
+    };
 
     // private
     var setURLAndReload = function (mvcGridName, newUrl) {
@@ -362,7 +362,7 @@ var MVCGrid = new function () {
                 }
             }
         });
-    }
+    };
 
     // public
     this.getExportUrl = function (mvcGridName) {
@@ -373,7 +373,7 @@ var MVCGrid = new function () {
         exportUrl = updateURLParameter(exportUrl, 'Name', mvcGridName);
 
         return exportUrl;
-    }
+    };
 };
 
 
