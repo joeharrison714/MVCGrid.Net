@@ -59,15 +59,40 @@
     </div>
 </div>
 
+<div class="well">
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Last Name"
+                   data-mvcgrid-type="filter" data-mvcgrid-option="LastName" />
+        </div>
+        <div class="form-group">
+                
+                
+            <input type="email" class="form-control" placeholder="First name"
+                   data-mvcgrid-type="filter" data-mvcgrid-option="FirstName" />
+        </div>
+        <div class="form-group">
+
+            <select class="form-control" data-mvcgrid-type="filter" data-mvcgrid-option="Status">
+                <option value=""></option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+
+        </div>
+        <button type="button" class="btn btn-default" data-mvcgrid-apply-filter="click">Apply</button>
+    </div>
+</div>
+
 
 @Html.MVCGrid("Filtering")
 
 <h3>Code</h3>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Javascript in View</div>
-    <div class="panel-body">
-        <pre class="brush: js">
+    <div class="panel panel-default">
+        <div class="panel-heading">Javascript in View</div>
+        <div class="panel-body">
+            <pre class="brush: js">
 &lt;script type=&quot;text/javascript&quot;&gt;
     $(&#39;#btnFilter&#39;).click(function(){
         MVCGrid.setFilters(&#39;Filtering&#39;,
@@ -79,21 +104,21 @@
     });
 &lt;/script&gt;
         </pre>
+        </div>
     </div>
-</div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
-    <div class="panel-body">
-        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("Filtering")</pre>
+    <div class="panel panel-default">
+        <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+        <div class="panel-body">
+            <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("Filtering")</pre>
+        </div>
     </div>
-</div>
 
 
 
-<div class="panel panel-default">
-    <div class="panel-heading">View</div>
-    <div class="panel-body">
-        <pre>@@Html.MVCGrid("Filtering")</pre>
+    <div class="panel panel-default">
+        <div class="panel-heading">View</div>
+        <div class="panel-body">
+            <pre>@@Html.MVCGrid("Filtering")</pre>
+        </div>
     </div>
-</div>

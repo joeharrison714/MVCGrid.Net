@@ -399,11 +399,11 @@ namespace MVCGridExample
                 {
                     cols.Add("Id").WithSorting(false)
                         .WithValueExpression(p => p.Id.ToString());
-                    cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression(p => p.FirstName)
-                        .WithFiltering(true);
                     cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression(p => p.LastName)
+                        .WithFiltering(true);
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName)
                         .WithFiltering(true);
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")

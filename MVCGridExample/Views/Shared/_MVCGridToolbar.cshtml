@@ -43,7 +43,9 @@
 @if (Model.GlobalSearch) {
             <span>&nbsp;</span>
             <div class="form-group">
-                <label>Search: <input type="search" placeholder="Search" class="form-control" data-mvcgrid-type="additionalQueryOption" data-mvcgrid-option="search" data-mvcgrid-name="@(gridName)"></label>
+                <label>Search: <input type="search" placeholder="Search" class="form-control"
+                    data-mvcgrid-type="additionalQueryOption" data-mvcgrid-option="search" data-mvcgrid-name="@(gridName)"
+                    data-mvcgrid-apply-additional="keyup"></label>
             </div>
 }
         </div>

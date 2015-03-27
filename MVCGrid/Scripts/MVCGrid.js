@@ -30,31 +30,105 @@ var MVCGrid = new function () {
         bindToolbarEvents();
     };
 
-    var bindToolbarEvents = function (){
+    var applyBoundFilters = function (mvcGridName){
 
-        $("[data-mvcgrid-type='additionalQueryOption']").each(function () {
+        var o = {};
 
-            $(this).keyup(function () {
-                var gridName =  $(this).attr('data-mvcgrid-name');
+        $("[data-mvcgrid-type='filter']").each(function () {
+
+            var gridName =  getGridName($(this));
+            if (gridName == mvcGridName){
+
                 var option = $(this).attr('data-mvcgrid-option');
                 var val = $(this).val();
-
-                var o = {};
+            
                 o[option] = val;
+            }
+        });
 
-                MVCGrid.setAdditionalQueryOptions(gridName, o);
+        MVCGrid.setFilters(mvcGridName, o);
+    };
+
+    var loadBoundFilters = function(){
+        $("[data-mvcgrid-type='filter']").each(function () {
+            var gridName =  getGridName($(this));
+            var option = $(this).attr('data-mvcgrid-option');
+
+            var val = MVCGrid.getFilters(gridName)[option];
+            $(this).val(val);
+        });
+    };
+
+    var applyAdditionalQueryOptions = function (mvcGridName){
+
+        var o = {};
+
+        $("[data-mvcgrid-type='additionalQueryOption']").each(function () {
+            var gridName =  getGridName($(this));
+
+            if (gridName == mvcGridName){
+                var option = $(this).attr('data-mvcgrid-option');
+                var val = $(this).val();
+            
+                o[option] = val;
+            }
+        });
+
+        MVCGrid.setAdditionalQueryOptions(mvcGridName, o);
+    };
+
+    var loadAdditionalQueryOptions = function(){
+        $("[data-mvcgrid-type='additionalQueryOption']").each(function () {
+            var gridName =  getGridName($(this));
+            var option = $(this).attr('data-mvcgrid-option');
+
+            var val = MVCGrid.getAdditionalQueryOptions(gridName)[option];
+            $(this).val(val);
+        });
+    };
+
+    var getGridName = function(elem){
+        var gridName = currentGrids[0].name;
+        var nameAttr =  elem.attr('data-mvcgrid-name');
+        if (typeof nameAttr !== typeof undefined && nameAttr !== false) {
+            gridName = nameAttr;
+        }
+        return gridName;
+    };
+
+    var bindToolbarEvents = function (){
+
+        loadBoundFilters();
+        loadAdditionalQueryOptions();
+
+        $("[data-mvcgrid-apply-filter]").each(function () {
+
+            var eventName = $(this).attr("data-mvcgrid-apply-filter");
+
+            $(this).on(eventName, function () {
+                var gridName =  getGridName($(this));
+
+                applyBoundFilters(gridName);
             });
 
-            var gridName =  $(this).attr('data-mvcgrid-name');
-            var option = $(this).attr('data-mvcgrid-option');
-            $(this).val(MVCGrid.getAdditionalQueryOptions(gridName)[option]);
+        });
+
+        $("[data-mvcgrid-apply-additional]").each(function () {
+
+            var eventName = $(this).attr("data-mvcgrid-apply-additional");
+
+            $(this).on(eventName, function () {
+                var gridName =  getGridName($(this));
+
+                applyAdditionalQueryOptions(gridName);
+            });
 
         });
 
         $("[data-mvcgrid-type='export']").each(function () {
 
             $(this).click(function () {
-                var gridName =  $(this).attr('data-mvcgrid-name');
+                var gridName =  getGridName($(this));
 
                 location.href = MVCGrid.getExportUrl(gridName);
             });
@@ -63,11 +137,11 @@ var MVCGrid = new function () {
 
         $("[data-mvcgrid-type='pageSize']").each(function () {
             
-            var gridName =  $(this).attr('data-mvcgrid-name');
+            var gridName =  getGridName($(this));
             $(this).val(MVCGrid.getPageSize(gridName));
 
             $(this).change(function () {
-                var gridName = $(this).attr('data-mvcgrid-name');
+                var gridName =  getGridName($(this));
                 MVCGrid.setPageSize(gridName, $(this).val());
             });
 
@@ -78,7 +152,7 @@ var MVCGrid = new function () {
         $("[data-mvcgrid-type='columnVisibilityList']").each(function () {
 
             var listElement = $(this);
-            var gridName =  $(this).attr('data-mvcgrid-name');
+            var gridName =  getGridName($(this));
 
             var colVis = MVCGrid.getColumnVisibility(gridName);
             $.each(colVis, function (colName, col) {
@@ -99,7 +173,7 @@ var MVCGrid = new function () {
 
             $("input:checkbox[name='" + gridName + "cols']").change(function() {
                 var jsonData = {};
-                var gridName =  $(this).closest('ul').attr('data-mvcgrid-name');
+                var gridName = getGridName($(this).closest('ul'));
                 
                 $("input:checkbox[name='" + gridName + "cols']:checked").each(function () {
                     var columnName = $(this).val();
