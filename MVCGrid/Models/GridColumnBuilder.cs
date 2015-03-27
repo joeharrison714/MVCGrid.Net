@@ -33,7 +33,7 @@ namespace MVCGrid.Models
             return Add(columnName, null, null);
         }
 
-        public GridColumnBuilder<T1> Add(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
+        public GridColumnBuilder<T1> Add(string columnName, string headerText, Func<T1, string> valueExpression)
         {
             GridColumnBuilder<T1> col = new GridColumnBuilder<T1>(columnName, headerText, valueExpression, _columnDefaults);
 
@@ -63,16 +63,23 @@ namespace MVCGrid.Models
         {
         }
 
-        public GridColumnBuilder(string columnName, string headerText, Func<T1, GridContext, string> valueExpression)
+        public GridColumnBuilder(string columnName, string headerText, Func<T1, string> valueExpression)
             :this(columnName, headerText, valueExpression, null)
         {
 
         }
 
-        public GridColumnBuilder(string columnName, string headerText, Func<T1, GridContext, string> valueExpression, ColumnDefaults columnDefaults)
+        public GridColumnBuilder(string columnName, string headerText, Func<T1, string> valueExpression, ColumnDefaults columnDefaults)
         {
-            GridColumn = new GridColumn<T1>(columnName, headerText, valueExpression, columnDefaults);
+            Func<T1, GridContext, string> newVe = null;
+            if (valueExpression != null)
+            {
+                newVe = (T1, GridContext) => valueExpression(T1);
+            }
+
+            GridColumn = new GridColumn<T1>(columnName, headerText, newVe, columnDefaults);
         }
+
 
         public GridColumn<T1> GridColumn { get; set; }
 
@@ -123,6 +130,15 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// This is how to specify the contents of the current cell. If this contains HTML, set HTMLEncode to false
+        /// </summary>
+        public GridColumnBuilder<T1> WithValueExpression(Func<T1, string> expression)
+        {
+            GridColumn.ValueExpression = (T1, GridContext) => expression(T1);
+            return this;
+        }
+
 
         /// <summary>
         /// This is how to specify the contents of the current cell when used in an export file, if different that ValueExpression
@@ -134,11 +150,29 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// This is how to specify the contents of the current cell when used in an export file, if different that ValueExpression
+        /// </summary>
+        public GridColumnBuilder<T1> WithPlainTextValueExpression(Func<T1, string> expression)
+        {
+            GridColumn.PlainTextValueExpression = (T1, GridContext) => expression(T1);
+            return this;
+        }
+
+        /// <summary>
         /// Use this to return a custom css class based on data for the current cell
         /// </summary>
         public GridColumnBuilder<T1> WithCellCssClassExpression(Func<T1, GridContext, string> expression)
         {
             GridColumn.CellCssClassExpression = expression;
+            return this;
+        }
+
+        /// <summary>
+        /// Use this to return a custom css class based on data for the current cell
+        /// </summary>
+        public GridColumnBuilder<T1> WithCellCssClassExpression(Func<T1, string> expression)
+        {
+            GridColumn.CellCssClassExpression = (T1, GridContext) => expression(T1);
             return this;
         }
 
@@ -160,6 +194,16 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// Indicates whether column is visible.
+        /// </summary>
+        public GridColumnBuilder<T1> WithVisibility(bool visible, bool allowChangeVisibility)
+        {
+            GridColumn.Visible = visible;
+            GridColumn.AllowChangeVisibility = allowChangeVisibility;
+            return this;
+        }
+
 
 
         /// <summary>
@@ -168,6 +212,16 @@ namespace MVCGrid.Models
         public GridColumnBuilder<T1> WithValueTemplate(string template)
         {
             GridColumn.ValueTemplate = template;
+            return this;
+        }
+
+        /// <summary>
+        /// Template for formatting cell value
+        /// </summary>
+        public GridColumnBuilder<T1> WithValueTemplate(string template, bool htmlEncode)
+        {
+            GridColumn.ValueTemplate = template;
+            GridColumn.HtmlEncode = htmlEncode;
             return this;
         }
 

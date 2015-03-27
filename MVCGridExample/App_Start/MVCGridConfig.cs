@@ -17,8 +17,9 @@ namespace MVCGridExample
         {
             MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
-                .WithAllowChangingPageSize(true)
-                .WithMaxItemsPerPage(100)
+                .WithSorting(true, "Id", SortDirection.Dsc)
+                .WithPaging(true, 10, true, 100)
+                .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
                 {
                     cols.Add(new GridColumn<Person>()
@@ -63,13 +64,7 @@ namespace MVCGridExample
                     cols.Add("Url").WithVisibility(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
                 })
-                //.WithAdditionalSetting(MVCGrid.Rendering.BootstrapRenderingEngine.SettingNameTableClass, "notreal") // Excample of changing table css class
-                .WithSorting(true)
-                .WithDefaultSortColumn("Id")
-                .WithDefaultSortDirection(SortDirection.Dsc)
-                .WithPaging(true)
-                .WithItemsPerPage(10)
-                .WithAdditionalQueryOptionNames("search")
+                //.WithAdditionalSetting(MVCGrid.Rendering.BootstrapRenderingEngine.SettingNameTableClass, "notreal") // Example of changing table css class
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -97,11 +92,11 @@ namespace MVCGridExample
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
-                    cols.Add("Id").WithValueExpression((p, c) => p.Id.ToString());
+                    cols.Add("Id").WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
                 .WithRetrieveDataMethod((options) =>
                 {
@@ -126,14 +121,13 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
+                .WithSorting(true, "LastName")
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -168,16 +162,14 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -220,16 +212,14 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -253,23 +243,21 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("StartDate").WithHeaderText("Start Date")
-                        .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                        .WithValueExpression(p => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
                     cols.Add("ViewLink").WithSorting(false)
                         .WithHeaderText("")
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>View</a>");
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -294,18 +282,18 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("StartDate").WithHeaderText("Start Date")
-                        .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                        .WithValueExpression(p => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
-                    cols.Add("Gender").WithValueExpression((p, c) => p.Gender)
-                        .WithCellCssClassExpression((p, c) => p.Gender == "Female" ? "danger" : "warning");
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive");
+                    cols.Add("Gender").WithValueExpression(p => p.Gender)
+                        .WithCellCssClassExpression(p => p.Gender == "Female" ? "danger" : "warning");
                     cols.Add().WithColumnName("ViewLink")
                         .WithSorting(false)
                         .WithHeaderText("")
@@ -313,11 +301,9 @@ namespace MVCGridExample
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>View</a>");
                 })
-                .WithRowCssClassExpression((p, c) => p.Active ? "success" : "")
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithRowCssClassExpression(p => p.Active ? "success" : "")
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -343,17 +329,15 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
                 .WithPreloadData(false)
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -377,17 +361,15 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName")
                         .WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithClientSideLoadingMessageFunctionName("showLoading")
                 .WithClientSideLoadingCompleteFunctionName("hideLoading")
                 .WithRetrieveDataMethod((context) =>
@@ -416,25 +398,21 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName)
+                        .WithValueExpression(p => p.FirstName)
                         .WithFiltering(true);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName)
+                        .WithValueExpression(p => p.LastName)
                         .WithFiltering(true);
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive")
                         .WithFiltering(true);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10, true, 100)
                 .WithFiltering(true)
-                .WithAllowChangingPageSize(true)
-                .WithMaxItemsPerPage(100)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -479,19 +457,17 @@ namespace MVCGridExample
                             return String.Format("<a href='{0}'>{1}</a>",
                                 c.UrlHelper.Action("detail", "demo", new { id = p.Id }), p.Id);
                         })
-                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                        .WithPlainTextValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive");
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithClientSideLoadingMessageFunctionName("showLoading")
                 .WithClientSideLoadingCompleteFunctionName("hideLoading")
                 .WithRetrieveDataMethod((context) =>
@@ -525,17 +501,15 @@ namespace MVCGridExample
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
                         .WithPlainTextValueExpression((p, c) => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive");
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithQueryStringPrefix("grid1")
                 .WithRetrieveDataMethod((context) =>
                 {
@@ -562,14 +536,12 @@ namespace MVCGridExample
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
                 {
-                    cols.Add("Col1").WithValueExpression((p, c) => p.Col1);
-                    cols.Add("Col2").WithValueExpression((p, c) => p.Col2);
-                    cols.Add("Col3").WithValueExpression((p, c) => p.Col3);
+                    cols.Add("Col1").WithValueExpression(p => p.Col1);
+                    cols.Add("Col2").WithValueExpression(p => p.Col2);
+                    cols.Add("Col3").WithValueExpression(p => p.Col3);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("Col1")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "Col1")
+                .WithPaging(true, 10)
                 .WithQueryStringPrefix("grid2")
                 .WithRetrieveDataMethod((context) =>
                 {
@@ -596,20 +568,18 @@ namespace MVCGridExample
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
-                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                        .WithPlainTextValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive");
                 })
                 .WithRenderingEngine(typeof(CustomHtmlRenderingEngine))
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(20)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 20)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -642,19 +612,17 @@ namespace MVCGridExample
                         .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
-                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                        .WithPlainTextValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive");
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive");
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(20)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 20)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -682,14 +650,13 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithHtmlEncoding(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
-                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
-                        .WithPlainTextValueExpression((p, c) => p.Id.ToString());
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>", false)
+                        .WithPlainTextValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("Edit").WithHtmlEncoding(false)
                         .WithSorting(false)
                         .WithHeaderText(" ")
@@ -706,10 +673,8 @@ namespace MVCGridExample
                         .WithValueExpression((p, c) => p.Active ? "label-success" : "label-danger")
                         .WithValueTemplate("You can access any of the item's properties: <strong>{Model.FirstName}</strong> <br />or the current column value: <span class='label {Value}'>{Model.Active}</span>");
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(20)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 20)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -737,16 +702,15 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
                 .WithErrorMessageHtml(@"<div class=""alert alert-danger"" role=""alert"">OH NO!!!</div>")
-                .WithSorting(true)
+                .WithSorting(true, "LastName")
                 .WithPaging(true)
-                .WithDefaultSortColumn("LastName")
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -789,7 +753,7 @@ namespace MVCGridExample
                 {
                     // Add your columns here
                     cols.Add("UniqueColumnName").WithHeaderText("Any Header")
-                        .WithValueExpression((i, c) => i.YourProperty); // use the Value Expression to return the cell text for this column
+                        .WithValueExpression(i => i.YourProperty); // use the Value Expression to return the cell text for this column
                 })
                 .WithRetrieveDataMethod((context) =>
                 {
@@ -811,20 +775,16 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
                 .WithAdditionalQueryOptionNames("GlobalSearch")
                 .WithAdditionalSetting("RenderLoadingDiv", false)
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
-                .WithAllowChangingPageSize(true)
-                .WithMaxItemsPerPage(100)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10, true, 100)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -850,18 +810,14 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
-                .WithAllowChangingPageSize(true)
-                .WithMaxItemsPerPage(100)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10, true, 100)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -885,27 +841,25 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithSorting(false)
-                        .WithValueExpression((p, c) => p.Id.ToString());
+                        .WithValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("StartDate").WithHeaderText("Start Date")
-                        .WithVisibility(false).WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                        .WithVisibility(false, true)
+                        .WithValueExpression(p => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
                     cols.Add("Status").WithSortColumnData("Active")
                         .WithHeaderText("Status")
-                        .WithVisibility(false).WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
+                        .WithVisibility(false, true)
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive")
                         .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger");
                     cols.Add("Gender")
-                        .WithVisibility(false).WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.Gender);
+                        .WithVisibility(false, true)
+                        .WithValueExpression(p => p.Gender);
                 })
-                .WithSorting(true)
-                .WithDefaultSortColumn("LastName")
-                .WithPaging(true)
-                .WithItemsPerPage(10)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
                 .WithRetrieveDataMethod((context) =>
                 {
                     var options = context.QueryOptions;
@@ -924,13 +878,13 @@ namespace MVCGridExample
                 })
             );
 
-            MVCGridDefinitionTable.Add("NextedObjectTest", new MVCGridBuilder<Job>()
+            MVCGridDefinitionTable.Add("NestedObjectTest", new MVCGridBuilder<Job>()
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithPaging(true)
                 .AddColumns(cols =>
                 {
-                    cols.Add("Id", "Id", (row, context) => row.JobId.ToString());
-                    cols.Add("Name", "Name", (row, context) => row.Name);
+                    cols.Add("Id", "Id", row => row.JobId.ToString());
+                    cols.Add("Name", "Name", row => row.Name);
 
                     cols.Add("Contact")
                         .WithHeaderText("Contact")

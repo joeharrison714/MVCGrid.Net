@@ -32,8 +32,8 @@ namespace MVCGrid.Web.Controllers
                 .WithAdditionalQueryOptionName("globalsearch")
                 .AddColumns(cols =>
                 {
-                    cols.Add("Id", "Id", (row, context) => row.JobId.ToString()).WithSorting(true);
-                    cols.Add("Name", "Name", (row, context) => row.Name).WithSorting(true);
+                    cols.Add("Id", "Id", row => row.JobId.ToString()).WithSorting(true);
+                    cols.Add("Name", "Name", row => row.Name).WithSorting(true);
 
                     cols.Add("Contact")
                         .WithHeaderText("Contact")

@@ -89,6 +89,15 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Use this to specify a custom css class based on data for the current row
+        /// </summary>
+        public MVCGridBuilder<T1> WithRowCssClassExpression(Func<T1, string> rowCssClassExpression)
+        {
+            GridDefinition.RowCssClassExpression = (T1, GridContext) => rowCssClassExpression(T1);
+            return this;
+        }
+
+        /// <summary>
         /// A prefix to add to all query string parameters for this grid, for when there are more than 1 grids on the same page
         /// </summary>
         public MVCGridBuilder<T1> WithQueryStringPrefix(string prefix)
@@ -116,6 +125,30 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Enables paging on the grid
+        /// </summary>
+        public MVCGridBuilder<T1> WithPaging(bool paging, int itemsPerPage)
+        {
+            GridDefinition.Paging = paging;
+            GridDefinition.ItemsPerPage = itemsPerPage;
+            return this;
+        }
+
+        /// <summary>
+        /// Enables paging on the grid
+        /// </summary>
+        public MVCGridBuilder<T1> WithPaging(bool paging, int itemsPerPage, bool allowChangePageSize, int maxItemsPerPage)
+        {
+            GridDefinition.Paging = paging;
+            GridDefinition.ItemsPerPage = itemsPerPage;
+            GridDefinition.AllowChangingPageSize = allowChangePageSize;
+            GridDefinition.MaxItemsPerPage = maxItemsPerPage;
+            return this;
+        }
+
+        
+
+        /// <summary>
         /// Number of items to display on each page
         /// </summary>
         public MVCGridBuilder<T1> WithItemsPerPage(int itemsPerPage)
@@ -130,6 +163,27 @@ namespace MVCGrid.Models
         public MVCGridBuilder<T1> WithSorting(bool sorting)
         {
             GridDefinition.Sorting = sorting;
+            return this;
+        }
+
+        /// <summary>
+        /// Enables sorting on the grid. Note, sorting must also be enabled on each column where sorting is wanted
+        /// </summary>
+        public MVCGridBuilder<T1> WithSorting(bool sorting, string defaultSortColumn)
+        {
+            GridDefinition.Sorting = sorting;
+            GridDefinition.DefaultSortColumn = defaultSortColumn;
+            return this;
+        }
+
+        /// <summary>
+        /// Enables sorting on the grid. Note, sorting must also be enabled on each column where sorting is wanted
+        /// </summary>
+        public MVCGridBuilder<T1> WithSorting(bool sorting, string defaultSortColumn, SortDirection defaultSortDirection)
+        {
+            GridDefinition.Sorting = sorting;
+            GridDefinition.DefaultSortColumn = defaultSortColumn;
+            GridDefinition.DefaultSortDirection = defaultSortDirection;
             return this;
         }
 
