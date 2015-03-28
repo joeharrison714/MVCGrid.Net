@@ -26,7 +26,7 @@ namespace $rootnamespace$
                         .WithValueExpression(i => i.YourProperty); // use the Value Expression to return the cell text for this column
                     cols.Add().WithColumnName("UrlExample")
                         .WithHeaderText("Edit")
-                        .WithValueExpression((i, c) => c.UrlHelper.Action("detail", "demo", new { id = i.Id });
+                        .WithValueExpression((i, c) => c.UrlHelper.Action("detail", "demo", new { id = i.Id }));
                 })
                 .WithRetrieveDataMethod((context) =>
                 {
