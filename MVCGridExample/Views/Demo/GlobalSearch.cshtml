@@ -17,28 +17,6 @@
 
 <h2>@ViewBag.Title</h2>
 
-@section Scripts{
-    <script type="text/javascript">
-
-        $(function () {
-
-            $('#selPageSize').change(function () {
-                MVCGrid.setPageSize('GlobalSearchGrid', $('#selPageSize').val());
-            });
-
-            $('#txtGlobalSearch').keyup(function () {
-                MVCGrid.setAdditionalQueryOptions('GlobalSearchGrid', { globalsearch: $('#txtGlobalSearch').val() });
-            });
-
-            $('#selPageSize').val(MVCGrid.getPageSize('GlobalSearchGrid'));
-            $('#txtGlobalSearch').val(MVCGrid.getAdditionalQueryOptions('GlobalSearchGrid').GlobalSearch);
-
-        });
-
-
-    </script>
-}
-
 <p>
     You can use the <code>AdditionalQueryOptions</code> to pass additional options from client to server side. In this example, we use this to create a "global search".
     When you click the search button below, it will call the javascript method <code>MVCGrid.setAdditionalQueryOptions</code> with the value of the text box.
@@ -47,21 +25,10 @@
     Note, when using the <code>AdditionalQueryOptions</code>, you must specify the names you are going to use in the grid config. See the code sample below.
 </p>
 
+<p>Or use <a href="/documentation#ClientSideBindings">client-side bindings</a>, as is done below:</p>
+
 <p>&nbsp;</p>
 
-@*<div class="mgPageSize">
-        <label>
-            Show <select id="selPageSize">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select> entries
-        </label>
-    </div>
-    <div class="mgfilter">
-        <label>Search:<input type="search" id="txtGlobalSearch" placeholder=""></label>
-    </div>*@
 
 
 
