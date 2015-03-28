@@ -1,0 +1,44 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Toolbar";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>The toolbar is just a partial view with inputs that use <a href="/documentation#ClientSideBindings">client-side bindings</a>.</p>
+<p>You can eaily create your own toolbar (re-use it by putting it in a partial view) or download the one below to get your started.</p>
+
+<ol>
+    <li>Download <code>MVCGridToolbarModel.cs</code> and put it in your models folder:<br />
+        <a href="https://raw.githubusercontent.com/joeharrison714/MVCGrid.Net/master/MVCGridExample/Models/MVCGridToolbarModel.cs">MVCGridToolbarModel.cs</a>
+    </li>
+    <li>Download <code>_MVCGridToolbar.cshtml</code> and put it in your /Views/Shared folder<br />
+        <a href="https://raw.githubusercontent.com/joeharrison714/MVCGrid.Net/master/MVCGridExample/Views/Shared/_MVCGridToolbar.cshtml">_MVCGridToolbar.cshtml</a>
+    </li>
+    <li>Include it using the code example below</li>
+</ol>
+
+<pre class="brush: js">
+@@Html.Partial(&quot;_MVCGridToolbar&quot;, new MVCGridToolbarModel()
+{
+    MVCGridName = &quot;TestGrid&quot;,
+    PageSize = true,
+    ColumnVisibility = true,
+    Export = true,
+    GlobalSearch = true
+})
+@@Html.MVCGrid(&quot;TestGrid&quot;)
+</pre>
+
+<br /><br /><br />
+
+@Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
+{
+    MVCGridName = "TestGrid",
+    PageSize = true,
+    ColumnVisibility = true,
+    Export = true,
+    GlobalSearch = true
+})
+
+@Html.MVCGrid("TestGrid")
