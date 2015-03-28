@@ -45,14 +45,43 @@
         {
             MVCGridName = "TestGrid",
             PageSize = true,
-            ColumnVisibility = false,
-            Export = false,
+            ColumnVisibility = true,
+            Export = true,
             GlobalSearch = true
         })
 
         @Html.MVCGrid("TestGrid")
     </div>
 </div>
+
+<p class="lead">Here is the view markup for the above grid:</p>
+<pre class="brush: js">
+&lt;div class=&quot;panel panel-default&quot;&gt;
+    &lt;div class=&quot;panel-body&quot;&gt;
+            
+        @@Html.Partial(&quot;_MVCGridToolbar&quot;, new MVCGridToolbarModel()
+        {
+            MVCGridName = &quot;TestGrid&quot;,
+            PageSize = true,
+            ColumnVisibility = true,
+            Export = true,
+            GlobalSearch = true
+        })
+        @@Html.MVCGrid(&quot;TestGrid&quot;)
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+<p class="lead">Below is the only code needed to query the data and display the grid:</p>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("TestGrid")</pre>
+    </div>
+</div>
+
+
 
 @*<input type="button" value="Refresh" onclick="MVCGrid.reloadGrid('TestMapping');" />
 <input type="button" value="Export" onclick="location.href = MVCGrid.getExportUrl('TestMapping');" />*@

@@ -15,52 +15,45 @@ namespace MVCGridExample
     {
         public static void RegisterGrids()
         {
-            MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>()
+            ColumnDefaults colDefauls = new ColumnDefaults()
+            {
+                EnableSorting = true
+            };
+
+            MVCGridDefinitionTable.Add("TestGrid", new MVCGridBuilder<Person>(colDefauls)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
-                .WithSorting(true, "Id", SortDirection.Dsc)
-                .WithPaging(true, 10, true, 100)
+                .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
+                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
                 {
-                    cols.Add(new GridColumn<Person>()
-                    {
-                        ColumnName = "Id",
-                        EnableSorting = true,
-                        HtmlEncode = false,
-                        ValueExpression = (p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }),
-                        ValueTemplate = "<a href='{Value}'>{Model.Id}</a>",
-                        PlainTextValueExpression = (p, c) => p.Id.ToString()
-                    });
+                    cols.Add("Id").WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>", false)
+                        .WithPlainTextValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
-                        .WithSorting(true)
-                        .WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.FirstName);
+                        .WithVisibility(true, true)
+                        .WithValueExpression(p => p.FirstName);
                     cols.Add("LastName").WithHeaderText("Last Name")
-                        .WithSorting(true)
-                        .WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.LastName);
+                        .WithVisibility(true, true)
+                        .WithValueExpression(p => p.LastName);
                     cols.Add("FullName").WithHeaderText("Full Name")
                         .WithValueTemplate("{Model.FirstName} {Model.LastName}")
-                        .WithVisibility(false)
-                        .WithAllowChangeVisibility(true)
+                        .WithVisibility(visible: false, allowChangeVisibility: true)
                         .WithSorting(false);
                     cols.Add("StartDate").WithHeaderText("Start Date")
-                        .WithSorting(true)
-                        .WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                        .WithVisibility(visible: true, allowChangeVisibility: true)
+                        .WithValueExpression(p => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
                     cols.Add("Status")
                         .WithSortColumnData("Active")
-                        .WithSorting(true)
-                        .WithAllowChangeVisibility(true)
+                        .WithVisibility(visible: true, allowChangeVisibility: true)
                         .WithHeaderText("Status")
-                        .WithValueExpression((p, c) => p.Active ? "Active" : "Inactive")
-                        .WithCellCssClassExpression((p, c) => p.Active ? "success" : "danger");
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive")
+                        .WithCellCssClassExpression(p => p.Active ? "success" : "danger");
                     cols.Add("Gender").WithValueExpression((p, c) => p.Gender)
                         .WithAllowChangeVisibility(true);
                     cols.Add("Email")
-                        .WithVisibility(false)
-                        .WithAllowChangeVisibility(true)
-                        .WithValueExpression((p, c) => p.Email);
+                        .WithVisibility(visible: false, allowChangeVisibility: true)
+                        .WithValueExpression(p => p.Email);
                     cols.Add("Url").WithVisibility(false)
                         .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }));
                 })
@@ -110,11 +103,6 @@ namespace MVCGridExample
                     return result;
                 })
             );
-
-            ColumnDefaults colDefauls = new ColumnDefaults()
-            {
-                EnableSorting = true
-            };
 
             MVCGridDefinitionTable.Add("SortableGrid", new MVCGridBuilder<Person>(colDefauls)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
