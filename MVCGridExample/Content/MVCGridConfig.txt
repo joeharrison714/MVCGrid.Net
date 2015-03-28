@@ -754,6 +754,9 @@ namespace MVCGridExample
                     // Add your columns here
                     cols.Add("UniqueColumnName").WithHeaderText("Any Header")
                         .WithValueExpression(i => i.YourProperty); // use the Value Expression to return the cell text for this column
+                    cols.Add().WithColumnName("UrlExample")
+                        .WithHeaderText("Edit")
+                        .WithValueExpression((i, c) => c.UrlHelper.Action("detail", "demo", new { id = i.YourProperty }));
                 })
                 .WithRetrieveDataMethod((context) =>
                 {
