@@ -784,7 +784,7 @@ namespace MVCGridExample
                     cols.Add("LastName").WithHeaderText("Last Name")
                         .WithValueExpression(p => p.LastName);
                 })
-                .WithAdditionalQueryOptionNames("GlobalSearch")
+                .WithAdditionalQueryOptionNames("Search")
                 .WithAdditionalSetting("RenderLoadingDiv", false)
                 .WithSorting(true, "LastName")
                 .WithPaging(true, 10, true, 100)
@@ -795,7 +795,7 @@ namespace MVCGridExample
                     int totalRecords;
                     var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
-                    string globalSearch = options.GetAdditionalQueryOptionString("GlobalSearch");
+                    string globalSearch = options.GetAdditionalQueryOptionString("Search");
 
                     var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
                         options.SortColumnName, options.SortDirection == SortDirection.Dsc);

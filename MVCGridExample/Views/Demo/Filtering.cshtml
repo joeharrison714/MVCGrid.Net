@@ -3,61 +3,11 @@
     ViewBag.Title = "Filtering";
 }
 
-@section Scripts{
-    <script type="text/javascript">
-        $(function () {
-            $('#btnFilter').click(function(){
-                MVCGrid.setFilters('Filtering',
-                    {
-                        FirstName: $('#FirstName').val(),
-                        LastName: $('#LastName').val(),
-                        Status: $('#Status').val()
-                    })
-            });
-
-            $('#FirstName').val(MVCGrid.getFilters('Filtering').FirstName);
-            $('#LastName').val(MVCGrid.getFilters('Filtering').LastName);
-            $('#Status').val(MVCGrid.getFilters('Filtering').Status);
-        });
-    </script>
-}
-
 <h2>@ViewBag.Title</h2>
 
 <p>It is your responsibility to add whatever inputs to your page that you want for filtering. Then call the <code>MVCGrid.setFilters</code> javascript function to perform the filtering.</p>
 
-<div class="well">
-    <div class="form-horizontal">
-
-        <div class="form-group">
-            <label class="col-sm-5 control-label" for="LastName">Last Name</label>
-            <div class="col-sm-3">
-                <input class="form-control" id="LastName" name="LastName" type="text" value="">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-5 control-label" for="FirstName">First Name</label>
-            <div class="col-sm-3">
-                <input class="form-control" id="FirstName" name="FirstName" type="text" value="">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-5 control-label" for="Status">Status</label>
-            <div class="col-sm-2">
-                <select class="form-control" id="Status" name="Status">
-                    <option value=""></option>
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-7 col-sm-1">
-                <button type="button" id="btnFilter" class="btn btn-default">Filter</button>
-            </div>
-        </div>
-    </div>
-</div>
+<p>Or use client-side bindings, as is done below:</p>
 
 <div class="well">
     <div class="form-inline">
@@ -90,19 +40,33 @@
 <h3>Code</h3>
 
     <div class="panel panel-default">
-        <div class="panel-heading">Javascript in View</div>
+        <div class="panel-heading">View</div>
         <div class="panel-body">
             <pre class="brush: js">
-&lt;script type=&quot;text/javascript&quot;&gt;
-    $(&#39;#btnFilter&#39;).click(function(){
-        MVCGrid.setFilters(&#39;Filtering&#39;,
-            {
-                FirstName: $(&#39;#FirstName&#39;).val(),
-                LastName: $(&#39;#LastName&#39;).val(),
-                Status: $(&#39;#Status&#39;).val()
-            })
-    });
-&lt;/script&gt;
+&lt;div class=&quot;well&quot;&gt;
+    &lt;div class=&quot;form-inline&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Last Name&quot;
+                   data-mvcgrid-type=&quot;filter&quot; data-mvcgrid-option=&quot;LastName&quot; /&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+                
+                
+            &lt;input type=&quot;email&quot; class=&quot;form-control&quot; placeholder=&quot;First name&quot;
+                   data-mvcgrid-type=&quot;filter&quot; data-mvcgrid-option=&quot;FirstName&quot; /&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;select class=&quot;form-control&quot; data-mvcgrid-type=&quot;filter&quot; data-mvcgrid-option=&quot;Status&quot;&gt;
+                &lt;option value=&quot;&quot;&gt;&lt;/option&gt;
+                &lt;option value=&quot;Active&quot;&gt;Active&lt;/option&gt;
+                &lt;option value=&quot;Inactive&quot;&gt;Inactive&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; data-mvcgrid-apply-filter=&quot;click&quot;&gt;Apply&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+@@Html.MVCGrid("Filtering")
         </pre>
         </div>
     </div>
@@ -115,10 +79,3 @@
     </div>
 
 
-
-    <div class="panel panel-default">
-        <div class="panel-heading">View</div>
-        <div class="panel-body">
-            <pre>@@Html.MVCGrid("Filtering")</pre>
-        </div>
-    </div>

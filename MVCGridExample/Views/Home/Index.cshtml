@@ -41,11 +41,12 @@
 <div class="panel panel-default">
     <div class="panel-body">
             
-        @Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel("TestGrid")
+        @Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
         {
+            MVCGridName = "TestGrid",
             PageSize = true,
-            ColumnVisibility = true,
-            Export = true,
+            ColumnVisibility = false,
+            Export = false,
             GlobalSearch = true
         })
 
