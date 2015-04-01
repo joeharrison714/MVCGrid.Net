@@ -38,6 +38,10 @@
             $('#pageSizeButtonGet').click(function () {
                 alert(MVCGrid.getPageSize('Filtering'));
             });
+
+            $('#reloadGridButton').click(function () {
+                MVCGrid.reloadGrid('Filtering');
+            });
         });
 
     </script>
@@ -51,6 +55,7 @@
         <button class="btn btn-default" id="pageButton">Goto Page 3</button>
         <button class="btn btn-default" id="filterButton">Filter for Smith</button>
         <button class="btn btn-default" id="pageSizeButton">Page Size to 50</button>
+        <button class="btn btn-default" id="reloadGridButton">Reload Grid</button>
     </div>
 
     <p>&nbsp;</p>
