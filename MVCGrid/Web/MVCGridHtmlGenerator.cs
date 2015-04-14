@@ -30,9 +30,9 @@ namespace MVCGrid.Web
             sb.Append(",");
             sb.AppendFormat("\"sortDirection\": \"{0}\"", gridContext.QueryOptions.SortDirection);
             sb.Append(",");
-            sb.AppendFormat("\"itemsPerPage\": {0}", gridContext.QueryOptions.ItemsPerPage);
+            sb.AppendFormat("\"itemsPerPage\": {0}", gridContext.QueryOptions.ItemsPerPage.HasValue ? gridContext.QueryOptions.ItemsPerPage.ToString() : "\"\"");
             sb.Append(",");
-            sb.AppendFormat("\"pageNumber\": {0}", gridContext.QueryOptions.PageIndex + 1);
+            sb.AppendFormat("\"pageNumber\": {0}", gridContext.QueryOptions.PageIndex.HasValue ? (gridContext.QueryOptions.PageIndex + 1).ToString() : "\"\"");
             sb.Append(",");
 
             sb.Append("\"columnVisibility\": {");
