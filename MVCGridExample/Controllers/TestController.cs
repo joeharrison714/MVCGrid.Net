@@ -1,5 +1,6 @@
 ﻿using MVCGrid.Models;
 using MVCGrid.Web.Models;
+using MVCGrid.Web.Models.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,62 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult InitialDate()
+        {
+            return View();
+        }
     }
 
     public class TestControllerGrids : GridRegistration
     {
         public override void RegisterGrids()
         {
+            //Issue6Grid
+            MVCGridDefinitionTable.Add("InitialDateGrid", new MVCGridBuilder<IReportInvoiceLine>()
+                .WithSorting(false)
+                .WithPaging(false)
+                .WithAllowChangingPageSize(false)
+                .WithFiltering(true)
+                .WithNoResultsMessage("Please enter a year to search for. No results found.")
+                .AddColumns(cols =>
+                {
+                    cols.Add("Year").WithHeaderText("Year")
+                        .WithFiltering(true)
+                        .WithValueExpression(a => a.Year.ToString());
+
+                    cols.Add("InvoiceNo").WithHeaderText("Invoice No.")
+                        .WithVisibility(true, true)
+                        .WithValueExpression(a => a.InvoiceNumber.ToString());
+
+                    cols.Add("City").WithHeaderText("City")
+                        .WithVisibility(true, true)
+                        .WithValueExpression(a => a.City);
+                })
+                .WithRetrieveDataMethod((context) =>
+                {
+                    IList<IReportInvoiceLine> list = new List<IReportInvoiceLine>();
+                    int totalRecords = 0;
+
+                    string syear = context.QueryOptions.GetFilterString("Year");
+                    int year;
+
+                    if (Int32.TryParse(syear, out year))
+                    {
+                        list = ReportInvoiceLines(year);
+                        totalRecords = list.Count;
+                    }
+
+                    return new QueryResult<IReportInvoiceLine>()
+                    {
+                        Items = list,
+                        TotalRecords = totalRecords
+                    };
+
+                })
+            );
+
+
             //Issue6Grid
             MVCGridDefinitionTable.Add("Issue6Grid", new MVCGridBuilder<Job>()
                 .WithSorting(true)
@@ -70,6 +121,82 @@ namespace MVCGrid.Web.Controllers
                     };
                 })
             );
+        }
+
+        const string CacheKey = "ReportInvoiceLines";
+        private IList<IReportInvoiceLine> ReportInvoiceLines(int year)
+        {
+            if (HttpContext.Current.Cache[CacheKey] == null)
+            {
+                List<IReportInvoiceLine> items = new List<IReportInvoiceLine>();
+                int contactId = 0;
+                for (int i = 1; i < 88; i++)
+                {
+                    int thisyear = _rng.Next(2010, 2016);
+                    var j = new ReportInvoiceLine() { Year = thisyear, InvoiceNumber = i, City = RandomString(8) };
+
+                    items.Add(j);
+                }
+                HttpContext.Current.Cache.Insert(CacheKey, items);
+            }
+
+            List<IReportInvoiceLine> data = (List<IReportInvoiceLine>)HttpContext.Current.Cache[CacheKey];
+
+
+            var q = data.AsQueryable();
+
+            //if (!String.IsNullOrWhiteSpace(globalSearch))
+            {
+                q = q.Where(p => p.Year == year);
+            }
+
+            //totalRecords = q.Count();
+
+            //if (!String.IsNullOrWhiteSpace(orderBy))
+            //{
+            //    switch (orderBy.ToLower())
+            //    {
+            //        case "id":
+            //            if (!desc)
+            //                q = q.OrderBy(p => p.JobId);
+            //            else
+            //                q = q.OrderByDescending(p => p.JobId);
+            //            break;
+            //        case "name":
+            //            if (!desc)
+            //                q = q.OrderBy(p => p.Name);
+            //            else
+            //                q = q.OrderByDescending(p => p.Name);
+            //            break;
+            //        case "contact":
+            //            if (!desc)
+            //                q = q.OrderBy(p => p.Contact.FullName);
+            //            else
+            //                q = q.OrderByDescending(p => p.Contact.FullName);
+            //            break;
+            //    }
+            //}
+
+            //if (limitOffset.HasValue)
+            //{
+            //    q = q.Skip(limitOffset.Value).Take(limitRowCount.Value);
+            //}
+
+            return q.ToList();
+        }
+
+        private readonly Random _rng = new Random();
+        private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        private string RandomString(int size)
+        {
+            char[] buffer = new char[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                buffer[i] = _chars[_rng.Next(_chars.Length)];
+            }
+            return new string(buffer);
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Initial Date";
+}
+
+<h2>Initial Date</h2>
+
+<div class="well">
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Year" id="searchYear" />
+        </div>
+        <button type="button" class="btn btn-default" id="searchButton">Search</button>
+    </div>
+</div>
+
+@Html.MVCGrid("InitialDateGrid")
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#searchButton').click(function () {
+                MVCGrid.setFilters('InitialDateGrid', { Year: $('#searchYear').val() })
+            });
+
+            $('#searchYear').val(MVCGrid.getFilters('InitialDateGrid').Year);
+        });
+    </script>
+}

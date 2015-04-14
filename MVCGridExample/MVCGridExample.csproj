@@ -187,6 +187,7 @@
     <Compile Include="Models\PersonRepository.cs" />
     <Compile Include="Models\TestItem.cs" />
     <Compile Include="Models\TestItemRepository.cs" />
+    <Compile Include="Models\Test\IReportInvoiceLine.cs" />
     <Compile Include="Models\YourModelItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -301,6 +302,7 @@
     <Content Include="Views\Shared\_MVCGridToolbar.cshtml" />
     <Content Include="Views\Test\Issue6.cshtml" />
     <Content Include="Views\Demo\Toolbar.cshtml" />
+    <Content Include="Views\Test\InitialDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />
