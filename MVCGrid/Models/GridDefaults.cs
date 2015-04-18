@@ -28,6 +28,7 @@ namespace MVCGrid.Models
             ContainerViewPath = null;
             ErrorMessageHtml= @"<div class=""alert alert-warning"" role=""alert"">There was a problem loading the grid.</div>";
             AdditionalQueryOptionNames = new HashSet<string>();
+            PageParameterNames = new HashSet<string>();
             AllowChangingPageSize = false;
             MaxItemsPerPage = null;
             AuthorizationType = Models.AuthorizationType.AllowAnonymous;
@@ -60,6 +61,7 @@ namespace MVCGrid.Models
 
 
         public HashSet<string> AdditionalQueryOptionNames { get; set; }
+        public HashSet<string> PageParameterNames { get; set; }
 
         public bool AllowChangingPageSize { get; set; }
         public int? MaxItemsPerPage { get; set; }

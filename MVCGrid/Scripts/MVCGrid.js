@@ -402,9 +402,17 @@ var MVCGrid = new function () {
             ajaxBaseUrl = controllerPath;
         }
 
+
+        var fullAjaxUrl = ajaxBaseUrl + location.search;
+
+        $.each(gridDef.pageParameters, function (k, v) {
+            var thisPP = "_pp_" + gridDef.qsPrefix + k;
+            fullAjaxUrl = updateURLParameter(fullAjaxUrl, thisPP, v);
+        });
+
         $.ajax({
             type: "GET",
-            url: ajaxBaseUrl + location.search,
+            url: fullAjaxUrl,
             data: { 'Name': mvcGridName },
             cache: false,
             beforeSend: function () {

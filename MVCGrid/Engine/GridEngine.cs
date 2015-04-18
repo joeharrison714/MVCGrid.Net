@@ -154,14 +154,14 @@ namespace MVCGrid.Engine
             }
         }
 
-        public string GetBasePageHtml(HtmlHelper helper, string gridName, IMVCGridDefinition grid)
+        public string GetBasePageHtml(HtmlHelper helper, string gridName, IMVCGridDefinition grid, object pageParameters)
         {
             string preload = "";
             if (grid.PreloadData)
             {
                 try
                 {
-                    preload = RenderPreloadedGridHtml(helper, grid, gridName);
+                    preload = RenderPreloadedGridHtml(helper, grid, gridName, pageParameters);
                 }
                 catch (Exception ex)
                 {
@@ -182,7 +182,7 @@ namespace MVCGrid.Engine
                 }
             }
 
-            string baseGridHtml = MVCGridHtmlGenerator.GenerateBasePageHtml(gridName, grid);
+            string baseGridHtml = MVCGridHtmlGenerator.GenerateBasePageHtml(gridName, grid, pageParameters);
             baseGridHtml = baseGridHtml.Replace("%%PRELOAD%%", preload);
 
             ContainerRenderingModel containerRenderingModel = new ContainerRenderingModel() { InnerHtmlBlock = baseGridHtml };
@@ -219,11 +219,36 @@ namespace MVCGrid.Engine
             return container;
         }
 
-        private static string RenderPreloadedGridHtml(HtmlHelper helper, IMVCGridDefinition grid, string gridName)
+        private static string RenderPreloadedGridHtml(HtmlHelper helper, IMVCGridDefinition grid, string gridName, object pageParameters)
         {
             string preload = "";
 
             var options = QueryStringParser.ParseOptions(grid, System.Web.HttpContext.Current.Request);
+
+            // set the page parameters for the preloaded grid
+            Dictionary<string, string> pageParamsDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            if (pageParameters != null)
+            {
+                foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pageParameters))
+                {
+                    object obj2 = descriptor.GetValue(pageParameters);
+                    pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                }
+            }
+            if (grid.PageParameterNames.Count > 0)
+            {
+                foreach (var aqon in grid.PageParameterNames)
+                {
+                    string val = "";
+
+                    if (pageParamsDict.ContainsKey(aqon))
+                    {
+                        val = pageParamsDict[aqon];
+                    }
+
+                    options.PageParameters[aqon] = val;
+                }
+            }
 
             var gridContext = GridContextUtility.Create(HttpContext.Current, gridName, grid, options);
 

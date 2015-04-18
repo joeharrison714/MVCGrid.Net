@@ -100,6 +100,11 @@ namespace MVCGrid.Interfaces
         HashSet<string> AdditionalQueryOptionNames { get; set; }
 
         /// <summary>
+        /// Names of page parameters that will be passed from the view
+        /// </summary>
+        HashSet<string> PageParameterNames { get; set; }
+
+        /// <summary>
         /// Allows changing of page size from client-side
         /// </summary>
         bool AllowChangingPageSize { get; set; }

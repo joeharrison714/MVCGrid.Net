@@ -46,6 +46,7 @@ namespace MVCGrid.Models
             this.QueryStringPrefix = gridDefaults.QueryStringPrefix;
             this.ErrorMessageHtml = gridDefaults.ErrorMessageHtml;
             this.AdditionalQueryOptionNames = gridDefaults.AdditionalQueryOptionNames;
+            this.PageParameterNames = gridDefaults.PageParameterNames;
             this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
             this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
             this.AuthorizationType = gridDefaults.AuthorizationType;
@@ -261,6 +262,11 @@ namespace MVCGrid.Models
         /// Names of additional parameters that can be passed from client to server side
         /// </summary>
         public HashSet<string> AdditionalQueryOptionNames { get; set; }
+
+        /// <summary>
+        /// Names of page parameters that will be passed from the view
+        /// </summary>
+        public HashSet<string> PageParameterNames { get; set; }
 
         /// <summary>
         /// Allows changing of page size from client-side

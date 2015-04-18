@@ -19,6 +19,8 @@ namespace MVCGrid.Web
         public const string QueryStringSuffix_ItemsPerPage = "pagesize";
         public const string QueryStringSuffix_Columns = "cols";
 
+        public const string QueryStringPrefix_PageParameter = "_pp_";
+
         public static QueryOptions ParseOptions(IMVCGridDefinition grid, HttpRequest httpRequest)
         {
             string qsKeyPage = grid.QueryStringPrefix + QueryStringSuffix_Page;
@@ -171,6 +173,22 @@ namespace MVCGrid.Web
                     }
 
                     options.AdditionalQueryOptions.Add(aqon, val);
+                }
+            }
+
+            if (grid.PageParameterNames.Count > 0)
+            {
+                foreach (var aqon in grid.PageParameterNames)
+                {
+                    string qsKeyAQO = QueryStringPrefix_PageParameter + grid.QueryStringPrefix + aqon;
+                    string val = "";
+
+                    if (httpRequest.QueryString[qsKeyAQO] != null)
+                    {
+                        val = httpRequest.QueryString[qsKeyAQO];
+                    }
+
+                    options.PageParameters.Add(aqon, val);
                 }
             }
 

@@ -20,14 +20,21 @@ namespace MVCGrid.Web
         {
             var currentMapping = MVCGridDefinitionTable.GetDefinitionInterface(name);
 
-            return MVCGrid(helper, name, currentMapping);
+            return MVCGrid(helper, name, currentMapping, null);
         }
 
-        internal static IHtmlString MVCGrid(this HtmlHelper helper, string name, IMVCGridDefinition grid)
+        public static IHtmlString MVCGrid(this HtmlHelper helper, string name, object pageParameters)
+        {
+            var currentMapping = MVCGridDefinitionTable.GetDefinitionInterface(name);
+
+            return MVCGrid(helper, name, currentMapping, pageParameters);
+        }
+
+        internal static IHtmlString MVCGrid(this HtmlHelper helper, string name, IMVCGridDefinition grid, object pageParameters)
         {
             GridEngine ge = new GridEngine();
 
-            string html = ge.GetBasePageHtml(helper, name, grid);
+            string html = ge.GetBasePageHtml(helper, name, grid, pageParameters);
 
             return MvcHtmlString.Create(html);
         }

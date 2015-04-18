@@ -303,6 +303,7 @@
     <Content Include="Views\Test\Issue6.cshtml" />
     <Content Include="Views\Demo\Toolbar.cshtml" />
     <Content Include="Views\Test\InitialDate.cshtml" />
+    <Content Include="Views\Demo\PageParameters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

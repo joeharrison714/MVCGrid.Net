@@ -3,6 +3,7 @@ using MVCGrid.Models;
 using MVCGrid.Utility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,9 +131,9 @@ namespace MVCGrid.Web
             return sb.ToString();
         }
 
-        internal static string GenerateBasePageHtml(string gridName, IMVCGridDefinition def)
+        internal static string GenerateBasePageHtml(string gridName, IMVCGridDefinition def, object pageParameters)
         {
-            string definitionJson = GenerateClientDefinitionJson(gridName, def);
+            string definitionJson = GenerateClientDefinitionJson(gridName, def, pageParameters);
 
             StringBuilder sbHtml = new StringBuilder();
 
@@ -171,7 +172,34 @@ namespace MVCGrid.Web
             return sbHtml.ToString();
         }
 
-        private static string GenerateClientDefinitionJson(string gridName, IMVCGridDefinition def)
+        private static string GenerateJsonPageParameters(object pageParameters)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            Dictionary<string, string> pageParamsDict = new Dictionary<string, string>();
+            if (pageParameters != null)
+            {
+                foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pageParameters))
+                {
+                    object obj2 = descriptor.GetValue(pageParameters);
+                    pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                }
+            }
+
+            foreach (var col in pageParamsDict)
+            {
+                string val = col.Value;
+
+                if (sb.Length > 0)
+                {
+                    sb.Append(",");
+                }
+                sb.AppendFormat("\"{0}\": \"{1}\"", col.Key, HttpUtility.JavaScriptStringEncode(val));
+            }
+            return sb.ToString();
+        }
+
+        private static string GenerateClientDefinitionJson(string gridName, IMVCGridDefinition def, object pageParameters)
         {
             StringBuilder sbJson = new StringBuilder();
 
@@ -190,6 +218,11 @@ namespace MVCGrid.Web
 
             sbJson.Append(",");
             sbJson.AppendFormat("\"renderingMode\": \"{0}\"", def.RenderingMode.ToString().ToLower());
+
+            sbJson.Append(",");
+            sbJson.Append("\"pageParameters\": {");
+            sbJson.Append(GenerateJsonPageParameters(pageParameters));
+            sbJson.Append("}");
 
             sbJson.Append("}");
             return sbJson.ToString();

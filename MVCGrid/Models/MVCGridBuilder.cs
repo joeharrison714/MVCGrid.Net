@@ -332,6 +332,18 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Names of page parameters that will be passed from the view
+        /// </summary>
+        public MVCGridBuilder<T1> WithPageParameterNames(params string[] names)
+        {
+            foreach (var name in names)
+            {
+                GridDefinition.PageParameterNames.Add(name);
+            }
+            return this;
+        }
+
+        /// <summary>
         /// Allows changing of page size from client-side
         /// </summary>
         public MVCGridBuilder<T1> WithAllowChangingPageSize(bool allow)

@@ -131,6 +131,11 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult PageParameters()
+        {
+            return View();
+        }
     }
 
     public class DemoControllerGrids : GridRegistration

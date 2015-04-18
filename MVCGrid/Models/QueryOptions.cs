@@ -11,12 +11,14 @@ namespace MVCGrid.Models
 
         public QueryOptions()
         {
-            Filters = new Dictionary<string, string>();
-            AdditionalQueryOptions = new Dictionary<string, string>();
+            Filters = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            AdditionalQueryOptions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            PageParameters = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             ColumnVisibility = new List<ColumnVisibility>();
         }
 
         public Dictionary<string, string> AdditionalQueryOptions { get; set; }
+        public Dictionary<string, string> PageParameters { get; set; }
 
         public string RenderingEngineName { get; set; }
 
@@ -96,6 +98,26 @@ namespace MVCGrid.Models
                 return null;
             }
             string val = AdditionalQueryOptions[name].Trim();
+
+            if (String.IsNullOrWhiteSpace(val))
+            {
+                return null;
+            }
+
+            return val;
+        }
+
+        public string GetPageParameterString(string name)
+        {
+            if (!PageParameters.ContainsKey(name))
+            {
+                return null;
+            }
+            if (PageParameters[name] == null)
+            {
+                return null;
+            }
+            string val = PageParameters[name].Trim();
 
             if (String.IsNullOrWhiteSpace(val))
             {
