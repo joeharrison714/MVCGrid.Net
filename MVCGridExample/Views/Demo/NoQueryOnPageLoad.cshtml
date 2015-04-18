@@ -1,0 +1,22 @@
+﻿@using MVCGrid.Web
+@using MVCGrid.Web.Models
+@{
+    ViewBag.Title = "No Query On Page Load";
+}
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $('#reloadGridButton').click(function () {
+                MVCGrid.reloadGrid('QPLGrid');
+            });
+        });
+
+    </script>
+}
+
+<h2>@ViewBag.Title</h2>
+
+<button class="btn btn-default" id="reloadGridButton">Load Grid</button>
+
+@Html.MVCGrid("QPLGrid")

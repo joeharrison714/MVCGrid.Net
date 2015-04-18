@@ -116,6 +116,15 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Specified if the data should be loaded as soon as the page loads
+        /// </summary>
+        public MVCGridBuilder<T1> WithQueryOnPageLoad(bool queryOnPageLoad)
+        {
+            GridDefinition.QueryOnPageLoad = queryOnPageLoad;
+            return this;
+        }
+
+        /// <summary>
         /// Enables paging on the grid
         /// </summary>
         public MVCGridBuilder<T1> WithPaging(bool paging)

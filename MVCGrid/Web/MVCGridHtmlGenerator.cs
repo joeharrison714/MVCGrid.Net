@@ -208,7 +208,13 @@ namespace MVCGrid.Web
             sbJson.Append(",");
             sbJson.AppendFormat("\"qsPrefix\": \"{0}\"", def.QueryStringPrefix);
             sbJson.Append(",");
-            sbJson.AppendFormat("\"preloaded\": {0}", def.PreloadData.ToString().ToLower());
+
+            bool preloadedAlready = def.PreloadData;
+            if (!def.QueryOnPageLoad)
+            {
+                preloadedAlready = true;
+            }
+            sbJson.AppendFormat("\"preloaded\": {0}", preloadedAlready.ToString().ToLower());
 
             sbJson.Append(",");
             sbJson.AppendFormat("\"clientLoading\": \"{0}\"", def.ClientSideLoadingMessageFunctionName);

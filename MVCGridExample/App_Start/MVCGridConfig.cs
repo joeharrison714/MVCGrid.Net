@@ -935,6 +935,39 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("QPLGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .WithQueryOnPageLoad(false)
+                .WithPreloadData(false)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression(p => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression(p => p.LastName);
+                })
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.GetSortColumnData<string>(), options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
 
 

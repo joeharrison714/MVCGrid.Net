@@ -11,6 +11,7 @@ namespace MVCGrid.Models
         public GridDefaults()
         {
             PreloadData = true;
+            QueryOnPageLoad = true;
             Paging = false;
             ItemsPerPage = 20;
             Sorting = false;
@@ -35,6 +36,7 @@ namespace MVCGrid.Models
         }
 
         public bool PreloadData { get; set; }
+        public bool QueryOnPageLoad { get; set; }
         public bool Paging { get; set; }
         public int ItemsPerPage { get; set; }
         public bool Sorting { get; set; }

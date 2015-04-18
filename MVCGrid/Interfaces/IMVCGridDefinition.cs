@@ -22,6 +22,11 @@ namespace MVCGrid.Interfaces
         bool PreloadData { get; }
 
         /// <summary>
+        /// Specified if the data should be loaded as soon as the page loads
+        /// </summary>
+        bool QueryOnPageLoad { get; set; }
+
+        /// <summary>
         /// Enables paging on the grid
         /// </summary>
         bool Paging { get; set; }

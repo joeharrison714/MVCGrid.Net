@@ -157,7 +157,7 @@ namespace MVCGrid.Engine
         public string GetBasePageHtml(HtmlHelper helper, string gridName, IMVCGridDefinition grid, object pageParameters)
         {
             string preload = "";
-            if (grid.PreloadData)
+            if (grid.QueryOnPageLoad && grid.PreloadData)
             {
                 try
                 {

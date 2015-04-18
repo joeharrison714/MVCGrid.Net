@@ -29,6 +29,7 @@ namespace MVCGrid.Models
                 gridDefaults = new GridDefaults();
             }
             this.PreloadData = gridDefaults.PreloadData;
+            this.QueryOnPageLoad = gridDefaults.QueryOnPageLoad;
             this.Paging = gridDefaults.Paging;
             this.ItemsPerPage = gridDefaults.ItemsPerPage;
             this.Sorting = gridDefaults.Sorting;
@@ -184,6 +185,11 @@ namespace MVCGrid.Models
         /// Enables data loading when the page is first loaded so that the initial ajax request can be skipped.
         /// </summary>
         public bool PreloadData { get; set; }
+
+        /// <summary>
+        /// Specified if the data should be loaded as soon as the page loads
+        /// </summary>
+        public bool QueryOnPageLoad { get; set; }
 
         /// <summary>
         /// Enables paging on the grid
