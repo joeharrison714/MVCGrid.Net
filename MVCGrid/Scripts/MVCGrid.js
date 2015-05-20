@@ -419,9 +419,8 @@ var MVCGrid = new function () {
                 if (gridDef.clientLoading != '') {
                     window[gridDef.clientLoading]();
                 }
-                else {
-                    $('#' + loadingHtmlId).css("visibility", "visible");
-                }
+                
+                $('#' + loadingHtmlId).css("visibility", "visible");
             },
             success: function (result) {
                 $('#' + tableHolderHtmlId).html(result);
@@ -439,9 +438,8 @@ var MVCGrid = new function () {
                 if (gridDef.clientLoadingComplete != '') {
                     window[gridDef.clientLoadingComplete]();
                 }
-                else {
-                    $('#' + loadingHtmlId).css("visibility", "hidden");
-                }
+
+                $('#' + loadingHtmlId).css("visibility", "hidden");
             }
         });
     };
