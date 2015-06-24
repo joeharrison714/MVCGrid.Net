@@ -305,6 +305,7 @@
     <Content Include="Views\Test\InitialDate.cshtml" />
     <Content Include="Views\Demo\PageParameters.cshtml" />
     <Content Include="Views\Demo\NoQueryOnPageLoad.cshtml" />
+    <Content Include="Views\Test\DisplayGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

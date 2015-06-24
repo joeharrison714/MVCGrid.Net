@@ -9,6 +9,11 @@ namespace MVCGridExample.Models
     {
         public IEnumerable<TestItem> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
+            return GetData(out totalRecords, null, limitOffset, limitRowCount, orderBy, desc);
+        }
+
+        public IEnumerable<TestItem> GetData(out int totalRecords, string col3Filter, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        {
             if (HttpContext.Current.Cache["TestData"] == null)
             {
                 List<TestItem> items = new List<TestItem>();
@@ -20,7 +25,7 @@ namespace MVCGridExample.Models
             }
 
             List<TestItem> data = (List<TestItem>)HttpContext.Current.Cache["TestData"];
-            totalRecords = data.Count;
+            
 
             var q = data.AsQueryable();
 
@@ -48,6 +53,13 @@ namespace MVCGridExample.Models
                         break;
                 }
             }
+
+            if (!String.IsNullOrWhiteSpace(col3Filter))
+            {
+                q = q.Where(p => p.Col3.Contains(col3Filter));
+            }
+
+            totalRecords = q.Count();
 
             if (limitOffset.HasValue)
             {

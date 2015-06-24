@@ -1,0 +1,11 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "DisplayGrid";
+}
+
+<h2>Display Grid</h2>
+
+@Html.TextBox("fromdate", null, new { @class = "form-control", @placeholder = "From", @id = "FromDate", @Name = "fromdate", @data_mvcgrid_option = "FromDate", @data_mvcgrid_type = "filter" })
+<button type="button" data-mvcgrid-apply-filter='click'>Apply</button>
+
+@Html.MVCGrid(((string)ViewBag.GridName))

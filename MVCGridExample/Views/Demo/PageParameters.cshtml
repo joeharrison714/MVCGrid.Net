@@ -7,3 +7,19 @@
 <h2>Page Parameters</h2>
 
 @Html.MVCGrid("PPGrid", new { active = "true" })
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre>@@Html.MVCGrid("PPGrid", new { active = "true" })</pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("PPGrid")</pre>
+    </div>
+</div>
+

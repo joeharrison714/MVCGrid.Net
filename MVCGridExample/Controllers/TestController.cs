@@ -1,6 +1,7 @@
 ﻿using MVCGrid.Models;
 using MVCGrid.Web.Models;
 using MVCGrid.Web.Models.Test;
+using MVCGridExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,13 @@ namespace MVCGrid.Web.Controllers
 
         public ActionResult InitialDate()
         {
+            return View();
+        }
+
+        public ActionResult DisplayGrid(string id)
+        {
+            ViewBag.GridName = id;
+
             return View();
         }
     }
@@ -121,6 +129,43 @@ namespace MVCGrid.Web.Controllers
                     };
                 })
             );
+
+            //Issue17Grid
+            MVCGridDefinitionTable.Add("Issue17Grid", new MVCGridBuilder<TestItem>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Col1").WithValueExpression(p => p.Col1);
+                    cols.Add("Col2").WithValueExpression(p => p.Col2);
+                   
+
+                    cols.Add("FromDate").WithHeaderText("From Date").WithFiltering(true).WithValueExpression(x => x.Col3);
+                })
+                .WithSorting(true, "Col1")
+                .WithPaging(true, 10)
+                .WithFiltering(true)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    string col3Filter = context.QueryOptions.GetFilterString("FromDate");
+
+                    TestItemRepository repo = new TestItemRepository();
+                    int totalRecords;
+                    var items = repo.GetData(out totalRecords, col3Filter, options.GetLimitOffset(), options.GetLimitRowcount(), options.GetSortColumnData<string>(), options.SortDirection == SortDirection.Dsc);
+
+                    
+
+                    return new QueryResult<TestItem>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+
+            
         }
 
         const string CacheKey = "ReportInvoiceLines";
