@@ -51,6 +51,7 @@ namespace MVCGrid.Models
             this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
             this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
             this.AuthorizationType = gridDefaults.AuthorizationType;
+            this.UsePost = gridDefaults.UsePost;
         }
 
         public IEnumerable<IMVCGridColumn> GetColumns()
@@ -301,6 +302,11 @@ namespace MVCGrid.Models
         /// Indicated the authorization type. Anonymous access is the default.
         /// </summary>
         public AuthorizationType AuthorizationType { get; set; }
+
+        /// <summary>
+        /// Changes method used to update grid data to post. It disables browser history feature. 
+        /// </summary>
+        public bool UsePost { get; set; }
     }
 
 }

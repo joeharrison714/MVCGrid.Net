@@ -125,5 +125,10 @@ namespace MVCGrid.Interfaces
         /// Indicated the authorization type. Anonymous access is the default.
         /// </summary>
         AuthorizationType AuthorizationType { get; set; }
+
+        /// <summary>
+        /// Changes method used to update grid data to post. It disables browser history feature. 
+        /// </summary>
+        bool UsePost { get; set; }
     }
 }

@@ -14,9 +14,10 @@ var MVCGrid = new function () {
 
             var jsonData = $('#' + 'MVCGrid_' + mvcGridName + '_JsonData').html();
 
-            currentGrids.push(
-                $.parseJSON(jsonData)
-            );
+            var grid = $.parseJSON(jsonData);
+            grid.data = {};
+
+            currentGrids.push(grid);
         });
 
         for (var i = 0; i < currentGrids.length; i++) {
@@ -269,13 +270,18 @@ var MVCGrid = new function () {
             }
         });
 
-        var newUrl = window.location.href;
+        if (gridDef.usePost) {
+            gridDef.data[gridDef.qsPrefix + 'cols'] = colString;
+            MVCGrid.reloadGrid(mvcGridName);
+        } else {
+            var newUrl = window.location.href;
 
-        $.each(obj, function (k, v) {
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'cols', colString);
-        });
+            $.each(obj, function(k, v) {
+                newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'cols', colString);
+            });
 
-        setURLAndReload(mvcGridName, newUrl);
+            setURLAndReload(mvcGridName, newUrl);
+        }
     };
 
     // public
@@ -289,13 +295,20 @@ var MVCGrid = new function () {
 
         var gridDef = findGridDef(mvcGridName);
 
-        var newUrl = window.location.href;
+        if (gridDef.usePost) {
+            $.each(obj, function (k, v) {
+                gridDef.data[gridDef.qsPrefix + k] = v;
+            });
+            MVCGrid.reloadGrid(mvcGridName);
+        } else {
+            var newUrl = window.location.href;
 
-        $.each(obj, function (k, v) {
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
-        });
+            $.each(obj, function (k, v) {
+                newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
+            });
 
-        setURLAndReload(mvcGridName, newUrl);
+            setURLAndReload(mvcGridName, newUrl);
+        }
     };
 
     // public
@@ -315,12 +328,17 @@ var MVCGrid = new function () {
 
         var gridDef = findGridDef(mvcGridName);
 
-        var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'sort', sortColumn);
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'dir', sortDirection);
+        if (gridDef.usePost) {
+            gridDef.data[gridDef.qsPrefix + 'sort'] = sortColumn;
+            gridDef.data[gridDef.qsPrefix + 'dir'] = sortDirection;
+            MVCGrid.reloadGrid(mvcGridName);
+        } else {
+            var newUrl = window.location.href;
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'sort', sortColumn);
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'dir', sortDirection);
 
-        
-        setURLAndReload(mvcGridName, newUrl);
+            setURLAndReload(mvcGridName, newUrl);
+        }
     };
 
     // public
@@ -333,10 +351,16 @@ var MVCGrid = new function () {
     this.setPage = function (mvcGridName, pageNumber) {
 
         var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'page', pageNumber);
-        setURLAndReload(mvcGridName, newUrl);
+        
+        if (gridDef.usePost) {
+            gridDef.data[gridDef.qsPrefix + 'page'] = pageNumber;
+            MVCGrid.reloadGrid(mvcGridName);
+        }
+        else {
+            var newUrl = window.location.href;
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'page', pageNumber);
+            setURLAndReload(mvcGridName, newUrl);
+        }
     };
 
     // public
@@ -349,10 +373,16 @@ var MVCGrid = new function () {
     this.setPageSize = function (mvcGridName, pageSize) {
 
         var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'pagesize', pageSize);
-        setURLAndReload(mvcGridName, newUrl);
+        
+        if (gridDef.usePost) {
+            gridDef.data[gridDef.qsPrefix + 'pagesize'] = pageSize;
+            MVCGrid.reloadGrid(mvcGridName);
+        }
+        else {
+            var newUrl = window.location.href;
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'pagesize', pageSize);
+            setURLAndReload(mvcGridName, newUrl);
+        }
     };
 
     // public
@@ -365,14 +395,22 @@ var MVCGrid = new function () {
     this.setAdditionalQueryOptions = function (mvcGridName, obj) {
 
         var gridDef = findGridDef(mvcGridName);
+        
+        if (gridDef.usePost) {
+            $.each(obj, function (k, v) {
+                gridDef.data[gridDef.qsPrefix + k] = v;
+            });
+            MVCGrid.reloadGrid(mvcGridName);
+        }
+        else {
+            var newUrl = window.location.href;
 
-        var newUrl = window.location.href;
+            $.each(obj, function (k, v) {
+                newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
+            });
 
-        $.each(obj, function (k, v) {
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
-        });
-
-        setURLAndReload(mvcGridName, newUrl);
+            setURLAndReload(mvcGridName, newUrl);
+        }
     };
 
     // private
@@ -407,13 +445,19 @@ var MVCGrid = new function () {
 
         $.each(gridDef.pageParameters, function (k, v) {
             var thisPP = "_pp_" + gridDef.qsPrefix + k;
-            fullAjaxUrl = updateURLParameter(fullAjaxUrl, thisPP, v);
+            if(gridDef.usePost)
+                gridDef.data[thisPP] = v;
+            else
+                fullAjaxUrl = updateURLParameter(fullAjaxUrl, thisPP, v);
         });
 
+        if (gridDef.usePost)
+            gridDef.data['Name'] = mvcGridName;
+
         $.ajax({
-            type: "GET",
-            url: fullAjaxUrl,
-            data: { 'Name': mvcGridName },
+            type: gridDef.usePost ? "POST" : "GET",
+            url: gridDef.usePost ? ajaxBaseUrl : fullAjaxUrl,
+            data: gridDef.usePost ? gridDef.data : { 'Name': mvcGridName },
             cache: false,
             beforeSend: function () {
                 if (gridDef.clientLoading != '') {

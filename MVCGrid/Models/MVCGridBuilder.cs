@@ -378,5 +378,14 @@ namespace MVCGrid.Models
             GridDefinition.AuthorizationType = authType;
             return this;
         }
+
+        /// <summary>
+        /// Changes method used to update grid data to post. It disables browser history feature. 
+        /// </summary>
+        public MVCGridBuilder<T1> WithUsePost(bool usesPost)
+        {
+            GridDefinition.UsePost = usesPost;
+            return this;
+        }
     }
 }
