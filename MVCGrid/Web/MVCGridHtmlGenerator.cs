@@ -226,6 +226,9 @@ namespace MVCGrid.Web
             sbJson.AppendFormat("\"renderingMode\": \"{0}\"", def.RenderingMode.ToString().ToLower());
 
             sbJson.Append(",");
+            sbJson.AppendFormat("\"usePost\": {0}", def.UsePost.ToString().ToLower());
+
+            sbJson.Append(",");
             sbJson.Append("\"pageParameters\": {");
             sbJson.Append(GenerateJsonPageParameters(pageParameters));
             sbJson.Append("}");

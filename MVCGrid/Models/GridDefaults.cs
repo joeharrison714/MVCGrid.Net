@@ -33,6 +33,7 @@ namespace MVCGrid.Models
             AllowChangingPageSize = false;
             MaxItemsPerPage = null;
             AuthorizationType = Models.AuthorizationType.AllowAnonymous;
+            UsePost = false;
         }
 
         public bool PreloadData { get; set; }
@@ -75,5 +76,6 @@ namespace MVCGrid.Models
         }
 
         public AuthorizationType AuthorizationType { get; set; }
+        public bool UsePost { get; set; }
     }
 }
