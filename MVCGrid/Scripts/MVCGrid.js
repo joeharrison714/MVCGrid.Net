@@ -454,6 +454,17 @@ var MVCGrid = new function () {
 
         return exportUrl;
     };
+
+    // public
+    this.getEngineExportUrl = function (mvcGridName, engineName) {
+        var gridDef = findGridDef(mvcGridName);
+
+        var exportUrl = handlerPath + location.search;
+        exportUrl = updateURLParameter(exportUrl, 'engine', engineName);
+        exportUrl = updateURLParameter(exportUrl, 'Name', mvcGridName);
+
+        return exportUrl;
+    };
 };
 
 

@@ -1,6 +1,7 @@
 ﻿using MVCGrid.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -71,6 +72,7 @@ namespace MVCGrid.Interfaces
         /// </summary>
         bool Filtering { get; set; }
 
+        [Obsolete("RenderingEngine is obsolete. Please user RenderingEngines and DefaultRenderingEngineName")]
         Type RenderingEngine { get; set; }
         Type TemplatingEngine { get; set; }
 
@@ -125,5 +127,22 @@ namespace MVCGrid.Interfaces
         /// Indicated the authorization type. Anonymous access is the default.
         /// </summary>
         AuthorizationType AuthorizationType { get; set; }
+
+
+        /// <summary>
+        /// The list of configured rendering engines availble for this grid
+        /// </summary>
+        /// <value>
+        /// The rendering engines, each with a unique name
+        /// </value>
+        ProviderSettingsCollection RenderingEngines { get; set; }
+
+        /// <summary>
+        /// The unique rendering engine name to use when none is specified in the request
+        /// </summary>
+        /// <value>
+        /// The default name of the rendering engine.
+        /// </value>
+        string DefaultRenderingEngineName { get; set; }
     }
 }

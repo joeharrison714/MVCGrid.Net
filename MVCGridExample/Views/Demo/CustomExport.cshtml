@@ -1,0 +1,92 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Custom Export";
+}
+
+<h2>Custom Export</h2>
+
+<p>You can add additional rendering engines if you want to be able to export in different formats.</p>
+<p>Here are the steps:</p>
+<ol>
+    <li>Use <code>AddRenderingEngine</code> on the GridConfig or GridDefaults like so:<br /><pre class="brush: csharp">.AddRenderingEngine("tabs", typeof(TabDelimitedRenderingEngine))</pre></li>
+    <li>Create the export url using the javascript api:<br />
+        <pre class="brush: js">
+$('#tabExportButton').click(function () {
+    location.href = MVCGrid.getEngineExportUrl('CustomExport', 'tabs');
+});
+    </pre>
+    </li>
+</ol>
+
+
+
+<div class="container">
+    <div class="row">
+        <button class="btn btn-default" id="csvExportButton">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> CSV Export
+        </button>
+
+        <button class="btn btn-default" id="tabExportButton">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Tab Export
+        </button>
+    </div>
+</div>
+
+@Html.MVCGrid("CustomExport")
+
+<p>
+    If you want to replace the default export, simply remove the RenderingEngine named export and add a different one of the same name, like this:
+    <pre class="brush: csharp">
+.RemoveRenderingEngine("export")
+.AddRenderingEngine("export", typeof(TabDelimitedRenderingEngine))
+</pre>
+</p>
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+$(function () {
+	$(&#39;#csvExportButton&#39;).click(function () {
+		location.href = MVCGrid.getExportUrl(&#39;CustomExport&#39;);
+	});
+	$(&#39;#tabExportButton&#39;).click(function () {
+		location.href = MVCGrid.getEngineExportUrl(&#39;CustomExport&#39;, &#39;tabs&#39;);
+	});
+});
+        </pre>
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("CustomExport")</pre>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+
+    <script type="text/javascript">
+        function showLoading() {
+            $.blockUI();
+        }
+        function hideLoading() {
+            $.unblockUI();
+        }
+
+        $(function () {
+            $('#csvExportButton').click(function () {
+                location.href = MVCGrid.getExportUrl('CustomExport');
+            });
+
+            $('#tabExportButton').click(function () {
+                location.href = MVCGrid.getEngineExportUrl('CustomExport', 'tabs');
+            });
+        });
+    </script>
+}

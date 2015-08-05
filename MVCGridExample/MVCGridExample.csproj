@@ -185,6 +185,7 @@
     <Compile Include="Models\JobRepo.cs" />
     <Compile Include="Models\MVCGridToolbarModel.cs" />
     <Compile Include="Models\PersonRepository.cs" />
+    <Compile Include="Models\TabDelimitedRenderingEngine.cs" />
     <Compile Include="Models\TestItem.cs" />
     <Compile Include="Models\TestItemRepository.cs" />
     <Compile Include="Models\Test\IReportInvoiceLine.cs" />
@@ -306,6 +307,7 @@
     <Content Include="Views\Demo\PageParameters.cshtml" />
     <Content Include="Views\Demo\NoQueryOnPageLoad.cshtml" />
     <Content Include="Views\Test\DisplayGrid.cshtml" />
+    <Content Include="Views\Demo\CustomExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

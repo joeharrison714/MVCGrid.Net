@@ -2,6 +2,7 @@
 using MVCGrid.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace MVCGrid.Models
             this.ClientSideLoadingMessageFunctionName = gridDefaults.ClientSideLoadingMessageFunctionName;
             this.ClientSideLoadingCompleteFunctionName = gridDefaults.ClientSideLoadingCompleteFunctionName;
             this.Filtering = gridDefaults.Filtering;
-            this.RenderingEngine = gridDefaults.RenderingEngine;
+            //this.RenderingEngine = gridDefaults.RenderingEngine;
             this.TemplatingEngine = gridDefaults.TemplatingEngine;
             this.AdditionalSettings = gridDefaults.AdditionalSettings;
             this.RenderingMode = gridDefaults.RenderingMode;
@@ -51,6 +52,33 @@ namespace MVCGrid.Models
             this.AllowChangingPageSize = gridDefaults.AllowChangingPageSize;
             this.MaxItemsPerPage = gridDefaults.MaxItemsPerPage;
             this.AuthorizationType = gridDefaults.AuthorizationType;
+
+            this.RenderingEngines = gridDefaults.RenderingEngines;
+            this.DefaultRenderingEngineName = gridDefaults.DefaultRenderingEngineName;
+        }
+
+        [Obsolete("RenderingEngine is obsolete. Please user RenderingEngines and DefaultRenderingEngineName")]
+        public Type RenderingEngine
+        {
+            get
+            {
+                if (RenderingEngines[DefaultRenderingEngineName] == null)
+                {
+                    return null;
+                }
+                string typeName = RenderingEngines[DefaultRenderingEngineName].Type;
+
+                Type t = Type.GetType(typeName, true);
+                return t;
+            }
+            set
+            {
+                string fullyQualifiedName = value.AssemblyQualifiedName;
+                string name = value.Name;
+
+                RenderingEngines.Add(new ProviderSettings(name, fullyQualifiedName));
+                DefaultRenderingEngineName = name;
+            }
         }
 
         public IEnumerable<IMVCGridColumn> GetColumns()
@@ -236,7 +264,7 @@ namespace MVCGrid.Models
         /// </summary>
         public string ClientSideLoadingCompleteFunctionName { get; set; }
 
-        public Type RenderingEngine { get; set; }
+        //public Type RenderingEngine { get; set; }
         public Type TemplatingEngine { get; set; }
 
         /// <summary>
@@ -301,6 +329,9 @@ namespace MVCGrid.Models
         /// Indicated the authorization type. Anonymous access is the default.
         /// </summary>
         public AuthorizationType AuthorizationType { get; set; }
+
+        public ProviderSettingsCollection RenderingEngines { get; set; }
+        public string DefaultRenderingEngineName { get; set; }
     }
 
 }

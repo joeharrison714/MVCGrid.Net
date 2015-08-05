@@ -141,6 +141,11 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult CustomExport()
+        {
+            return View();
+        }
     }
 
     public class DemoControllerGrids : GridRegistration

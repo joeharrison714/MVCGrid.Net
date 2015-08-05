@@ -23,9 +23,17 @@ namespace MVCGrid.Engine
 
             if (!String.IsNullOrWhiteSpace(gridContext.QueryOptions.RenderingEngineName))
             {
-                if (String.Compare(gridContext.QueryOptions.RenderingEngineName, "export", true) == 0)
+                foreach (ProviderSettings configuredEngine in gridContext.GridDefinition.RenderingEngines)
                 {
-                    renderingEngine = new CsvRenderingEngine();
+                    if (String.Compare(gridContext.QueryOptions.RenderingEngineName, configuredEngine.Name, true) == 0)
+                    {
+                        string engineName = gridContext.QueryOptions.RenderingEngineName;
+
+                        string typeString = gridContext.GridDefinition.RenderingEngines[engineName].Type;
+                        Type engineType = Type.GetType(typeString, true);
+
+                        renderingEngine = (IMVCGridRenderingEngine)Activator.CreateInstance(engineType, true);
+                    }
                 }
             }
 
@@ -39,7 +47,17 @@ namespace MVCGrid.Engine
 
         internal static IMVCGridRenderingEngine GetRenderingEngineInternal(IMVCGridDefinition gridDefinition)
         {
-            IMVCGridRenderingEngine renderingEngine = (IMVCGridRenderingEngine)Activator.CreateInstance(gridDefinition.RenderingEngine, true);
+            string engineName = gridDefinition.DefaultRenderingEngineName;
+
+            if (gridDefinition.RenderingEngines[engineName] == null)
+            {
+                throw new ConfigurationException(String.Format("The requested default rendering engine '{0}' was not found.", engineName));
+            }
+
+            string typeString = gridDefinition.RenderingEngines[engineName].Type;
+            Type engineType = Type.GetType(typeString, true);
+
+            IMVCGridRenderingEngine renderingEngine = (IMVCGridRenderingEngine)Activator.CreateInstance(engineType, true);
 
             return renderingEngine;
         }
