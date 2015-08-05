@@ -29,6 +29,8 @@ namespace MVCGrid.Web.Controllers
 
             return View();
         }
+
+
     }
 
     public class TestControllerGrids : GridRegistration
@@ -125,6 +127,38 @@ namespace MVCGrid.Web.Controllers
                     return new QueryResult<Job>()
                     {
                         Items = data,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+            //Issue21Grid
+            //ńłóźćłąę.
+            MVCGridDefinitionTable.Add("Issue21Grid", new MVCGridBuilder<TestItem>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Col1").WithValueExpression(p => "ńłóźćłąę.");
+                    cols.Add("Col2").WithValueExpression(p => p.Col2);
+                })
+                .WithSorting(true, "Col1")
+                .WithPaging(true, 10)
+                .WithFiltering(true)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    string col3Filter = context.QueryOptions.GetFilterString("FromDate");
+
+                    TestItemRepository repo = new TestItemRepository();
+                    int totalRecords;
+                    var items = repo.GetData(out totalRecords, col3Filter, options.GetLimitOffset(), options.GetLimitRowcount(), options.GetSortColumnData<string>(), options.SortDirection == SortDirection.Dsc);
+
+
+
+                    return new QueryResult<TestItem>()
+                    {
+                        Items = items,
                         TotalRecords = totalRecords
                     };
                 })
