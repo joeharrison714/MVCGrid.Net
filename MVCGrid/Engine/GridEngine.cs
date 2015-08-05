@@ -17,6 +17,8 @@ namespace MVCGrid.Engine
 {
     public class GridEngine
     {
+        private static readonly Encoding LocalEncoding = Encoding.UTF8;
+
         public static IMVCGridRenderingEngine GetRenderingEngine(GridContext gridContext)
         {
             IMVCGridRenderingEngine renderingEngine = null;
@@ -315,7 +317,8 @@ namespace MVCGrid.Engine
                     engine.Run(renderingEngine, gridContext, tw);
                 }
 
-                return Encoding.ASCII.GetString(ms.ToArray());
+                string result = LocalEncoding.GetString(ms.ToArray());
+                return result;
             }
         }
 
@@ -346,7 +349,7 @@ namespace MVCGrid.Engine
                     renderingEngine.RenderContainer(model, tw);
                 }
 
-                return Encoding.ASCII.GetString(ms.ToArray());
+                return LocalEncoding.GetString(ms.ToArray());
             }
         }
 
