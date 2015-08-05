@@ -1,7 +1,7 @@
 ﻿@using MVCGrid.Web
 @using MVCGrid.Web.Models
 @{
-    ViewBag.Title = "No Query On Page Load";
+    ViewBag.Title = "Load Grid On Demand";
 }
 @section Scripts{
     <script type="text/javascript">
@@ -16,6 +16,17 @@
 }
 
 <h2>@ViewBag.Title</h2>
+
+<p>If you do not want the grid to load when the page first loads, you can do the following.</p>
+<p>In your grid config, set these 2 options:</p>
+<pre class="brush: csharp">
+.WithQueryOnPageLoad(false)
+.WithPreloadData(false)
+</pre>
+<p>Then use the reloadGrid javascript function when you want to load it:</p>
+<pre class="brush: jscript">
+MVCGrid.reloadGrid('QPLGrid');
+</pre>
 
 <button class="btn btn-default" id="reloadGridButton">Load Grid</button>
 

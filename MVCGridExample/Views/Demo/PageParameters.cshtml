@@ -6,6 +6,29 @@
 
 <h2>Page Parameters</h2>
 
+<p>If you need to pass some data from your view to your grid, you can use page parameters. Here's how:</p>
+<ol>
+    <li>Add one or more names of the page parameters to your grid config: (The names can be anything you want)
+    <br />
+<pre class="brush: csharp">
+    .WithPageParameterNames("Active")
+</pre>
+    </li>
+    <li>Populate the parameter from your view
+    <br />
+<pre>
+    @@Html.MVCGrid("PPGrid", new { active = "true" })
+</pre>
+    </li>
+    <li>Use the value in your function:
+    <br />
+        <pre class="brush: csharp">
+    string ppactive = options.GetPageParameterString("active");
+</pre>
+    </li>
+</ol>
+
+
 @Html.MVCGrid("PPGrid", new { active = "true" })
 
 
