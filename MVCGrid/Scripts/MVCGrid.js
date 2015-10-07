@@ -378,8 +378,8 @@ var MVCGrid = new function () {
     // private
     var setURLAndReload = function (mvcGridName, newUrl) {
 
-        if (history.pushState) {
-            window.history.pushState({ path: newUrl }, '', newUrl);
+        if (history.replaceState) {
+            window.history.replaceState({ path: newUrl }, '', newUrl);
             MVCGrid.reloadGrid(mvcGridName);
         }
         else {
