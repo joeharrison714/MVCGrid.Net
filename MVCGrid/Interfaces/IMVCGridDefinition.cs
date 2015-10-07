@@ -128,6 +128,10 @@ namespace MVCGrid.Interfaces
         /// </summary>
         AuthorizationType AuthorizationType { get; set; }
 
+        /// <summary>
+        /// Sets the browser navigation mode for the grid.  PreserveAllGridActions is the default.
+        /// </summary>
+        BrowserNavigationMode BrowserNavigationMode { get; set; }
 
         /// <summary>
         /// The list of configured rendering engines availble for this grid

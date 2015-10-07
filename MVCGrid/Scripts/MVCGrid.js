@@ -378,8 +378,14 @@ var MVCGrid = new function () {
     // private
     var setURLAndReload = function (mvcGridName, newUrl) {
 
-        if (history.pushState) {
+        var gridDef = findGridDef(mvcGridName);
+        
+        if (gridDef.browserNavigationMode === 'preserveallgridactions' && history.pushState) {
             window.history.pushState({ path: newUrl }, '', newUrl);
+            MVCGrid.reloadGrid(mvcGridName);
+
+        } else if (history.replaceState) {
+            window.history.replaceState({ path: newUrl }, '', newUrl);
             MVCGrid.reloadGrid(mvcGridName);
         }
         else {

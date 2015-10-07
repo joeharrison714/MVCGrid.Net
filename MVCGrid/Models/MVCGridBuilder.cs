@@ -429,5 +429,14 @@ namespace MVCGrid.Models
             GridDefinition.AuthorizationType = authType;
             return this;
         }
+
+        /// <summary>
+        /// Sets the browser navigation mode for the grid.  PreserveAllGridActions is the default.
+        /// </summary>
+        public MVCGridBuilder<T1> WithBrowserNavigationMode(BrowserNavigationMode mode)
+        {
+            GridDefinition.BrowserNavigationMode = mode;
+            return this;
+        }
     }
 }
