@@ -23,11 +23,9 @@ var MVCGrid = new function () {
             var obj = currentGrids[i];
 
             if (!obj.preloaded) {
-                MVCGrid.reloadGrid(obj.name);
+                MVCGrid.reloadGrid(obj.name, bindToolbarEvents);
             }
         }
-
-        bindToolbarEvents();
     };
 
     var applyBoundFilters = function (mvcGridName){
@@ -376,17 +374,17 @@ var MVCGrid = new function () {
     };
 
     // private
-    var setURLAndReload = function (mvcGridName, newUrl) {
+    var setURLAndReload = function (mvcGridName, newUrl, callback) {
 
         var gridDef = findGridDef(mvcGridName);
         
         if (gridDef.browserNavigationMode === 'preserveallgridactions' && history.pushState) {
             window.history.pushState({ path: newUrl }, '', newUrl);
-            MVCGrid.reloadGrid(mvcGridName);
+            MVCGrid.reloadGrid(mvcGridName, callback);
 
         } else if (history.replaceState) {
             window.history.replaceState({ path: newUrl }, '', newUrl);
-            MVCGrid.reloadGrid(mvcGridName);
+            MVCGrid.reloadGrid(mvcGridName, callback);
         }
         else {
             location.href = newUrl;
@@ -395,7 +393,7 @@ var MVCGrid = new function () {
     };
 
     // public
-    this.reloadGrid = function(mvcGridName){
+    this.reloadGrid = function(mvcGridName, callback){
         var tableHolderHtmlId = 'MVCGridTableHolder_' + mvcGridName;
         var loadingHtmlId = 'MVCGrid_Loading_' + mvcGridName;
         var errorHtmlId = 'MVCGrid_ErrorMessage_' + mvcGridName;
@@ -446,6 +444,10 @@ var MVCGrid = new function () {
                 }
 
                 $('#' + loadingHtmlId).css("visibility", "hidden");
+
+                if (callback && typeof callback === 'function') {
+                    callback();
+                }
             }
         });
     };
