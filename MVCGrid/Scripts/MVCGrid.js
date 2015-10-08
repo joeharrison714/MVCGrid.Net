@@ -21,8 +21,17 @@ var MVCGrid = new function () {
 
         for (var i = 0; i < currentGrids.length; i++) {
             var obj = currentGrids[i];
+            var gridDef = findGridDef(obj.name);
+            var persistedUrl = "";
+            
+            if (gridDef.persistLastState === 'true') {
+                persistedUrl = MVCGrid.getPersistedUrl(obj.name);
+            }
+            
+            if (persistedUrl) {
+                setURLAndReload(obj.name, persistedUrl, bindToolbarEvents);
 
-            if (!obj.preloaded) {
+            } else if (!obj.preloaded) {
                 MVCGrid.reloadGrid(obj.name, bindToolbarEvents);
             }
         }
@@ -377,6 +386,10 @@ var MVCGrid = new function () {
     var setURLAndReload = function (mvcGridName, newUrl, callback) {
 
         var gridDef = findGridDef(mvcGridName);
+
+        if (gridDef.persistLastState === 'true') {
+            MVCGrid.persistUrl(mvcGridName, newUrl, 3);
+        }
         
         if (gridDef.browserNavigationMode === 'preserveallgridactions' && history.pushState) {
             window.history.pushState({ path: newUrl }, '', newUrl);
@@ -473,6 +486,60 @@ var MVCGrid = new function () {
 
         return exportUrl;
     };
+
+    // public
+    this.persistUrl = function (mvcGridName, persistedUrl, daysToPersist) {
+        var nameEQ = "gridState_" + mvcGridName + "=";
+        var expires = "";
+
+        if (daysToPersist) {
+            var date = new Date();
+            date.setTime(date.getTime() + (daysToPersist * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+
+        document.cookie = nameEQ + persistedUrl + expires + "; path=/";
+    }
+
+    // public
+    this.getPersistedUrl = function(mvcGridName) {
+        var nameEQ = "gridState_" + mvcGridName + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // public
+    this.setQueryStringAndReloadGrid = function (mvcGridName, queryString, callback) {
+        MVCGrid.persistUrl("gridState_" + mvcGridName, "", -1);
+        var newUrl = window.location.origin;
+
+        if (queryString) {
+            newUrl += ('?' + queryString);
+        }
+
+        // reset bound filters
+        $("[data-mvcgrid-type='filter']").each(function () {
+            var gridName = getGridName($(this));
+            if (gridName == mvcGridName) {
+                $(this).val('');
+            }
+        });
+
+        // reset additional options
+        $("[data-mvcgrid-type='additionalQueryOption']").each(function () {
+            var gridName = getGridName($(this));
+            if (gridName == mvcGridName) {
+                $(this).val('');
+            }
+        });
+
+        setURLAndReload(mvcGridName, newUrl, callback);
+    }
 };
 
 

@@ -336,6 +336,11 @@ namespace MVCGrid.Models
         /// </summary>
         public BrowserNavigationMode BrowserNavigationMode { get; set; }
 
+        /// <summary>
+        /// Perists the latest grid state in a cookie so that it will be reloaded the next time the user navigates to the page. Default is false.
+        /// </summary>
+        public bool PersistLastState { get; set; }
+
         public ProviderSettingsCollection RenderingEngines { get; set; }
         public string DefaultRenderingEngineName { get; set; }
     }

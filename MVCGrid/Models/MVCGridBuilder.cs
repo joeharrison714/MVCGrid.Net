@@ -433,9 +433,13 @@ namespace MVCGrid.Models
         /// <summary>
         /// Sets the browser navigation mode for the grid.  PreserveAllGridActions is the default.
         /// </summary>
-        public MVCGridBuilder<T1> WithBrowserNavigationMode(BrowserNavigationMode mode)
+        /// <param name="mode">browser navigation mode</param>
+        /// <param name="persistLastState">Perists the latest grid state in a cookie so that it will be reloaded the next time the user navigates to the page</param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithBrowserNavigationMode(BrowserNavigationMode mode, bool persistLastState = false)
         {
             GridDefinition.BrowserNavigationMode = mode;
+            GridDefinition.PersistLastState = persistLastState;
             return this;
         }
     }

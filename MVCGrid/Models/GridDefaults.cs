@@ -35,6 +35,7 @@ namespace MVCGrid.Models
             MaxItemsPerPage = null;
             AuthorizationType = Models.AuthorizationType.AllowAnonymous;
             BrowserNavigationMode = Models.BrowserNavigationMode.PreserveAllGridActions;
+            PersistLastState = false;
 
             RenderingEngines = new ProviderSettingsCollection();
             RenderingEngines.Add(new ProviderSettings("BootstrapRenderingEngine", "MVCGrid.Rendering.BootstrapRenderingEngine, MVCGrid"));
@@ -106,6 +107,8 @@ namespace MVCGrid.Models
         public AuthorizationType AuthorizationType { get; set; }
 
         public BrowserNavigationMode BrowserNavigationMode { get; set; }
+
+        public bool PersistLastState { get; set; }
 
         public ProviderSettingsCollection RenderingEngines { get; set; }
         public string DefaultRenderingEngineName { get; set; }

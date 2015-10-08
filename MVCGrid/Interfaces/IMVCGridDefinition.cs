@@ -134,6 +134,11 @@ namespace MVCGrid.Interfaces
         BrowserNavigationMode BrowserNavigationMode { get; set; }
 
         /// <summary>
+        /// Perists the latest grid state in a cookie so that it will be reloaded the next time the user navigates to the page. Default is false.
+        /// </summary>
+        bool PersistLastState { get; set; }
+
+        /// <summary>
         /// The list of configured rendering engines availble for this grid
         /// </summary>
         /// <value>
