@@ -33,6 +33,9 @@ var MVCGrid = new function () {
 
             } else if (!obj.preloaded) {
                 MVCGrid.reloadGrid(obj.name, bindToolbarEvents);
+
+            } else {
+                bindToolbarEvents();
             }
         }
     };
