@@ -39,6 +39,7 @@ namespace MVCGrid.Models
 
             RenderingEngines = new ProviderSettingsCollection();
             RenderingEngines.Add(new ProviderSettings("BootstrapRenderingEngine", "MVCGrid.Rendering.BootstrapRenderingEngine, MVCGrid"));
+            RenderingEngines.Add(new ProviderSettings("BootstrapVerticalRenderingEngine", "MVCGrid.Rendering.BootstrapVerticalRenderingEngine, MVCGrid"));
             RenderingEngines.Add(new ProviderSettings("Export", "MVCGrid.Rendering.CsvRenderingEngine, MVCGrid"));
             DefaultRenderingEngineName = "BootstrapRenderingEngine";
         }

@@ -67,6 +67,7 @@
     <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="Rendering\CsvRenderingEngine.cs" />
     <Compile Include="Rendering\BootstrapRenderingEngine.cs" />
+    <Compile Include="Rendering\BootstrapVerticalRenderingEngine.cs" />
     <Compile Include="Templating\SimpleTemplatingEngine.cs" />
     <Compile Include="Utility\ConfigUtility.cs" />
     <Compile Include="Utility\GridContextUtility.cs" />
