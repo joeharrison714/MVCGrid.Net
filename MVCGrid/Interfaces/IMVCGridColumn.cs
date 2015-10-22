@@ -19,11 +19,6 @@ namespace MVCGrid.Interfaces
         string ColumnVisibilityListText { get; set; }
 
         /// <summary>
-        /// Determines if the column is displayed in the Visibility List
-        /// </summary>
-        bool ShowInVisibilityList { get; set; }
-
-        /// <summary>
         /// A unique name for this column
         /// </summary>
         string ColumnName { get; }

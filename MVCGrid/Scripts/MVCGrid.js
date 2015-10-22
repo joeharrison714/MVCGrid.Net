@@ -167,7 +167,7 @@ var MVCGrid = new function () {
             var colVis = MVCGrid.getColumnVisibility(gridName);
             $.each(colVis, function (colName, col) {
 
-                if (!col.showInList || (!col.visible && !col.allow)) {
+                if (!col.visible && !col.allow) {
                     return true;
                 }
 
@@ -185,11 +185,17 @@ var MVCGrid = new function () {
             $("input:checkbox[name='" + gridName + "cols']").change(function() {
                 var jsonData = {};
                 var gridName = getGridName($(this).closest('ul'));
-                
-                $("input:checkbox[name='" + gridName + "cols']:checked").each(function () {
-                    var columnName = $(this).val();
-                    jsonData[columnName] = true;
+
+                var colVis = MVCGrid.getColumnVisibility(gridName);
+                $.each(colVis, function(colName, col) {
+                    var isChecked = $("input:checkbox[name='" + gridName + "cols'][value='" + colName + "']:checked").length > 0;
+                    if (isChecked || (!col.allow && col.visible)) {
+                        jsonData[colName] = true;
+                    } else {
+                        jsonData[colName] = false;
+                    }
                 });
+
                 MVCGrid.setColumnVisibility(gridName, jsonData);
             });
         });

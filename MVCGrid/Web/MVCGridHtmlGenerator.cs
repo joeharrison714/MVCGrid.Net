@@ -67,19 +67,16 @@ namespace MVCGrid.Web
 
             StringBuilder sb = new StringBuilder();
 
-            foreach (var cv in gridContext.QueryOptions.ColumnVisibility)
+            foreach (var gridColumn in gridColumns)
             {
-                var gridColumn = gridColumns.SingleOrDefault(p => p.ColumnName == cv.ColumnName);
-
-                if (gridColumn == null)
-                    continue;
+                var cv = gridContext.QueryOptions.ColumnVisibility.SingleOrDefault(p => p.ColumnName == gridColumn.ColumnName);
 
                 if (sb.Length > 0)
                 {
                     sb.Append(",");
                 }
 
-                sb.AppendFormat("\"{0}\": {{", cv.ColumnName);
+                sb.AppendFormat("\"{0}\": {{", gridColumn.ColumnName);
 
                 sb.AppendFormat("\"{0}\": \"{1}\"", "headerText",
                     HttpUtility.JavaScriptStringEncode(String.IsNullOrEmpty(gridColumn.ColumnVisibilityListText)
@@ -90,10 +87,9 @@ namespace MVCGrid.Web
                 sb.AppendFormat("\"{0}\": {1}", "visible", cv.Visible.ToString().ToLower());
                 sb.Append(",");
                 sb.AppendFormat("\"{0}\": {1}", "allow", gridColumn.AllowChangeVisibility.ToString().ToLower());
-                sb.Append(",");
-                sb.AppendFormat("\"{0}\": {1}", "showInList", gridColumn.ShowInVisibilityList.ToString().ToLower());
                 sb.Append("}");
             }
+
             return sb.ToString();
         }
 

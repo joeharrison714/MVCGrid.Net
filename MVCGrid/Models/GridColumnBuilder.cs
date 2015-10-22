@@ -112,15 +112,6 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
-        /// Determines if the column is displayed in the Visibility List
-        /// </summary>
-        public GridColumnBuilder<T1> WithShowInVisibilityList(bool show)
-        {
-            GridColumn.ShowInVisibilityList = show;
-            return this;
-        }
-
-        /// <summary>
         /// Enables sorting on this column
         /// </summary>
         public GridColumnBuilder<T1> WithSorting(bool enableSorting)

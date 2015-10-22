@@ -13,7 +13,6 @@ namespace MVCGrid.Models
             ColumnName = null;
             HeaderText = null;
             ColumnVisibilityListText = null;
-            ShowInVisibilityList = true;
             EnableSorting = false;
             HtmlEncode = true;
             EnableFiltering = false;
@@ -25,7 +24,6 @@ namespace MVCGrid.Models
         public string ColumnName { get; set; }
         public string HeaderText { get; set; }
         public string ColumnVisibilityListText { get; set; }
-        public bool ShowInVisibilityList { get; set; }
         public bool EnableSorting { get; set; }
         public bool HtmlEncode { get; set; }
         public bool EnableFiltering { get; set; }
