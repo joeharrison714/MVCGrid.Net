@@ -49,6 +49,7 @@ namespace MVCGrid.Models
             Visible = columnDefaults.Visible;
             SortColumnData = columnDefaults.SortColumnData;
             AllowChangeVisibility = columnDefaults.AllowChangeVisibility;
+            ShowInVisibilityList = true;
 
         }
 
@@ -74,6 +75,16 @@ namespace MVCGrid.Models
                 _headerText = value;
             }
         }
+
+        /// <summary>
+        /// Text to display in Visibility List, if different from HeaderText.
+        /// </summary>
+        public string ColumnVisibilityListText { get; set; }
+
+        /// <summary>
+        /// Determines if the column is displayed in the Visibility List
+        /// </summary>
+        public bool ShowInVisibilityList { get; set; }
 
         /// <summary>
         /// Template for formatting cell value

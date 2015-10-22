@@ -102,6 +102,23 @@ namespace MVCGrid.Models
             return this;
         }
 
+        /// <summary>
+        /// Text to display in Visibility List, if different from HeaderText.
+        /// </summary>
+        public GridColumnBuilder<T1> WithColumnVisibilityText(string text)
+        {
+            GridColumn.ColumnVisibilityListText = text;
+            return this;
+        }
+
+        /// <summary>
+        /// Determines if the column is displayed in the Visibility List
+        /// </summary>
+        public GridColumnBuilder<T1> WithShowInVisibilityList(bool show)
+        {
+            GridColumn.ShowInVisibilityList = show;
+            return this;
+        }
 
         /// <summary>
         /// Enables sorting on this column

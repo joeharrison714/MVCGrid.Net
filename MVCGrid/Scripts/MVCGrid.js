@@ -166,10 +166,11 @@ var MVCGrid = new function () {
 
             var colVis = MVCGrid.getColumnVisibility(gridName);
             $.each(colVis, function (colName, col) {
-                
-                if (!col.visible && !col.allow) {
+
+                if (!col.showInList || (!col.visible && !col.allow)) {
                     return true;
                 }
+
                 var html = '<li><a><label><input type="checkbox" name="' + gridName + 'cols" value="' + colName + '"';
                 if (col.visible) {
                     html += ' checked';
