@@ -219,8 +219,6 @@ var MVCGrid = new function () {
     // private
     var updateURLParameter = function (url, param, paramVal) {
 
-        param = param.toLowerCase();
-
         var TheAnchor = null;
         var newAdditionalURL = "";
         var tempArray = url.split("?");
@@ -517,16 +515,15 @@ var MVCGrid = new function () {
     }
 
     // public
-    this.setQueryStringAndReloadGrid = function (mvcGridName, queryString, callback) {
+    this.setQueryStringAndReloadGrid = function (mvcGridName, newUrl, callback) {
         MVCGrid.persistUrl("gridState_" + mvcGridName, "", -1);
-        var newUrl = window.location.origin;
-
-        if (queryString) {
-            newUrl += ('?' + queryString);
-        }
 
         // reset bound filters
         $("[data-mvcgrid-type='filter']").each(function () {
+            var preserve = $(this).attr('data-preserve');
+            if (preserve)
+                return;
+            
             var gridName = getGridName($(this));
             if (gridName == mvcGridName) {
                 $(this).val('');
@@ -535,6 +532,10 @@ var MVCGrid = new function () {
 
         // reset additional options
         $("[data-mvcgrid-type='additionalQueryOption']").each(function () {
+            var preserve = $(this).attr('data-preserve');
+            if (preserve)
+                return;
+            
             var gridName = getGridName($(this));
             if (gridName == mvcGridName) {
                 $(this).val('');
