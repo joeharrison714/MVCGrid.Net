@@ -202,7 +202,7 @@ namespace MVCGrid.Rendering
                 sbHtml.AppendFormat("onclick='{0}'", "return false;");
             }
             sbHtml.Append(">");
-            sbHtml.Append("<span aria-hidden='true'>&laquo; Previous</span></a></li>");
+            sbHtml.Append("<span class='glyphicon glyphicon-backward' aria-hidden='true'></span></a></li>");
 
             for (int i = pageToStart; i <= pageToEnd; i++)
             {
@@ -233,7 +233,7 @@ namespace MVCGrid.Rendering
                 sbHtml.AppendFormat("onclick='{0}'", "return false;");
             }
             sbHtml.Append(">");
-            sbHtml.Append("<span aria-hidden='true'>Next &raquo;</span></a></li>");
+            sbHtml.Append("<span class='glyphicon glyphicon-forward' aria-hidden='true'></span></a></li>");
 
             sbHtml.Append("</ul>");
             sbHtml.Append("</div>");

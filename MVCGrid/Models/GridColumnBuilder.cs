@@ -177,6 +177,15 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Use this to return a custom css class for the current cell
+        /// </summary>
+        public GridColumnBuilder<T1> WithCellCssClass(string cssClass)
+        {
+            GridColumn.CellCssClass = cssClass;
+            return this;
+        }
+
+        /// <summary>
         /// Enables filtering on this column
         /// </summary>
         public GridColumnBuilder<T1> WithFiltering(bool enableFiltering)

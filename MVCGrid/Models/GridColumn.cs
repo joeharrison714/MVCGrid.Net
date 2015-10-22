@@ -96,6 +96,11 @@ namespace MVCGrid.Models
         public Func<T1, GridContext, string> CellCssClassExpression { get; set; }
 
         /// <summary>
+        /// Use this to return a custom css class for the current cell
+        /// </summary>
+        public string CellCssClass { get; set; }
+
+        /// <summary>
         /// Enables sorting on this column
         /// </summary>
         public bool EnableSorting { get; set; }

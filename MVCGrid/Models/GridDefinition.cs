@@ -125,6 +125,11 @@ namespace MVCGrid.Models
         /// </summary>
         public Func<T1, GridContext, string> RowCssClassExpression { get; set; }
 
+        /// <summary>
+        /// Use this to specify a custom css class for the current row
+        /// </summary>
+        public string RowCssClass { get; set; }
+
         internal override List<Row> GetData(GridContext context, out int? totalRecords)
         {
             List<Row> resultRows = new List<Row>();
@@ -141,20 +146,31 @@ namespace MVCGrid.Models
 
             foreach (var item in queryResult.Items)
             {
-                Row thisRow = new Row();
+                Row thisRow = new Row
+                {
+                    CalculatedCssClass = String.Empty
+                };
+
+                if (!String.IsNullOrEmpty(RowCssClass))
+                {
+                    thisRow.CalculatedCssClass = RowCssClass.Trim();
+                }
 
                 if (RowCssClassExpression != null)
                 {
                     string rowCss = RowCssClassExpression(item, context);
                     if (!String.IsNullOrWhiteSpace(rowCss))
                     {
-                        thisRow.CalculatedCssClass = rowCss;
+                        thisRow.CalculatedCssClass = String.Join(" ", thisRow.CalculatedCssClass, rowCss.Trim());
                     }
                 }
 
                 foreach (var col in this.Columns)
                 {
-                    Cell thisCell = new Cell();
+                    Cell thisCell = new Cell
+                    {
+                        CalculatedCssClass = String.Empty
+                    };
                     thisRow.Cells.Add(col.ColumnName, thisCell);
 
                     thisCell.HtmlText = "";
@@ -189,12 +205,17 @@ namespace MVCGrid.Models
                         thisCell.PlainText = col.PlainTextValueExpression(item, context);
                     }
 
+                    if (!String.IsNullOrEmpty(col.CellCssClass))
+                    {
+                        thisCell.CalculatedCssClass = col.CellCssClass.Trim();
+                    }
+
                     if (col.CellCssClassExpression != null)
                     {
                         string cellCss = col.CellCssClassExpression(item, context);
                         if (!String.IsNullOrWhiteSpace(cellCss))
                         {
-                            thisCell.CalculatedCssClass = cellCss;
+                            thisCell.CalculatedCssClass = String.Join(" ", thisCell.CalculatedCssClass, cellCss.Trim());
                         }
                     }
                 }

@@ -99,6 +99,15 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Use this to specify a custom css class for the current row
+        /// </summary>
+        public MVCGridBuilder<T1> WithRowCssClass(string cssClass)
+        {
+            GridDefinition.RowCssClass = cssClass;
+            return this;
+        }
+
+        /// <summary>
         /// A prefix to add to all query string parameters for this grid, for when there are more than 1 grids on the same page
         /// </summary>
         public MVCGridBuilder<T1> WithQueryStringPrefix(string prefix)
