@@ -264,6 +264,45 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("VerticalEngineGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .WithDefaultRenderingEngineName("BootstrapVerticalRenderingEngine")
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression(p => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression(p => p.LastName);
+                    cols.Add("StartDate").WithHeaderText("Start Date")
+                        .WithValueExpression(p => p.StartDate.HasValue ? p.StartDate.Value.ToShortDateString() : "");
+                    cols.Add("ViewLink").WithSorting(false)
+                        .WithHeaderText("")
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>View</a>");
+                })
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    var items = repo.GetData(out totalRecords, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumnName, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
 
             MVCGridDefinitionTable.Add("StyledGrid", new MVCGridBuilder<Person>(colDefauls)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)

@@ -36,6 +36,11 @@ namespace MVCGrid.Web.Controllers
             return View();
         }
 
+        public ActionResult VerticalEngine()
+        {
+            return View();
+        }
+
         public ActionResult Styling()
         {
             return View();

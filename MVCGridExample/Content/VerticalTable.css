@@ -1,0 +1,33 @@
+﻿@media only screen and (max-width: 768px) {
+
+    /* Force table to not be like tables anymore */
+    .vertical-table table,
+    .vertical-table thead,
+    .vertical-table tbody,
+    .vertical-table th,
+    .vertical-table td,
+    .vertical-table tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .vertical-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .vertical-table tr {
+        border: 1px solid #ccc;
+    }
+
+    .verticalCellLabel {
+        /* Behave  like a "row" */
+        width: 50% !important;
+    }
+
+    .verticalCellLabel {
+        display: inline-block !important;
+        font-weight: bold;
+    }
+}

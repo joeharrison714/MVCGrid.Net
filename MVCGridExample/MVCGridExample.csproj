@@ -208,6 +208,7 @@
     <Content Include="Content\sh\shCore.js" />
     <Content Include="Content\sh\shThemeDefault.css" />
     <Content Include="Content\stackoverflow_logo.jpg" />
+    <Content Include="Content\VerticalTable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -308,6 +309,7 @@
     <Content Include="Views\Demo\NoQueryOnPageLoad.cshtml" />
     <Content Include="Views\Test\DisplayGrid.cshtml" />
     <Content Include="Views\Demo\CustomExport.cshtml" />
+    <Content Include="Views\Demo\VerticalEngine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />
