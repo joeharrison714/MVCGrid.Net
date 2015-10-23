@@ -15,8 +15,6 @@ namespace MVCGrid.Web
     //Show/hide fields
     internal class MVCGridHtmlGenerator
     {
-        private const string RenderLoadingDivSettingName = "RenderLoadingDiv";
-
         internal static string GenerateClientDataTransferHtml(GridContext gridContext)
         {
             StringBuilder sb = new StringBuilder();
@@ -158,16 +156,6 @@ namespace MVCGrid.Web
             }
             sbHtml.Append("</div>");
 
-            bool renderLoadingDiv = def.GetAdditionalSetting<bool>(RenderLoadingDivSettingName, true);
-
-            if (renderLoadingDiv)
-            {
-                sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);
-                sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='Processing' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath());
-                sbHtml.Append("Processing...");
-                sbHtml.Append("</div>");
-            }
-
             sbHtml.AppendFormat("<div id='{0}'>", HtmlUtility.GetTableHolderHtmlId(gridName));
             sbHtml.Append("%%PRELOAD%%");
             sbHtml.Append("</div>");
@@ -235,6 +223,15 @@ namespace MVCGrid.Web
 
             sbJson.Append(",");
             sbJson.AppendFormat("\"persistLastState\": \"{0}\"", def.PersistLastState.ToString().ToLower());
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"spinnerEnabled\": \"{0}\"", def.SpinnerEnabled.ToString().ToLower());
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"spinnerTargetElementId\": \"{0}\"", def.SpinnerTargetElementId);
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"spinnerRadius\": \"{0}\"", def.SpinnerRadius);
 
             sbJson.Append(",");
             sbJson.Append("\"pageParameters\": {");

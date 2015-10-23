@@ -36,6 +36,8 @@ namespace MVCGrid.Models
             AuthorizationType = Models.AuthorizationType.AllowAnonymous;
             BrowserNavigationMode = Models.BrowserNavigationMode.PreserveAllGridActions;
             PersistLastState = false;
+            SpinnerEnabled = true;
+            SpinnerRadius = 15;
 
             RenderingEngines = new ProviderSettingsCollection();
             RenderingEngines.Add(new ProviderSettings("BootstrapRenderingEngine", "MVCGrid.Rendering.BootstrapRenderingEngine, MVCGrid"));
@@ -113,5 +115,8 @@ namespace MVCGrid.Models
 
         public ProviderSettingsCollection RenderingEngines { get; set; }
         public string DefaultRenderingEngineName { get; set; }
+        public bool SpinnerEnabled { get; set; }
+        public string SpinnerTargetElementId { get; set; }
+        public int SpinnerRadius { get; set; }
     }
 }

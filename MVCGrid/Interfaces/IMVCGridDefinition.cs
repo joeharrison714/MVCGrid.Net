@@ -153,5 +153,20 @@ namespace MVCGrid.Interfaces
         /// The default name of the rendering engine.
         /// </value>
         string DefaultRenderingEngineName { get; set; }
+
+        /// <summary>
+        /// Enables or disables spinner for the grid
+        /// </summary>
+        bool SpinnerEnabled { get; set; }
+
+        /// <summary>
+        /// The target DOM element ID for the spinner
+        /// </summary>
+        string SpinnerTargetElementId { get; set; }
+
+        /// <summary>
+        /// Sets the size of the spinner
+        /// </summary>
+        int SpinnerRadius { get; set; }
     }
 }

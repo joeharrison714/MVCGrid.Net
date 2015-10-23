@@ -56,6 +56,8 @@ namespace MVCGrid.Models
 
             this.RenderingEngines = gridDefaults.RenderingEngines;
             this.DefaultRenderingEngineName = gridDefaults.DefaultRenderingEngineName;
+            this.SpinnerEnabled = true;
+            this.SpinnerRadius = 15;
         }
 
         [Obsolete("RenderingEngine is obsolete. Please user RenderingEngines and DefaultRenderingEngineName")]
@@ -364,6 +366,21 @@ namespace MVCGrid.Models
 
         public ProviderSettingsCollection RenderingEngines { get; set; }
         public string DefaultRenderingEngineName { get; set; }
+
+        /// <summary>
+        /// Enables or disables spinner for the grid
+        /// </summary>
+        public bool SpinnerEnabled { get; set; }
+
+        /// <summary>
+        /// The target DOM element ID for the spinner
+        /// </summary>
+        public string SpinnerTargetElementId { get; set; }
+
+        /// <summary>
+        /// Sets the size of the spinner
+        /// </summary>
+        public int SpinnerRadius { get; set; }
     }
 
 }

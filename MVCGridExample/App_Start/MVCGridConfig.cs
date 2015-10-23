@@ -773,7 +773,6 @@ namespace MVCGridExample
                         .WithValueExpression(p => p.LastName);
                 })
                 .WithAdditionalQueryOptionNames("Search")
-                .WithAdditionalSetting("RenderLoadingDiv", false)
                 .WithSorting(true, "LastName")
                 .WithPaging(true, 10, true, 100)
                 .WithRetrieveDataMethod((context) =>

@@ -56,8 +56,8 @@ namespace MVCGrid.Web
                         script = script.Replace("%%CONTROLLERPATH%%", controllerPath);
 
                         _cachedTextResources.Add("MVCGrid.js", script);
+                        _cachedTextResources.Add("spin.min.js", GetTextResource("spin.min.js"));
 
-                        _cachedBinaryResources.Add("ajaxloader.gif", GetBinaryResource("ajaxloader.gif"));
                         _cachedBinaryResources.Add("sort.png", GetBinaryResource("sort.png"));
                         _cachedBinaryResources.Add("sortdown.png", GetBinaryResource("sortdown.png"));
                         _cachedBinaryResources.Add("sortup.png", GetBinaryResource("sortup.png"));
@@ -130,10 +130,6 @@ namespace MVCGrid.Web
             if (context.Request.Path.ToLower().EndsWith("/script.js"))
             {
                 HandleScript(context);
-            }
-            else if (context.Request.Path.ToLower().EndsWith("/ajaxloader.gif"))
-            {
-                HandelGifImage(context, "ajaxloader.gif");
             }
             else if (context.Request.Path.ToLower().EndsWith("/sort.png"))
             {
@@ -209,6 +205,7 @@ namespace MVCGrid.Web
         {
             context.Response.ContentType = "application/javascript";
             context.Response.Write(_cachedTextResources["MVCGrid.js"]);
+            context.Response.Write(_cachedTextResources["spin.min.js"]);
         }
     }
 }

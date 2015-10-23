@@ -451,5 +451,38 @@ namespace MVCGrid.Models
             GridDefinition.PersistLastState = persistLastState;
             return this;
         }
+
+        /// <summary>
+        /// Enables or disables the spinner for the grid.
+        /// </summary>
+        /// <param name="spinnerEnabled">Spinner enabled state</param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithSpinnerEnabled(bool spinnerEnabled)
+        {
+            GridDefinition.SpinnerEnabled = spinnerEnabled;
+            return this;
+        }
+
+        /// <summary>
+        /// Places the spinner in the target element.  If not specified, it will place the spinner over the grid
+        /// </summary>
+        /// <param name="spinnerTargetElementId">Spinner enabled state</param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithSpinnerTargetElementId(string spinnerTargetElementId)
+        {
+            GridDefinition.SpinnerTargetElementId = spinnerTargetElementId;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the size of the spinner
+        /// </summary>
+        /// <param name="spinnerRadius">Radius of spinner in pixels</param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithSpinnerRadius(int spinnerRadius)
+        {
+            GridDefinition.SpinnerRadius = spinnerRadius;
+            return this;
+        }
     }
 }

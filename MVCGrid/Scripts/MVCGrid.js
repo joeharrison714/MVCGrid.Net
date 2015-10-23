@@ -6,6 +6,29 @@ var MVCGrid = new function () {
     var showErrorDetails = %%ERRORDETAILS%%;
     var currentGrids = [];
 
+    var spinnerOptions = {
+        lines: 15
+        , length: 0
+        , width: 5
+        , radius: 15
+        , scale: 1
+        , corners: 1
+        , color: '#000'
+        , opacity: 0
+        , rotate: 0
+        , direction: 1
+        , speed: 1.3
+        , trail: 75
+        , fps: 20
+        , zIndex: 2e9
+        , className: 'spinner'
+        , top: '50%'
+        , left: '50%'
+        , shadow: false
+        , hwaccel: false
+        , position: 'relative'
+    }
+
     // public
     this.init = function () {
         $('.MVCGridContainer').each(function () {
@@ -416,24 +439,25 @@ var MVCGrid = new function () {
     // public
     this.reloadGrid = function(mvcGridName, callback){
         var tableHolderHtmlId = 'MVCGridTableHolder_' + mvcGridName;
-        var loadingHtmlId = 'MVCGrid_Loading_' + mvcGridName;
         var errorHtmlId = 'MVCGrid_ErrorMessage_' + mvcGridName;
 
-        var gridDef = findGridDef(mvcGridName);;
+        var gridDef = findGridDef(mvcGridName);
 
         var ajaxBaseUrl = handlerPath;
 
         if (gridDef.renderingMode == 'controller') {
             ajaxBaseUrl = controllerPath;
         }
-
-
+        
         var fullAjaxUrl = ajaxBaseUrl + location.search;
 
         $.each(gridDef.pageParameters, function (k, v) {
             var thisPP = "_pp_" + gridDef.qsPrefix + k;
             fullAjaxUrl = updateURLParameter(fullAjaxUrl, thisPP, v);
         });
+
+        var spinner;
+        var spinnerEnabled = gridDef.spinnerEnabled && gridDef.spinnerEnabled === 'true';
 
         $.ajax({
             type: "GET",
@@ -444,8 +468,18 @@ var MVCGrid = new function () {
                 if (gridDef.clientLoading != '') {
                     window[gridDef.clientLoading]();
                 }
-                
-                $('#' + loadingHtmlId).css("visibility", "visible");
+
+                // show spinner
+                if (spinnerEnabled) {
+                    var targetId = gridDef.spinnerTargetElementId && gridDef.spinnerTargetElementId.length > 0
+                        ? gridDef.spinnerTargetElementId
+                        : 'MVCGridContainer_' + mvcGridName;
+
+                    if ($('#' + targetId).length > 0) {
+                        spinnerOptions.radius = gridDef.spinnerRadius;
+                        spinner = new Spinner(spinnerOptions).spin($('#' + targetId)[0]);
+                    }
+                }
             },
             success: function (result) {
                 $('#' + tableHolderHtmlId).html(result);
@@ -464,7 +498,10 @@ var MVCGrid = new function () {
                     window[gridDef.clientLoadingComplete]();
                 }
 
-                $('#' + loadingHtmlId).css("visibility", "hidden");
+                // hide spinner
+                if (spinnerEnabled && spinner) {
+                    spinner.stop();
+                }
 
                 if (callback && typeof callback === 'function') {
                     callback();
