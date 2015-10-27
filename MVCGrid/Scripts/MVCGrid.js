@@ -593,4 +593,26 @@ var MVCGrid = new function () {
 
 $(function () {
     MVCGrid.init();
+    
+    $('body').on('click', '.row-select a, .row-select input, .row-select button, .row-select glyphicon', function() {
+        e.stopPropagation();
+    });
+
+    $('body').on('click', '.row-select', function() {
+        var callback = $(this).data('row-select-callback');
+        var method = window;
+        method = method[callback];
+
+        var data;
+        var rowSelectId = $(this).data('row-select-id');
+        if ($('#' + rowSelectId).length > 0) {
+            data = $('#' + rowSelectId).text();
+        }
+
+        if (data) {
+            method(JSON.parse(data));
+        } else {
+            method();
+        }
+    });
 });

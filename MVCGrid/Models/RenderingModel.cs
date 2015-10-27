@@ -77,6 +77,7 @@ namespace MVCGrid.Models
             Cells = new Dictionary<string, Cell>();
         }
         public string CalculatedCssClass { get; set; }
+        public string RowSelectEventParameters { get; set; }
         public Dictionary<string, Cell> Cells { get; set; }
     }
 

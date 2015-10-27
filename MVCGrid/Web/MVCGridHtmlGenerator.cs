@@ -234,6 +234,12 @@ namespace MVCGrid.Web
             sbJson.AppendFormat("\"spinnerRadius\": \"{0}\"", def.SpinnerRadius);
 
             sbJson.Append(",");
+            sbJson.AppendFormat("\"enableRowSelect\": \"{0}\"", def.EnableRowSelect.ToString().ToLowerInvariant());
+
+            sbJson.Append(",");
+            sbJson.AppendFormat("\"clientRowSelect\": \"{0}\"", def.ClientSideRowSelectFunctionName);
+
+            sbJson.Append(",");
             sbJson.Append("\"pageParameters\": {");
             sbJson.Append(GenerateJsonPageParameters(pageParameters));
             sbJson.Append("}");

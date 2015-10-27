@@ -1,4 +1,5 @@
-﻿using MVCGrid.Interfaces;
+﻿using System.Globalization;
+using MVCGrid.Interfaces;
 using MVCGrid.Models;
 using System;
 using System.IO;
@@ -43,7 +44,7 @@ namespace MVCGrid.Rendering
 
             if (model.Rows.Count > 0)
             {
-                RenderBody(model, sbHtml);
+                RenderBody(model, gridContext, sbHtml);
             }
             else
             {
@@ -56,6 +57,17 @@ namespace MVCGrid.Rendering
                 sbHtml.Append("</tbody>");
             }
             sbHtml.AppendLine("</table>");
+
+            if (gridContext.GridDefinition.EnableRowSelect)
+            {
+                for(var i = 0; i < model.Rows.Count; i++)
+                {
+                    sbHtml.AppendLine(String.Format(CultureInfo.InvariantCulture, "<div id='{0}_{1}' style='display:none;'>{2}</div>",
+                        gridContext.GridName, 
+                        i,
+                        model.Rows[i].RowSelectEventParameters));
+                }
+            }
 
             RenderPaging(model, sbHtml);
 
@@ -70,14 +82,29 @@ namespace MVCGrid.Rendering
             }
         }
 
-        private void RenderBody(RenderingModel model, StringBuilder sbHtml)
+        private void RenderBody(RenderingModel model, GridContext gridContext, StringBuilder sbHtml)
         {
             sbHtml.AppendLine("<tbody>");
 
+            var rowIndex = 0;
             foreach (var row in model.Rows)
             {
                 sbHtml.Append("<tr");
-                AppendCssAttribute(row.CalculatedCssClass, sbHtml);
+
+                if (gridContext.GridDefinition.EnableRowSelect)
+                {
+                    AppendCssAttribute(String.Join(" ", "row-select", row.CalculatedCssClass), sbHtml);
+                    if (!String.IsNullOrEmpty(gridContext.GridDefinition.ClientSideRowSelectFunctionName))
+                    {
+                        sbHtml.AppendFormat(" data-row-select-id=\"{0}_{1}\"", gridContext.GridName, rowIndex);
+                        sbHtml.AppendFormat(" data-row-select-callback=\"{0}\"", gridContext.GridDefinition.ClientSideRowSelectFunctionName);
+                    }
+                }
+                else
+                {
+                    AppendCssAttribute(row.CalculatedCssClass, sbHtml);
+                }
+
                 sbHtml.AppendLine(">");
 
                 foreach (var col in model.Columns)
@@ -119,6 +146,8 @@ namespace MVCGrid.Rendering
                     sbHtml.Append("</td>");
                 }
                 sbHtml.AppendLine("  </tr>");
+
+                rowIndex++;
             }
 
             sbHtml.AppendLine("</tbody>");

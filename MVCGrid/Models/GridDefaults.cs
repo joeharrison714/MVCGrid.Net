@@ -38,6 +38,9 @@ namespace MVCGrid.Models
             PersistLastState = false;
             SpinnerEnabled = true;
             SpinnerRadius = 15;
+            EnableRowSelect = false;
+            ClientSideRowSelectFunctionName = null;
+            ClientSideRowSelectProperties = new List<string>();
 
             RenderingEngines = new ProviderSettingsCollection();
             RenderingEngines.Add(new ProviderSettings("BootstrapRenderingEngine", "MVCGrid.Rendering.BootstrapRenderingEngine, MVCGrid"));
@@ -118,5 +121,8 @@ namespace MVCGrid.Models
         public bool SpinnerEnabled { get; set; }
         public string SpinnerTargetElementId { get; set; }
         public int SpinnerRadius { get; set; }
+        public bool EnableRowSelect { get; set; }
+        public string ClientSideRowSelectFunctionName { get; set; }
+        public List<string> ClientSideRowSelectProperties { get; set; }
     }
 }

@@ -168,5 +168,20 @@ namespace MVCGrid.Interfaces
         /// Sets the size of the spinner
         /// </summary>
         int SpinnerRadius { get; set; }
+
+        /// <summary>
+        /// Enables the ability to select by row
+        /// </summary>
+        bool EnableRowSelect { get; set; }
+
+        /// <summary>
+        /// Client side function to call when a row is selected
+        /// </summary>
+        string ClientSideRowSelectFunctionName { get; set; }
+
+        /// <summary>
+        /// Arguments to pass to the client side row select function
+        /// </summary>
+        List<string> ClientSideRowSelectProperties { get; set; }
     }
 }

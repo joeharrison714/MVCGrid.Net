@@ -1,4 +1,6 @@
-﻿using MVCGrid.Interfaces;
+﻿using System.IO;
+using System.Reflection;
+using MVCGrid.Interfaces;
 using MVCGrid.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MVCGrid.Models
 {
@@ -56,8 +59,11 @@ namespace MVCGrid.Models
 
             this.RenderingEngines = gridDefaults.RenderingEngines;
             this.DefaultRenderingEngineName = gridDefaults.DefaultRenderingEngineName;
-            this.SpinnerEnabled = true;
-            this.SpinnerRadius = 15;
+            this.SpinnerEnabled = gridDefaults.SpinnerEnabled;
+            this.SpinnerRadius = gridDefaults.SpinnerRadius;
+            this.EnableRowSelect = gridDefaults.EnableRowSelect;
+            this.ClientSideRowSelectFunctionName = gridDefaults.ClientSideRowSelectFunctionName;
+            this.ClientSideRowSelectProperties = gridDefaults.ClientSideRowSelectProperties;
         }
 
         [Obsolete("RenderingEngine is obsolete. Please user RenderingEngines and DefaultRenderingEngineName")]
@@ -134,7 +140,7 @@ namespace MVCGrid.Models
 
         internal override List<Row> GetData(GridContext context, out int? totalRecords)
         {
-            List<Row> resultRows = new List<Row>();
+            var resultRows = new List<Row>();
 
             var queryResult = RetrieveData(context);
             totalRecords = queryResult.TotalRecords;
@@ -144,13 +150,15 @@ namespace MVCGrid.Models
                 throw new Exception("When paging is enabled, QueryResult must contain the TotalRecords");
             }
 
-            IMVCGridTemplatingEngine templatingEngine = (IMVCGridTemplatingEngine)Activator.CreateInstance(context.GridDefinition.TemplatingEngine, true);
+            var templatingEngine = (IMVCGridTemplatingEngine)Activator.CreateInstance(context.GridDefinition.TemplatingEngine, true);
+            var rowSelectProperties = GetRowSelectProperties(context);
 
             foreach (var item in queryResult.Items)
             {
-                Row thisRow = new Row
+                var thisRow = new Row
                 {
-                    CalculatedCssClass = String.Empty
+                    CalculatedCssClass = String.Empty,
+                    RowSelectEventParameters = rowSelectProperties != null ? GetEventParameters(rowSelectProperties, item) : null
                 };
 
                 if (!String.IsNullOrEmpty(RowCssClass))
@@ -226,6 +234,45 @@ namespace MVCGrid.Models
             }
 
             return resultRows;
+        }
+
+        private IEnumerable<PropertyInfo> GetRowSelectProperties(GridContext context)
+        {
+            IEnumerable<PropertyInfo> properties = null;
+            if (context.GridDefinition.EnableRowSelect && context.GridDefinition.ClientSideRowSelectProperties != null &&
+                context.GridDefinition.ClientSideRowSelectProperties.Any())
+            {
+                var objectType = typeof(T1);
+                properties = objectType.GetProperties()
+                    .Where(x => x.CanRead && context.GridDefinition.ClientSideRowSelectProperties.Contains(x.Name, StringComparer.OrdinalIgnoreCase));
+            }
+
+            return properties;
+        }
+
+        private string GetEventParameters(IEnumerable<PropertyInfo> properties, T1 item)
+        {
+            if (properties == null || !properties.Any())
+                return String.Empty;
+
+            var sb = new StringBuilder();
+            var sw = new StringWriter(sb);
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                writer.Formatting = Formatting.None;
+                writer.StringEscapeHandling = StringEscapeHandling.EscapeNonAscii;
+                writer.WriteStartObject();
+                foreach (var property in properties)
+                {
+                    var propertyValue = property.GetValue(item, null);
+
+                    writer.WritePropertyName(property.Name);
+                    writer.WriteValue(propertyValue ?? String.Empty);
+                }
+                writer.WriteEndObject();
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -381,6 +428,21 @@ namespace MVCGrid.Models
         /// Sets the size of the spinner
         /// </summary>
         public int SpinnerRadius { get; set; }
+
+        /// <summary>
+        /// Enables the ability to select by row
+        /// </summary>
+        public bool EnableRowSelect { get; set; }
+
+        /// <summary>
+        /// Client side function to call when a row is selected
+        /// </summary>
+        public string ClientSideRowSelectFunctionName { get; set; }
+
+        /// <summary>
+        /// Arguments to pass to the client side row select function
+        /// </summary>
+        public List<string> ClientSideRowSelectProperties { get; set; }
     }
 
 }

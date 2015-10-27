@@ -484,5 +484,29 @@ namespace MVCGrid.Models
             GridDefinition.SpinnerRadius = spinnerRadius;
             return this;
         }
+
+        /// <summary>
+        /// Enables the ability to select by row
+        /// </summary>
+        /// <param name="enableRowSelect">enabled state</param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithEnableRowSelect(bool enableRowSelect)
+        {
+            GridDefinition.EnableRowSelect = enableRowSelect;
+            return this;
+        }
+
+        /// <summary>
+        /// Client side function to call when a row is selected
+        /// </summary>
+        /// <param name="clientSideRowSelectFunctionName">name of the javascript function to call when a row is selected</param>
+        /// <param name="propertyNames">Property name(s) of your Grid's type to pass as arguments to client function</param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithClientSideRowSelectFunctionName(string clientSideRowSelectFunctionName, params string[] propertyNames)
+        {
+            GridDefinition.ClientSideRowSelectFunctionName = clientSideRowSelectFunctionName;
+            GridDefinition.ClientSideRowSelectProperties = propertyNames == null ? new List<string>() : propertyNames.ToList();
+            return this;
+        }
     }
 }
