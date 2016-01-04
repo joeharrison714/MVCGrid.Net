@@ -7,6 +7,9 @@
 <h2>Page Parameters</h2>
 
 <p>If you need to pass some data from your view to your grid, you can use page parameters. Here's how:</p>
+
+<div class="well"><strong>NOTE:</strong> Page parameters are for static data that will be loaded only once. If you need to pass additional query parameters that could change on the client side, use @Html.ActionLink("Additional Query Options", "AdditionalQueryOptions")</div>
+
 <ol>
     <li>Add one or more names of the page parameters to your grid config: (The names can be anything you want)
     <br />
@@ -28,6 +31,10 @@
     </li>
 </ol>
 
+
+<button class="btn btn-default" data-mvcgrid-type="export" data-mvcgrid-name="TestGrid">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Export
+</button>
 
 @Html.MVCGrid("PPGrid", new { active = "true" })
 

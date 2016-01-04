@@ -1009,6 +1009,43 @@ namespace MVCGridExample
                 })
             );
 
+            MVCGridDefinitionTable.Add("AQOGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression(p => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression(p => p.LastName);
+                })
+                .WithAdditionalQueryOptionNames("param1", "param2", "param3")
+                .WithAdditionalSetting("RenderLoadingDiv", false)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10, true, 100)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string param1Value = options.GetAdditionalQueryOptionString("param1");
+                    string param2Value = options.GetAdditionalQueryOptionString("param2");
+                    string param3Value = options.GetAdditionalQueryOptionString("param3");
+
+                    var items = repo.GetData(out totalRecords, null, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumnName, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
 
 

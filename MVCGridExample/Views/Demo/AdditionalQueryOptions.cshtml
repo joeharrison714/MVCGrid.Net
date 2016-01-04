@@ -1,0 +1,103 @@
+﻿@using MVCGrid.Web
+@{
+    ViewBag.Title = "Additional Query Options";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $('#searchButton').click(function () {
+                MVCGrid.setAdditionalQueryOptions('AQOGrid',
+                {
+                    param1: $('#parameter1Textbox').val(),
+                    param2: $('#parameter2Textbox').val(),
+                    param3: $('#parameter3Textbox').val()
+                });
+            });
+        });
+    </script>
+}
+
+<h2>Additional Query Options</h2>
+
+<p>
+    You can use the <code>AdditionalQueryOptions</code> to pass any query options you want from client to server.
+
+    When you click the search button below, it will call the javascript method <code>MVCGrid.setAdditionalQueryOptions</code> with the value of the text box.
+    This will be sent to the server-side with the ajax call and can be accessed in the <code>RetrieveDataMethod</code>.
+</p>
+
+<p>The below example does not use the parameters but simply shows you how to pass the data that you can access in the <code>RetrieveDataMethod</code>.</p>
+
+<p>The below example sets the values on the client side using the client side api, but it can also be done using <a href="/documentation#ClientSideBindings">client-side bindings</a></p>
+
+<div class="well">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">Parameter1</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="parameter1Textbox">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">Parameter2</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="parameter2Textbox">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">Parameter3</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="parameter3Textbox">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-6">
+                <button type="button" id="searchButton" class="btn btn-default">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.MVCGrid("AQOGrid")
+
+<h3>Code</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Javascript in View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+        $(function () {
+            $(&#39;#searchButton&#39;).click(function () {
+                MVCGrid.setAdditionalQueryOptions(&#39;AQOGrid&#39;,
+                {
+                    param1: $(&#39;#parameter1Textbox&#39;).val(),
+                    param2: $(&#39;#parameter2Textbox&#39;).val(),
+                    param3: $(&#39;#parameter3Textbox&#39;).val()
+                });
+            });
+        });
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">View</div>
+    <div class="panel-body">
+        <pre class="brush: js">
+            @@Html.MVCGrid("AQOGrid")
+        </pre>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Inside <strong>MVCGridConfig.cs</strong></div>
+    <div class="panel-body">
+        <pre class="brush: csharp">@CodeSnippetHelper.GetCodeSnippet("AQOGrid")</pre>
+    </div>
+</div>
