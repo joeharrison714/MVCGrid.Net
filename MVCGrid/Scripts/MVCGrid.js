@@ -203,6 +203,11 @@ var MVCGrid = new function () {
                 break;
             }
         }
+
+        if (gridDef == undefined){
+            window.console && console.log('Grid not found: ' + mvcGridName);
+        }
+
         return gridDef;
     };
 
@@ -446,24 +451,25 @@ var MVCGrid = new function () {
 
     // public
     this.getExportUrl = function (mvcGridName) {
-        var gridDef = findGridDef(mvcGridName);
-
-        var exportUrl = handlerPath + location.search;
-        exportUrl = updateURLParameter(exportUrl, 'engine', 'export');
-        exportUrl = updateURLParameter(exportUrl, 'Name', mvcGridName);
-
-        return exportUrl;
+        return MVCGrid.getEngineExportUrl(mvcGridName, 'export');
     };
 
     // public
     this.getEngineExportUrl = function (mvcGridName, engineName) {
         var gridDef = findGridDef(mvcGridName);
 
-        var exportUrl = handlerPath + location.search;
-        exportUrl = updateURLParameter(exportUrl, 'engine', engineName);
-        exportUrl = updateURLParameter(exportUrl, 'Name', mvcGridName);
+        var exportBaseUrl = handlerPath;
 
-        return exportUrl;
+        var fullExportUrl = exportBaseUrl + location.search;
+        fullExportUrl = updateURLParameter(fullExportUrl, 'engine', engineName);
+        fullExportUrl = updateURLParameter(fullExportUrl, 'Name', mvcGridName);
+
+        $.each(gridDef.pageParameters, function (k, v) {
+            var thisPP = "_pp_" + gridDef.qsPrefix + k;
+            fullExportUrl = updateURLParameter(fullExportUrl, thisPP, v);
+        });
+
+        return fullExportUrl;
     };
 };
 
