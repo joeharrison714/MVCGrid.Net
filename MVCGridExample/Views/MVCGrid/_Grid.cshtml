@@ -112,8 +112,8 @@
         <tr>
             @foreach (var col in Model.Columns)
             {
-                var thClassAttr = !String.IsNullOrWhiteSpace(ColumnStyle(col)) ? String.Format(" class='{0}'", ColumnStyle(col)) : "";
-                <th onclick='@Html.Raw(ColumnOnClick(col))'@(Html.Raw(thClassAttr))>@col.HeaderText @(SortImage(col))</th>
+                var thStyleAttr = !String.IsNullOrWhiteSpace(ColumnStyle(col)) ? String.Format(" style='{0}'", ColumnStyle(col)) : "";
+                <th onclick='@Html.Raw(ColumnOnClick(col))'@(Html.Raw(thStyleAttr))>@col.HeaderText @(SortImage(col))</th>
             }
         </tr>
     </thead>
