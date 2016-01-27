@@ -312,6 +312,7 @@
     <Content Include="Views\Test\DisplayGrid.cshtml" />
     <Content Include="Views\Demo\CustomExport.cshtml" />
     <Content Include="Views\Demo\AdditionalQueryOptions.cshtml" />
+    <Content Include="Views\Demo\CustomRazorView2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />
