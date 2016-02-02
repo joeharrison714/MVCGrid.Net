@@ -16,11 +16,16 @@ namespace MVCGrid.Rendering
             get { return false; }
         }
 
-        public void PrepareResponse(System.Web.HttpResponse httpResponse)
+        public virtual string GetFilename()
+        {
+            return "export.csv";
+        }
+
+        public virtual void PrepareResponse(System.Web.HttpResponse httpResponse)
         {
             httpResponse.Clear();
             httpResponse.ContentType = "text/csv";
-            httpResponse.AddHeader("content-disposition", "attachment; filename=\"" + "export" + ".csv\"");
+            httpResponse.AddHeader("content-disposition", "attachment; filename=\"" + GetFilename() + "\"");
             httpResponse.BufferOutput = false;
         }
 

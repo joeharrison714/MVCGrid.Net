@@ -672,6 +672,49 @@ namespace MVCGridExample
             );
 
 
+            MVCGridDefinitionTable.Add("CustomRazorView2", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .WithRenderingMode(RenderingMode.Controller)
+                .WithViewPath("~/Views/MVCGrid/_Grid.cshtml")
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithHtmlEncoding(false)
+                        .WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
+                        .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>")
+                        .WithPlainTextValueExpression(p => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression(p => p.LastName);
+                    cols.Add("Status").WithSortColumnData("Active")
+                        .WithHeaderText("Status")
+                        .WithValueExpression(p => p.Active ? "Active" : "Inactive");
+                })
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 20)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string sortColumn = options.GetSortColumnData<string>();
+
+                    var items = repo.GetData(out totalRecords,
+                        options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+
             MVCGridDefinitionTable.Add("ValueTemplate", new MVCGridBuilder<Person>(colDefauls)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .AddColumns(cols =>
@@ -1038,6 +1081,43 @@ namespace MVCGridExample
                     var items = repo.GetData(out totalRecords,
                         options.GetLimitOffset(), options.GetLimitRowcount(),
                         sortColumn, options.SortDirection == SortDirection.Dsc);
+
+                    return new QueryResult<Person>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
+
+            MVCGridDefinitionTable.Add("AQOGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression(p => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression(p => p.LastName);
+                })
+                .WithAdditionalQueryOptionNames("param1", "param2", "param3")
+                .WithAdditionalSetting("RenderLoadingDiv", false)
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10, true, 100)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+
+                    string param1Value = options.GetAdditionalQueryOptionString("param1");
+                    string param2Value = options.GetAdditionalQueryOptionString("param2");
+                    string param3Value = options.GetAdditionalQueryOptionString("param3");
+
+                    var items = repo.GetData(out totalRecords, null, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        options.SortColumnName, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()
                     {

@@ -19,7 +19,7 @@ namespace MVCGridExample.Models
                 List<TestItem> items = new List<TestItem>();
                 for (int i = 1; i < 1087; i++)
                 {
-                    items.Add(new TestItem() { Col1 = "Row" + i.ToString(), Col2 = RandomString(8), Col3 = RandomString(11) });
+                    items.Add(new TestItem() { Col1 = "Row" + i.ToString(), Col2 = RandomString(8), Col3 = RandomString(11), Col4 = RandomBool() });
                 }
                 HttpContext.Current.Cache.Insert("TestData", items);
             }
@@ -67,6 +67,11 @@ namespace MVCGridExample.Models
             }
 
             return q.ToList();
+        }
+
+        private bool RandomBool()
+        {
+            return _rng.Next(100) % 2 == 0;
         }
 
         private readonly Random _rng = new Random();

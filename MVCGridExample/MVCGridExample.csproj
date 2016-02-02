@@ -240,6 +240,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\Arvixe.pubxml" />
+    <None Include="Properties\PublishProfiles\SmarterASP.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -255,7 +256,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -309,7 +312,12 @@
     <Content Include="Views\Demo\NoQueryOnPageLoad.cshtml" />
     <Content Include="Views\Test\DisplayGrid.cshtml" />
     <Content Include="Views\Demo\CustomExport.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Demo\VerticalEngine.cshtml" />
+=======
+    <Content Include="Views\Demo\AdditionalQueryOptions.cshtml" />
+    <Content Include="Views\Demo\CustomRazorView2.cshtml" />
+>>>>>>> refs/remotes/joeharrison714/master
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

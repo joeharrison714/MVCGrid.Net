@@ -5,6 +5,7 @@ using MVCGridExample.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -199,7 +200,54 @@ namespace MVCGrid.Web.Controllers
             );
 
 
-            
+            //Issue28Grid
+            MVCGridDefinitionTable.Add("Issue28Grid", new MVCGridBuilder<TestItem>()
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Col1").WithValueExpression(p => p.Col1);
+                    cols.Add("Col2").WithValueExpression(p => p.Col2);
+                    cols.Add("Active").WithValueExpression(p => p.Col4.ToString());
+
+                    cols.Add("Actions").WithHtmlEncoding(false).WithValueExpression((p, c) =>
+                    {
+                        // here's how to get an action url
+                        string url = c.UrlHelper.Action("action1", "test");
+
+                        // build whatever html you want
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append("<img src='action1.png' onclick='someFunction()'>");
+                        sb.Append("<img src='action2.png' onclick='someFunction()'>");
+
+                        // conditional html
+                        if (p.Col4)
+                        {
+                            sb.Append("<img src='action3.png' onclick='someFunction()'>");
+                        }
+
+                        return sb.ToString();
+                    });
+                })
+                .WithSorting(true, "Col1")
+                .WithPaging(true, 10)
+                .WithFiltering(true)
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    TestItemRepository repo = new TestItemRepository();
+                    int totalRecords;
+                    var items = repo.GetData(out totalRecords, null, options.GetLimitOffset(), options.GetLimitRowcount(), options.GetSortColumnData<string>(), options.SortDirection == SortDirection.Dsc);
+
+
+
+                    return new QueryResult<TestItem>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+            );
         }
 
         const string CacheKey = "ReportInvoiceLines";

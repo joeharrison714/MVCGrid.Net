@@ -97,6 +97,11 @@ namespace MVCGrid.Web.Controllers
             return View();
         }
 
+        public ActionResult CustomRazorView2()
+        {
+            return View();
+        }
+
         public ActionResult ValueTemplate()
         {
             return View();
@@ -148,6 +153,11 @@ namespace MVCGrid.Web.Controllers
         }
 
         public ActionResult CustomExport()
+        {
+            return View();
+        }
+
+        public ActionResult AdditionalQueryOptions()
         {
             return View();
         }

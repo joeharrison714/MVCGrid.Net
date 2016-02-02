@@ -8,5 +8,9 @@ packages/
 MVCGridExample/Properties/PublishProfiles/
 MVCGrid.RazorTemplates/bin/
 MVCGrid.RazorTemplates/obj/
+<<<<<<< HEAD
 *.ldf
 MVCGridExample/App_Data/SampleDatabase.mdf
+=======
+.vs/
+>>>>>>> refs/remotes/joeharrison714/master
