@@ -54,6 +54,10 @@ namespace MVCGrid.Models
         public List<Row> Rows { get; set; }
 
         public string NoResultsMessage { get; set; }
+        public string NextButtonCaption { get; set; }
+        public string PreviousButtonCaption { get; set; }
+        public string SummaryMessage { get; set; }
+        public string ProcessingMessage { get; set; }
 
         /// <summary>
         /// Paging data. Will be null if paging should not be displayed

@@ -158,7 +158,7 @@ namespace MVCGrid.Rendering
 
             sbHtml.Append("<div class=\"row\">");
             sbHtml.Append("<div class=\"col-xs-6\">");
-            sbHtml.AppendFormat("Showing {0} to {1} of {2} entries",
+            sbHtml.AppendFormat(model.SummaryMessage,
                 pagingModel.FirstRecord, pagingModel.LastRecord, pagingModel.TotalRecords
                 );
             sbHtml.Append("</div>");
@@ -178,7 +178,7 @@ namespace MVCGrid.Rendering
             }
             sbHtml.Append(">");
 
-            sbHtml.Append("<a href='#' aria-label='Previous' ");
+            sbHtml.AppendFormat("<a href='#' aria-label='{0}' ", model.PreviousButtonCaption);
             if (pageToStart < pagingModel.CurrentPage)
             {
                 sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage - 1]);
@@ -188,7 +188,7 @@ namespace MVCGrid.Rendering
                 sbHtml.AppendFormat("onclick='{0}'", "return false;");
             }
             sbHtml.Append(">");
-            sbHtml.Append("<span aria-hidden='true'>&laquo; Previous</span></a></li>");
+            sbHtml.AppendFormat("<span aria-hidden='true'>&laquo; {0}</span></a></li>", model.PreviousButtonCaption);
 
             for (int i = pageToStart; i <= pageToEnd; i++)
             {
@@ -209,7 +209,7 @@ namespace MVCGrid.Rendering
             }
             sbHtml.Append(">");
 
-            sbHtml.Append("<a href='#' aria-label='Next' ");
+            sbHtml.AppendFormat("<a href='#' aria-label='{0}' ", model.NextButtonCaption);
             if (pageToEnd > pagingModel.CurrentPage)
             {
                 sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage + 1]);
@@ -219,7 +219,7 @@ namespace MVCGrid.Rendering
                 sbHtml.AppendFormat("onclick='{0}'", "return false;");
             }
             sbHtml.Append(">");
-            sbHtml.Append("<span aria-hidden='true'>Next &raquo;</span></a></li>");
+            sbHtml.AppendFormat("<span aria-hidden='true'>{0} &raquo;</span></a></li>", model.NextButtonCaption);
 
             sbHtml.Append("</ul>");
             sbHtml.Append("</div>");
