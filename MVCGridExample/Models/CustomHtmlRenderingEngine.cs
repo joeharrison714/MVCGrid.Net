@@ -96,7 +96,7 @@ namespace MVCGrid.Web.Models
 
 
             outputStream.Write(sb.ToString());
-
+            outputStream.Write(model.ClientDataTransferHtmlBlock);
         }
 
 
