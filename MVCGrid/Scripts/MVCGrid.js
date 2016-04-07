@@ -214,6 +214,8 @@ var MVCGrid = new function () {
     // private
     var updateURLParameter = function (url, param, paramVal) {
 
+        paramVal = encodeURIComponent(paramVal);
+
         param = param.toLowerCase();
 
         var TheAnchor = null;
