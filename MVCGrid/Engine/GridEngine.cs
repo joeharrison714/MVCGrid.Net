@@ -117,6 +117,10 @@ namespace MVCGrid.Engine
                 model.PagingModel.TotalRecords = totalRecords.Value;
 
                 model.PagingModel.FirstRecord = (currentPageIndex * gridContext.QueryOptions.ItemsPerPage.Value) + 1;
+                if(model.PagingModel.FirstRecord > model.PagingModel.TotalRecords) 
+                {
+                    model.PagingModel.FirstRecord = model.PagingModel.TotalRecords;
+                }
                 model.PagingModel.LastRecord = (model.PagingModel.FirstRecord + gridContext.QueryOptions.ItemsPerPage.Value) - 1;
                 if (model.PagingModel.LastRecord > model.PagingModel.TotalRecords)
                 {

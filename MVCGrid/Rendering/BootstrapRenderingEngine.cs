@@ -179,7 +179,7 @@ namespace MVCGrid.Rendering
             sbHtml.Append(">");
 
             sbHtml.Append("<a href='#' aria-label='Previous' ");
-            if (pageToStart < pagingModel.CurrentPage)
+            if (pageToStart < pagingModel.CurrentPage && pagingModel.PageLinks.Count > (pagingModel.CurrentPage - 1))
             {
                 sbHtml.AppendFormat("onclick='{0}'", pagingModel.PageLinks[pagingModel.CurrentPage - 1]);
             }
