@@ -16,7 +16,7 @@ using System.Web.Routing;
 
 namespace MVCGrid.Web
 {
-    public class MVCGridHandler : IHttpHandler
+    public class MVCGridHandler : IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
         static object _lock = new object();
         static bool _init = false;
