@@ -499,10 +499,6 @@ var MVCGrid = new function () {
                 }
             },
             complete: function() {
-                if (gridDef.clientLoadingComplete != '') {
-                    window[gridDef.clientLoadingComplete]();
-                }
-
                 // hide spinner
                 if (spinnerEnabled && spinner) {
                     spinner.stop();
@@ -510,6 +506,10 @@ var MVCGrid = new function () {
 
                 if (callback && typeof callback === 'function') {
                     callback();
+                }
+
+                if (gridDef.clientLoadingComplete != '') {
+                    window[gridDef.clientLoadingComplete]();
                 }
             }
         });
