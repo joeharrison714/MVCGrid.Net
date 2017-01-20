@@ -508,6 +508,7 @@ var MVCGrid = new function () {
                     callback();
                 }
 
+                // assumes callback is synchronous
                 if (gridDef.clientLoadingComplete != '') {
                     window[gridDef.clientLoadingComplete]();
                 }
