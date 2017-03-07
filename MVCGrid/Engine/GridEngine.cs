@@ -174,14 +174,14 @@ namespace MVCGrid.Engine
             }
         }
 
-        public string GetBasePageHtml(HtmlHelper helper, string gridName, IMVCGridDefinition grid, object pageParameters)
+        public string GetBasePageHtml(HtmlHelper helper, string gridName, IMVCGridDefinition grid, object pageParameters, QueryOptions options = null)
         {
             string preload = "";
             if (grid.QueryOnPageLoad && grid.PreloadData)
             {
                 try
                 {
-                    preload = RenderPreloadedGridHtml(helper, grid, gridName, pageParameters);
+                    preload = RenderPreloadedGridHtml(helper, grid, gridName, pageParameters, options);
                 }
                 catch (Exception ex)
                 {
@@ -239,11 +239,12 @@ namespace MVCGrid.Engine
             return container;
         }
 
-        private static string RenderPreloadedGridHtml(HtmlHelper helper, IMVCGridDefinition grid, string gridName, object pageParameters)
+        private static string RenderPreloadedGridHtml(HtmlHelper helper, IMVCGridDefinition grid, string gridName, object pageParameters, QueryOptions options = null)
         {
             string preload = "";
 
-            var options = QueryStringParser.ParseOptions(grid, System.Web.HttpContext.Current.Request);
+            if (options == null)
+                options = GridOptionParser.ParseOptions(grid, gridName, System.Web.HttpContext.Current.Request);
 
             // set the page parameters for the preloaded grid
             Dictionary<string, string> pageParamsDict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);

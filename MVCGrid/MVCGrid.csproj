@@ -91,7 +91,7 @@
     <Compile Include="Web\MVCGridDefinitionTable.cs" />
     <Compile Include="Models\QueryOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\QueryStringParser.cs" />
+    <Compile Include="Web\GridOptionParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -44,17 +44,7 @@ var MVCGrid = new function () {
 
         for (var i = 0; i < currentGrids.length; i++) {
             var obj = currentGrids[i];
-            var gridDef = findGridDef(obj.name);
-            var persistedUrl = "";
-            
-            if (gridDef.persistLastState === 'true') {
-                persistedUrl = MVCGrid.getPersistedUrl(obj.name);
-            }
-            
-            if (persistedUrl) {
-                setURLAndReload(obj.name, persistedUrl, bindToolbarEvents);
-
-            } else if (!obj.preloaded) {
+            if (!obj.preloaded) {
                 MVCGrid.reloadGrid(obj.name, bindToolbarEvents);
 
             } else {
@@ -294,152 +284,27 @@ var MVCGrid = new function () {
     };
 
     // public
-    this.getColumnVisibility = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.columnVisibility;
-    };
-
-    // public
-    this.setColumnVisibility = function (mvcGridName, obj) {
-
+    this.getGridStateProperty = function(mvcGridName, name) {
         var gridDef = findGridDef(mvcGridName);
 
-        var colString = '';
-        $.each(obj, function (k, v) {
-            if (v) {
-                if (colString != '') colString += ',';
-                colString += k;
-            }
-        });
-
-        var newUrl = window.location.href;
-
-        $.each(obj, function (k, v) {
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'cols', colString);
-        });
-
-        setURLAndReload(mvcGridName, newUrl);
-    };
-
-    // public
-    this.getFilters = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.filters;
-    };
-
-    // public
-    this.setFilters = function (mvcGridName, obj) {
-
-        var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-
-        $.each(obj, function (k, v) {
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
-        });
-
-        setURLAndReload(mvcGridName, newUrl);
-    };
-
-    // public
-    this.getSortColumn = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.sortColumn;
-    };
-
-    // public
-    this.getSortDirection = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.sortDirection;
-    };
-
-    // public
-    this.setSort = function (mvcGridName, sortColumn, sortDirection) {
-
-        var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'sort', sortColumn);
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'dir', sortDirection);
-
-        
-        setURLAndReload(mvcGridName, newUrl);
-    };
-
-    // public
-    this.getPage = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.pageNumber;
-    };
-
-    // public
-    this.setPage = function (mvcGridName, pageNumber) {
-
-        var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'page', pageNumber);
-        setURLAndReload(mvcGridName, newUrl);
-    };
-
-    // public
-    this.getPageSize = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.itemsPerPage;
-    };
-
-    // public
-    this.setPageSize = function (mvcGridName, pageSize) {
-
-        var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'pagesize', pageSize);
-        setURLAndReload(mvcGridName, newUrl);
-    };
-
-    // public
-    this.getAdditionalQueryOptions = function (mvcGridName) {
-        var clientJson = getClientData(mvcGridName);
-        return clientJson.additionalQueryOptions;
-    };
-
-    // public
-    this.setAdditionalQueryOptions = function (mvcGridName, obj) {
-
-        var gridDef = findGridDef(mvcGridName);
-
-        var newUrl = window.location.href;
-
-        $.each(obj, function (k, v) {
-            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
-        });
-
-        setURLAndReload(mvcGridName, newUrl);
-    };
-
-    // private
-    var setURLAndReload = function (mvcGridName, newUrl, callback) {
-
-        var gridDef = findGridDef(mvcGridName);
+        var queryString = "";
 
         if (gridDef.persistLastState === 'true') {
-            MVCGrid.persistUrl(mvcGridName, newUrl, 3);
-        }
-        
-        if (gridDef.browserNavigationMode === 'preserveallgridactions' && history.pushState) {
-            window.history.pushState({ path: newUrl }, '', newUrl);
-            MVCGrid.reloadGrid(mvcGridName, callback);
-
-        } else if (history.replaceState) {
-            window.history.replaceState({ path: newUrl }, '', newUrl);
-            MVCGrid.reloadGrid(mvcGridName, callback);
-        }
-        else {
-            location.href = newUrl;
+            var persistedUrl = MVCGrid.getPersistedGridState(mvcGridName);
+            if (persistedUrl) {
+                var queryStart = persistedUrl.indexOf("?");
+                if (queryStart > -1)
+                    queryString = persistedUrl.substr(queryStart);
+            }
+        } else {
+            queryString = window.location.search;
         }
 
-    };
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(queryString);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 
     // public
     this.reloadGrid = function(mvcGridName, callback){
@@ -516,31 +381,29 @@ var MVCGrid = new function () {
         });
     };
 
-    // public
-    this.getExportUrl = function (mvcGridName) {
-        return MVCGrid.getEngineExportUrl(mvcGridName, 'export');
-    };
-
-    // public
-    this.getEngineExportUrl = function (mvcGridName, engineName) {
+    // private
+    var setGridStateAndReload = function (mvcGridName, newUrl, callback) {
         var gridDef = findGridDef(mvcGridName);
 
-        var exportBaseUrl = handlerPath;
+        if (gridDef.persistLastState === 'true') {
+            MVCGrid.persistGridState(mvcGridName, newUrl, 3);
+            MVCGrid.reloadGrid(mvcGridName, callback);
 
-        var fullExportUrl = exportBaseUrl + location.search;
-        fullExportUrl = updateURLParameter(fullExportUrl, 'engine', engineName);
-        fullExportUrl = updateURLParameter(fullExportUrl, 'Name', mvcGridName);
+        } else if (gridDef.browserNavigationMode === 'preserveallgridactions' && history.pushState) {
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            MVCGrid.reloadGrid(mvcGridName, callback);
 
-        $.each(gridDef.pageParameters, function (k, v) {
-            var thisPP = "_pp_" + gridDef.qsPrefix + k;
-            fullExportUrl = updateURLParameter(fullExportUrl, thisPP, v);
-        });
-
-        return fullExportUrl;
+        } else if (history.replaceState) {
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+            MVCGrid.reloadGrid(mvcGridName, callback);
+        }
+        else {
+            location.href = newUrl;
+        }
     };
 
     // public
-    this.persistUrl = function (mvcGridName, persistedUrl, daysToPersist) {
+    this.persistGridState = function (mvcGridName, persistedUrl, daysToPersist) {
         var nameEQ = "gridState_" + mvcGridName + "=";
         var expires = "";
 
@@ -554,7 +417,7 @@ var MVCGrid = new function () {
     }
 
     // public
-    this.getPersistedUrl = function(mvcGridName) {
+    this.getPersistedGridState = function(mvcGridName) {
         var nameEQ = "gridState_" + mvcGridName + "=";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
@@ -566,9 +429,7 @@ var MVCGrid = new function () {
     }
 
     // public
-    this.setQueryStringAndReloadGrid = function (mvcGridName, newUrl, callback) {
-        MVCGrid.persistUrl("gridState_" + mvcGridName, "", -1);
-
+    this.clearPersistedGridState = function (mvcGridName, newUrl, callback) {
         // reset bound filters
         $("[data-mvcgrid-type='filter']").each(function () {
             var preserve = $(this).attr('data-preserve');
@@ -593,8 +454,168 @@ var MVCGrid = new function () {
             }
         });
 
-        setURLAndReload(mvcGridName, newUrl, callback);
+        setGridStateAndReload(mvcGridName, newUrl, callback);
     }
+
+    //private
+    var getUrlForGridState = function(mvcGridName) {
+        var gridDef = findGridDef(mvcGridName);
+        if (gridDef.persistLastState === 'true') {
+            var result = MVCGrid.getPersistedGridState(mvcGridName);
+            if (result)
+                return result;
+        }
+
+        return window.location.href;
+    }
+
+    // public
+    this.getColumnVisibility = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.columnVisibility;
+    };
+
+    // public
+    this.setColumnVisibility = function (mvcGridName, obj) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var colString = '';
+        $.each(obj, function (k, v) {
+            if (v) {
+                if (colString != '') colString += ',';
+                colString += k;
+            }
+        });
+
+        var newUrl = getUrlForGridState(mvcGridName);
+
+        $.each(obj, function (k, v) {
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'cols', colString);
+        });
+
+        setGridStateAndReload(mvcGridName, newUrl);
+    };
+
+    // public
+    this.getFilters = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.filters;
+    };
+
+    // public
+    this.setFilters = function (mvcGridName, obj) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = getUrlForGridState(mvcGridName);
+
+        $.each(obj, function (k, v) {
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
+        });
+
+        setGridStateAndReload(mvcGridName, newUrl);
+    };
+
+    // public
+    this.getSortColumn = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.sortColumn;
+    };
+
+    // public
+    this.getSortDirection = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.sortDirection;
+    };
+
+    // public
+    this.setSort = function (mvcGridName, sortColumn, sortDirection) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = getUrlForGridState(mvcGridName);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'sort', sortColumn);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'dir', sortDirection);
+
+        
+        setGridStateAndReload(mvcGridName, newUrl);
+    };
+
+    // public
+    this.getPage = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.pageNumber;
+    };
+
+    // public
+    this.setPage = function (mvcGridName, pageNumber) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = getUrlForGridState(mvcGridName);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'page', pageNumber);
+        setGridStateAndReload(mvcGridName, newUrl);
+    };
+
+    // public
+    this.getPageSize = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.itemsPerPage;
+    };
+
+    // public
+    this.setPageSize = function (mvcGridName, pageSize) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = getUrlForGridState(mvcGridName);
+        newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + 'pagesize', pageSize);
+        setGridStateAndReload(mvcGridName, newUrl);
+    };
+
+    // public
+    this.getAdditionalQueryOptions = function (mvcGridName) {
+        var clientJson = getClientData(mvcGridName);
+        return clientJson.additionalQueryOptions;
+    };
+
+    // public
+    this.setAdditionalQueryOptions = function (mvcGridName, obj) {
+
+        var gridDef = findGridDef(mvcGridName);
+
+        var newUrl = getUrlForGridState(mvcGridName);
+
+        $.each(obj, function (k, v) {
+            newUrl = updateURLParameter(newUrl, gridDef.qsPrefix + k, v);
+        });
+
+        setGridStateAndReload(mvcGridName, newUrl);
+    };
+
+    // public
+    this.getExportUrl = function (mvcGridName) {
+        return MVCGrid.getEngineExportUrl(mvcGridName, 'export');
+    };
+
+    // public
+    this.getEngineExportUrl = function (mvcGridName, engineName) {
+        var gridDef = findGridDef(mvcGridName);
+
+        var exportBaseUrl = handlerPath;
+
+        var fullExportUrl = exportBaseUrl + location.search;
+        fullExportUrl = updateURLParameter(fullExportUrl, 'engine', engineName);
+        fullExportUrl = updateURLParameter(fullExportUrl, 'Name', mvcGridName);
+
+        $.each(gridDef.pageParameters, function (k, v) {
+            var thisPP = "_pp_" + gridDef.qsPrefix + k;
+            fullExportUrl = updateURLParameter(fullExportUrl, thisPP, v);
+        });
+
+        return fullExportUrl;
+    };
 };
 
 

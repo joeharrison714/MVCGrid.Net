@@ -44,12 +44,12 @@ namespace MVCGrid.Web
             {
                 // TODO: dynamically get names
                 HashSet<string> forbiddenNames = new HashSet<string>();
-                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Page);
-                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Sort);
-                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_SortDir);
-                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Engine);
-                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_ItemsPerPage);
-                forbiddenNames.Add(QueryStringParser.QueryStringSuffix_Columns);
+                forbiddenNames.Add(GridOptionParser.QueryStringSuffix_Page);
+                forbiddenNames.Add(GridOptionParser.QueryStringSuffix_Sort);
+                forbiddenNames.Add(GridOptionParser.QueryStringSuffix_SortDir);
+                forbiddenNames.Add(GridOptionParser.QueryStringSuffix_Engine);
+                forbiddenNames.Add(GridOptionParser.QueryStringSuffix_ItemsPerPage);
+                forbiddenNames.Add(GridOptionParser.QueryStringSuffix_Columns);
 
                 mapping.GetColumns().ToList().ForEach(col => forbiddenNames.Add(col.ColumnName));
 

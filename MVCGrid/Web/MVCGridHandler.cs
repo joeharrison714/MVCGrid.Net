@@ -182,7 +182,7 @@ namespace MVCGrid.Web
 
             var grid = MVCGridDefinitionTable.GetDefinitionInterface(gridName);
 
-            var options = QueryStringParser.ParseOptions(grid, context.Request);
+            var options = GridOptionParser.ParseOptions(grid, gridName, context.Request);
 
             var gridContext = GridContextUtility.Create(context, gridName, grid, options);
 
