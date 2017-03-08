@@ -22,6 +22,7 @@ namespace MVCGrid.Models
             NextButtonCaption = "Next";
             PreviousButtonCaption = "Previous";
             SummaryMessage = "Showing {0} to {1} of {2} entries";
+            ProcessingMessage = "Processing";
             ClientSideLoadingMessageFunctionName = null;
             ClientSideLoadingCompleteFunctionName = null;
             Filtering = false;

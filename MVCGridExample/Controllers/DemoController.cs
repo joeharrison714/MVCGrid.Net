@@ -156,6 +156,11 @@ namespace MVCGrid.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Localization()
+        {
+            return View();
+        }
     }
 
     public class DemoControllerGrids : GridRegistration

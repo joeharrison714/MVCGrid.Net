@@ -429,5 +429,53 @@ namespace MVCGrid.Models
             GridDefinition.AuthorizationType = authType;
             return this;
         }
+
+
+        /// <summary>
+        /// Text to display on the "next" button.
+        /// </summary>
+        /// <param name="nextButtonCaption"></param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithNextButtonCaption(string nextButtonCaption)
+        {
+            GridDefinition.NextButtonCaption = nextButtonCaption;
+            return this;
+        }
+
+        /// <summary>
+        /// Text to display on the "previous" button.
+        /// </summary>
+        /// <param name="previousButtonCaption"></param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithPreviousButtonCaption(string previousButtonCaption)
+        {
+            GridDefinition.PreviousButtonCaption = previousButtonCaption;
+            return this;
+        }
+
+        /// <summary>
+        /// Summary text to display in grid footer. Defaults to "Showing {0} to {1} of {2} entries"
+        /// {0} = first record number shown on page
+        /// {1} = last record number shown on page
+        /// {2} = total number of records on all pages
+        /// </summary>
+        /// <param name="summaryMessage"></param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithSummaryMessage(string summaryMessage)
+        {
+            GridDefinition.SummaryMessage = summaryMessage;
+            return this;
+        }
+
+        /// <summary>
+        /// Text to display when query is processed
+        /// </summary>
+        /// <param name="processingMessage"></param>
+        /// <returns></returns>
+        public MVCGridBuilder<T1> WithProcessingMessage(string processingMessage)
+        {
+            GridDefinition.ProcessingMessage = processingMessage;
+            return this;
+        }
     }
 }

@@ -314,6 +314,7 @@
     <Content Include="Views\Demo\CustomExport.cshtml" />
     <Content Include="Views\Demo\AdditionalQueryOptions.cshtml" />
     <Content Include="Views\Demo\CustomRazorView2.cshtml" />
+    <Content Include="Views\Demo\Localization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Item\" />

@@ -1089,6 +1089,61 @@ namespace MVCGridExample
                 })
             );
 
+
+            MVCGridDefinitionTable.Add("LocalizationGrid", new MVCGridBuilder<Person>(colDefauls)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .AddColumns(cols =>
+                {
+                    cols.Add("Id").WithSorting(false)
+                        .WithValueExpression(p => p.Id.ToString());
+                    cols.Add("FirstName").WithHeaderText("First Name")
+                        .WithValueExpression(p => p.FirstName);
+                    cols.Add("LastName").WithHeaderText("Last Name")
+                        .WithValueExpression(p => p.LastName);
+                })
+                .WithSorting(true, "LastName")
+                .WithPaging(true, 10)
+                .WithProcessingMessage("Cargando")
+                .WithNextButtonCaption("Siguiente")
+                .WithPreviousButtonCaption("Anterior")
+                .WithSummaryMessage("Mostrando {0} a {1} de {2} entradas")
+                .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+
+                    var result = new QueryResult<Person>();
+
+                    using (var db = new SampleDatabaseEntities())
+                    {
+                        var query = db.People.AsQueryable();
+
+                        result.TotalRecords = query.Count();
+
+                        if (!String.IsNullOrWhiteSpace(options.SortColumnName))
+                        {
+                            switch (options.SortColumnName.ToLower())
+                            {
+                                case "firstname":
+                                    query = query.OrderBy(p => p.FirstName, options.SortDirection);
+                                    break;
+                                case "lastname":
+                                    query = query.OrderBy(p => p.LastName, options.SortDirection);
+                                    break;
+                            }
+                        }
+
+                        if (options.GetLimitOffset().HasValue)
+                        {
+                            query = query.Skip(options.GetLimitOffset().Value).Take(options.GetLimitRowcount().Value);
+                        }
+
+                        result.Items = query.ToList();
+                    }
+
+                    return result;
+                })
+            );
+
             //MVCGridDefinitionTable.Add DO NOT DELETE - Needed for demo code parsing
 
 
@@ -1188,11 +1243,7 @@ namespace MVCGridExample
                 .AddColumn(docsDescriptionColumn)
                 .WithRetrieveDataMethod(docsLoadData)
             );
-
         }
-
-
-        
     }
 
 }
