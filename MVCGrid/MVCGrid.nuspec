@@ -9,7 +9,8 @@
     <projectUrl>http://mvcgrid.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A grid for ASP.NET MVC and Bootstrap with ajax paging and sorting. Also has filtering support, export to csv, back button support, and graceful degradation. Easily configurable. All AJAX calls are handled for you... Simply tell it how to get your data!</description>
-    <copyright>Copyright 2015</copyright>
+    <copyright>Copyright 2015-2017</copyright>
+	<releaseNotes>Added localization support. Fixed bug in paging display.</releaseNotes>
     <tags>mvc grid</tags>
     <dependencies>
       <dependency id="Microsoft.AspNet.Mvc" version="3.0" />
