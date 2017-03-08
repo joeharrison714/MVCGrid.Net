@@ -53,9 +53,29 @@ namespace MVCGrid.Interfaces
         SortDirection DefaultSortDirection { get; set; }
 
         /// <summary>
-        /// Text to display when there are no results.
+        /// Text to display when there are no results
         /// </summary>
         string NoResultsMessage { get; set; }
+
+        /// <summary>
+        /// Text to display on the "next" button
+        /// </summary>
+        string NextButtonCaption { get; set; }
+
+        /// <summary>
+        /// Text to display on the "previous" button
+        /// </summary>
+        string PreviousButtonCaption { get; set; }
+
+        /// <summary>
+        /// Summary text to display in grid footer
+        /// </summary>
+        string SummaryMessage { get; set; }
+
+        /// <summary>
+        /// Text to display when query is processed
+        /// </summary>
+        string ProcessingMessage { get; set; }
 
         /// <summary>
         /// Name of function to call before ajax call begins

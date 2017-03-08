@@ -36,6 +36,10 @@ namespace MVCGrid.Models
             this.Sorting = gridDefaults.Sorting;
             this.DefaultSortColumn = gridDefaults.DefaultSortColumn;
             this.NoResultsMessage = gridDefaults.NoResultsMessage;
+            this.NextButtonCaption = gridDefaults.NextButtonCaption;
+            this.PreviousButtonCaption = gridDefaults.PreviousButtonCaption;
+            this.SummaryMessage = gridDefaults.SummaryMessage;
+            this.ProcessingMessage = gridDefaults.ProcessingMessage;
             this.ClientSideLoadingMessageFunctionName = gridDefaults.ClientSideLoadingMessageFunctionName;
             this.ClientSideLoadingCompleteFunctionName = gridDefaults.ClientSideLoadingCompleteFunctionName;
             this.Filtering = gridDefaults.Filtering;
@@ -253,6 +257,26 @@ namespace MVCGrid.Models
         /// Text to display when there are no results.
         /// </summary>
         public string NoResultsMessage { get; set; }
+
+        /// <summary>
+        /// Text to display on the "next" button.
+        /// </summary>
+        public string NextButtonCaption { get; set; }
+
+        /// <summary>
+        /// Text to display on the "previous" button.
+        /// </summary>
+        public string PreviousButtonCaption { get; set; }
+
+        /// <summary>
+        /// Summary text to display in grid footer
+        /// </summary>
+        public string SummaryMessage { get; set; }
+
+        /// <summary>
+        /// Text to display when query is processed
+        /// </summary>
+        public string ProcessingMessage { get; set; }
 
         /// <summary>
         /// Name of function to call before ajax call begins
