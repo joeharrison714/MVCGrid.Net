@@ -28,7 +28,6 @@ namespace MVCGridExample
                 .AddColumns(cols =>
                 {
                     cols.Add("Id").WithValueExpression((p, c) => c.UrlHelper.Action("detail", "demo", new { id = p.Id }))
-                        .WithHeaderTextExpression(() => new Random().Next().ToString())
                         .WithValueTemplate("<a href='{Value}'>{Model.Id}</a>", false)
                         .WithPlainTextValueExpression(p => p.Id.ToString());
                     cols.Add("FirstName").WithHeaderText("First Name")
@@ -61,19 +60,17 @@ namespace MVCGridExample
                 //.WithAdditionalSetting(MVCGrid.Rendering.BootstrapRenderingEngine.SettingNameTableClass, "notreal") // Example of changing table css class
                 .WithRetrieveDataMethod((context) =>
                 {
-                    //var options = context.QueryOptions;
+                    var options = context.QueryOptions;
 
-                    int totalRecords = 100;
-                    //var repo = DependencyResolver.Current.GetService<IPersonRepository>();
+                    int totalRecords;
+                    var repo = DependencyResolver.Current.GetService<IPersonRepository>();
 
-                    //string globalSearch = options.GetAdditionalQueryOptionString("search");
+                    string globalSearch = options.GetAdditionalQueryOptionString("search");
 
-                    //string sortColumn = options.GetSortColumnData<string>();
+                    string sortColumn = options.GetSortColumnData<string>();
 
-                    //var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
-                    //    sortColumn, options.SortDirection == SortDirection.Dsc);
-
-                    var items = new List<Person>() { new Person() { FirstName = "Okan" } };
+                    var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
 
                     return new QueryResult<Person>()
                     {
