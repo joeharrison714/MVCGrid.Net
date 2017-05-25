@@ -75,6 +75,8 @@ namespace MVCGrid.Models
             }
         }
 
+        public Func<string> HeaderTextExpression { get; set; }
+
         /// <summary>
         /// Template for formatting cell value
         /// </summary>

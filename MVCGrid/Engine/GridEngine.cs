@@ -122,7 +122,7 @@ namespace MVCGrid.Engine
                 model.PagingModel.TotalRecords = totalRecords.Value;
 
                 model.PagingModel.FirstRecord = (currentPageIndex * gridContext.QueryOptions.ItemsPerPage.Value) + 1;
-                if(model.PagingModel.FirstRecord > model.PagingModel.TotalRecords) 
+                if (model.PagingModel.FirstRecord > model.PagingModel.TotalRecords)
                 {
                     model.PagingModel.FirstRecord = model.PagingModel.TotalRecords;
                 }
@@ -154,7 +154,7 @@ namespace MVCGrid.Engine
                 Column renderingColumn = new Column();
                 model.Columns.Add(renderingColumn);
                 renderingColumn.Name = col.ColumnName;
-                renderingColumn.HeaderText = col.HeaderText;
+                renderingColumn.HeaderText = col.HeaderTextExpression != null ? col.HeaderTextExpression() : col.HeaderText;
 
                 if (gridContext.GridDefinition.Sorting && col.EnableSorting)
                 {

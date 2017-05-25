@@ -12,6 +12,7 @@ namespace MVCGrid.Interfaces
         /// Header text to display for the current column, if different from ColumnName.
         /// </summary>
         string HeaderText { get; }
+        Func<string> HeaderTextExpression { get; }
 
         /// <summary>
         /// A unique name for this column

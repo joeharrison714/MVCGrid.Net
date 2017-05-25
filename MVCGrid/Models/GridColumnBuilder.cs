@@ -102,6 +102,12 @@ namespace MVCGrid.Models
             return this;
         }
 
+        public GridColumnBuilder<T1> WithHeaderTextExpression(Func<string> expression)
+        {
+            GridColumn.HeaderTextExpression = expression;
+            return this;
+        }
+
 
         /// <summary>
         /// Enables sorting on this column
