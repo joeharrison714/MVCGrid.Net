@@ -55,6 +55,9 @@ var MVCGrid = new function () {
             var option = $(this).attr('data-mvcgrid-option');
 
             var val = MVCGrid.getFilters(gridName)[option];
+            if ($(this).prop("multiple") === true) {
+                val = val.split(',');
+            }
             $(this).val(val);
         });
     };
