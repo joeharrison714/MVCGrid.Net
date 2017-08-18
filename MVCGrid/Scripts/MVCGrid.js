@@ -5,6 +5,7 @@ var MVCGrid = new function () {
     var controllerPath = '%%CONTROLLERPATH%%';
     var showErrorDetails = %%ERRORDETAILS%%;
     var currentGrids = [];
+    var currentRequest;
 
     // public
     this.init = function () {
@@ -417,12 +418,17 @@ var MVCGrid = new function () {
             fullAjaxUrl = updateURLParameter(fullAjaxUrl, thisPP, v);
         });
 
-        $.ajax({
+        currentRequest = $.ajax({
             type: "GET",
             url: fullAjaxUrl,
             data: { 'Name': mvcGridName },
             cache: false,
             beforeSend: function () {
+                if(currentRequest != null)
+                {
+                    currentRequest.abort();
+                }
+                
                 if (gridDef.clientLoading != '') {
                     window[gridDef.clientLoading]();
                 }
