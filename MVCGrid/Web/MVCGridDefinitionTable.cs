@@ -74,6 +74,16 @@ namespace MVCGrid.Web
 
         }
 
+        public static bool HasDefinition(string name)
+        {
+            return _table.ContainsKey(name);
+        }
+
+        public static void ClearDefinitions()
+        {
+            _table.Clear();
+        }
+
         internal static IMVCGridDefinition GetDefinitionInterface(string name)
         {
             if (String.IsNullOrWhiteSpace(name))
