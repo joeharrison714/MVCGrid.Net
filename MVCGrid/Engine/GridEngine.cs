@@ -104,13 +104,13 @@ namespace MVCGrid.Engine
 
             if (model.Rows.Count == 0)
             {
-                model.NoResultsMessage = gridContext.GridDefinition.NoResultsMessage;
+                model.NoResultsMessage = gridContext.GridDefinition.NoResultsMessageExpression != null ? gridContext.GridDefinition.NoResultsMessageExpression() : gridContext.GridDefinition.NoResultsMessage;
             }
 
-            model.NextButtonCaption = gridContext.GridDefinition.NextButtonCaption;
-            model.PreviousButtonCaption = gridContext.GridDefinition.PreviousButtonCaption;
-            model.SummaryMessage = gridContext.GridDefinition.SummaryMessage;
-            model.ProcessingMessage = gridContext.GridDefinition.ProcessingMessage;
+            model.NextButtonCaption = gridContext.GridDefinition.NextButtonCaptionExpression != null ? gridContext.GridDefinition.NextButtonCaptionExpression() : gridContext.GridDefinition.NextButtonCaption;
+            model.PreviousButtonCaption = gridContext.GridDefinition.PreviousButtonCaptionExpression != null ? gridContext.GridDefinition.PreviousButtonCaptionExpression() : gridContext.GridDefinition.PreviousButtonCaption;
+            model.SummaryMessage = gridContext.GridDefinition.SummaryMessageExpression != null ? gridContext.GridDefinition.SummaryMessageExpression() : gridContext.GridDefinition.SummaryMessage;
+            model.ProcessingMessage = gridContext.GridDefinition.ProcessingMessageExpression != null ? gridContext.GridDefinition.ProcessingMessageExpression() : gridContext.GridDefinition.ProcessingMessage;
 
             model.PagingModel = null;
             if (gridContext.QueryOptions.ItemsPerPage.HasValue)

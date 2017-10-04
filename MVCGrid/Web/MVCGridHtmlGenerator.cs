@@ -158,8 +158,8 @@ namespace MVCGrid.Web
             if (renderLoadingDiv)
             {
                 sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);
-                sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='{1}' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath(), def.ProcessingMessage);
-                sbHtml.AppendFormat("&nbsp;{0}...", def.ProcessingMessage);
+                sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='{1}' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath(), def.ProcessingMessageExpression != null ? def.ProcessingMessageExpression() : def.ProcessingMessage);
+                sbHtml.AppendFormat("&nbsp;{0}...", def.ProcessingMessageExpression != null ? def.ProcessingMessageExpression() : def.ProcessingMessage);
                 sbHtml.Append("</div>");
             }
 
