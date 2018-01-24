@@ -261,7 +261,10 @@ namespace MVCGrid.Engine
                 foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pageParameters))
                 {
                     object obj2 = descriptor.GetValue(pageParameters);
-                    pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    if (obj2 != null)
+                    {
+                        pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    }
                 }
             }
             if (grid.PageParameterNames.Count > 0)

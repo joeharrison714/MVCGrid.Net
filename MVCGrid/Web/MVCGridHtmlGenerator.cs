@@ -182,12 +182,16 @@ namespace MVCGrid.Web
                 foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pageParameters))
                 {
                     object obj2 = descriptor.GetValue(pageParameters);
-                    pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    if (obj2 != null)
+                    {
+                        pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    }
                 }
             }
 
             foreach (var col in pageParamsDict)
             {
+                
                 string val = col.Value;
 
                 if (sb.Length > 0)
