@@ -45,6 +45,7 @@ namespace MVCGrid.Web.Controllers
                 .WithAllowChangingPageSize(false)
                 .WithFiltering(true)
                 .WithNoResultsMessage("Please enter a year to search for. No results found.")
+                .WithNoResultsMessageExpression(() => "beişey")
                 .AddColumns(cols =>
                 {
                     cols.Add("Year").WithHeaderText("Year")

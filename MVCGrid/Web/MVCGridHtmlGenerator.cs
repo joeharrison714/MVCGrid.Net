@@ -158,8 +158,8 @@ namespace MVCGrid.Web
             if (renderLoadingDiv)
             {
                 sbHtml.AppendFormat("<div id='MVCGrid_Loading_{0}' class='text-center' style='visibility: hidden'>", gridName);
-                sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='{1}' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath(), def.ProcessingMessage);
-                sbHtml.AppendFormat("&nbsp;{0}...", def.ProcessingMessage);
+                sbHtml.AppendFormat("&nbsp;&nbsp;&nbsp;<img src='{0}/ajaxloader.gif' alt='{1}' style='width: 15px; height: 15px;' />", HtmlUtility.GetHandlerPath(), def.ProcessingMessageExpression != null ? def.ProcessingMessageExpression() : def.ProcessingMessage);
+                sbHtml.AppendFormat("&nbsp;{0}...", def.ProcessingMessageExpression != null ? def.ProcessingMessageExpression() : def.ProcessingMessage);
                 sbHtml.Append("</div>");
             }
 
@@ -182,12 +182,16 @@ namespace MVCGrid.Web
                 foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pageParameters))
                 {
                     object obj2 = descriptor.GetValue(pageParameters);
-                    pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    if (obj2 != null)
+                    {
+                        pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    }
                 }
             }
 
             foreach (var col in pageParamsDict)
             {
+                
                 string val = col.Value;
 
                 if (sb.Length > 0)

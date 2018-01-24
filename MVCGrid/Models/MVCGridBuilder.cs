@@ -225,6 +225,38 @@ namespace MVCGrid.Models
         }
 
         /// <summary>
+        /// Text to display when there are no results with expression
+        /// </summary>
+        public MVCGridBuilder<T1> WithNoResultsMessageExpression(Func<string> expression)
+        {
+            GridDefinition.NoResultsMessageExpression = expression;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithNextButtonCaptionExpression(Func<string> expression)
+        {
+            GridDefinition.NextButtonCaptionExpression = expression;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithPreviousButtonCaptionExpression(Func<string> expression)
+        {
+            GridDefinition.PreviousButtonCaptionExpression = expression;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithSummaryMessageExpression(Func<string> expression)
+        {
+            GridDefinition.SummaryMessageExpression = expression;
+            return this;
+        }
+
+        public MVCGridBuilder<T1> WithProcessingMessageExpression(Func<string> expression)
+        {
+            GridDefinition.ProcessingMessageExpression = expression;
+            return this;
+        }
+        /// <summary>
         /// Name of function to call before ajax call begins
         /// </summary>
         public MVCGridBuilder<T1> WithClientSideLoadingMessageFunctionName(string name)

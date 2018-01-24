@@ -26,7 +26,7 @@ namespace MVCGrid.Web
             string qsKeyPage = grid.QueryStringPrefix + QueryStringSuffix_Page;
             string qsKeySort = grid.QueryStringPrefix + QueryStringSuffix_Sort;
             string qsKeyDirection = grid.QueryStringPrefix + QueryStringSuffix_SortDir;
-            string qsKeyEngine = grid.QueryStringPrefix + QueryStringSuffix_Engine;
+            string qsKeyEngine =  QueryStringSuffix_Engine;
             string qsKeyPageSize = grid.QueryStringPrefix + QueryStringSuffix_ItemsPerPage;
             string qsColumns = grid.QueryStringPrefix + QueryStringSuffix_Columns;
 

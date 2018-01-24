@@ -104,13 +104,13 @@ namespace MVCGrid.Engine
 
             if (model.Rows.Count == 0)
             {
-                model.NoResultsMessage = gridContext.GridDefinition.NoResultsMessage;
+                model.NoResultsMessage = gridContext.GridDefinition.NoResultsMessageExpression != null ? gridContext.GridDefinition.NoResultsMessageExpression() : gridContext.GridDefinition.NoResultsMessage;
             }
 
-            model.NextButtonCaption = gridContext.GridDefinition.NextButtonCaption;
-            model.PreviousButtonCaption = gridContext.GridDefinition.PreviousButtonCaption;
-            model.SummaryMessage = gridContext.GridDefinition.SummaryMessage;
-            model.ProcessingMessage = gridContext.GridDefinition.ProcessingMessage;
+            model.NextButtonCaption = gridContext.GridDefinition.NextButtonCaptionExpression != null ? gridContext.GridDefinition.NextButtonCaptionExpression() : gridContext.GridDefinition.NextButtonCaption;
+            model.PreviousButtonCaption = gridContext.GridDefinition.PreviousButtonCaptionExpression != null ? gridContext.GridDefinition.PreviousButtonCaptionExpression() : gridContext.GridDefinition.PreviousButtonCaption;
+            model.SummaryMessage = gridContext.GridDefinition.SummaryMessageExpression != null ? gridContext.GridDefinition.SummaryMessageExpression() : gridContext.GridDefinition.SummaryMessage;
+            model.ProcessingMessage = gridContext.GridDefinition.ProcessingMessageExpression != null ? gridContext.GridDefinition.ProcessingMessageExpression() : gridContext.GridDefinition.ProcessingMessage;
 
             model.PagingModel = null;
             if (gridContext.QueryOptions.ItemsPerPage.HasValue)
@@ -122,7 +122,7 @@ namespace MVCGrid.Engine
                 model.PagingModel.TotalRecords = totalRecords.Value;
 
                 model.PagingModel.FirstRecord = (currentPageIndex * gridContext.QueryOptions.ItemsPerPage.Value) + 1;
-                if(model.PagingModel.FirstRecord > model.PagingModel.TotalRecords) 
+                if (model.PagingModel.FirstRecord > model.PagingModel.TotalRecords)
                 {
                     model.PagingModel.FirstRecord = model.PagingModel.TotalRecords;
                 }
@@ -154,7 +154,7 @@ namespace MVCGrid.Engine
                 Column renderingColumn = new Column();
                 model.Columns.Add(renderingColumn);
                 renderingColumn.Name = col.ColumnName;
-                renderingColumn.HeaderText = col.HeaderText;
+                renderingColumn.HeaderText = col.HeaderTextExpression != null ? col.HeaderTextExpression() : col.HeaderText;
 
                 if (gridContext.GridDefinition.Sorting && col.EnableSorting)
                 {
@@ -261,7 +261,10 @@ namespace MVCGrid.Engine
                 foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pageParameters))
                 {
                     object obj2 = descriptor.GetValue(pageParameters);
-                    pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    if (obj2 != null)
+                    {
+                        pageParamsDict.Add(descriptor.Name, obj2.ToString());
+                    }
                 }
             }
             if (grid.PageParameterNames.Count > 0)

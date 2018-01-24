@@ -18,10 +18,12 @@ namespace MVCGrid.Models
             Visible = true;
             SortColumnData = null;
             AllowChangeVisibility = false;
+            HeaderTextExpression = null;
         }
 
         public string ColumnName { get; set; }
         public string HeaderText { get; set; }
+        public Func<string> HeaderTextExpression { get; set; }
         public bool EnableSorting { get; set; }
         public bool HtmlEncode { get; set; }
         public bool EnableFiltering { get; set; }

@@ -259,24 +259,37 @@ namespace MVCGrid.Models
         public string NoResultsMessage { get; set; }
 
         /// <summary>
+        /// Text to display when there are no results with expression.
+        /// </summary>
+        public Func<string> NoResultsMessageExpression { get; set; }
+
+        /// <summary>
         /// Text to display on the "next" button.
         /// </summary>
         public string NextButtonCaption { get; set; }
+
+        public Func<string> NextButtonCaptionExpression { get; set; }
 
         /// <summary>
         /// Text to display on the "previous" button.
         /// </summary>
         public string PreviousButtonCaption { get; set; }
 
+        public Func<string> PreviousButtonCaptionExpression { get; set; }
+
         /// <summary>
         /// Summary text to display in grid footer
         /// </summary>
         public string SummaryMessage { get; set; }
 
+        public Func<string> SummaryMessageExpression { get; set; }
+
         /// <summary>
         /// Text to display when query is processed
         /// </summary>
         public string ProcessingMessage { get; set; }
+
+        public Func<string> ProcessingMessageExpression { get; set; }
 
         /// <summary>
         /// Name of function to call before ajax call begins

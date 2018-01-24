@@ -58,14 +58,26 @@ namespace MVCGrid.Interfaces
         string NoResultsMessage { get; set; }
 
         /// <summary>
+        /// Text to display when there are no results with expression
+        /// </summary>
+        Func<string> NoResultsMessageExpression { get; set; }
+
+        /// <summary>
         /// Text to display on the "next" button
         /// </summary>
         string NextButtonCaption { get; set; }
 
         /// <summary>
+        /// Text to display on the "next" button
+        /// </summary>
+        Func<string> NextButtonCaptionExpression { get; set; }
+
+        /// <summary>
         /// Text to display on the "previous" button
         /// </summary>
         string PreviousButtonCaption { get; set; }
+
+        Func<string> PreviousButtonCaptionExpression { get; set; }
 
         /// <summary>
         /// Summary text to display in grid footer
@@ -73,9 +85,16 @@ namespace MVCGrid.Interfaces
         string SummaryMessage { get; set; }
 
         /// <summary>
+        /// Summary text to display in grid footer
+        /// </summary>
+        Func<string> SummaryMessageExpression { get; set; }
+
+        /// <summary>
         /// Text to display when query is processed
         /// </summary>
         string ProcessingMessage { get; set; }
+
+        Func<string> ProcessingMessageExpression { get; set; }
 
         /// <summary>
         /// Name of function to call before ajax call begins
