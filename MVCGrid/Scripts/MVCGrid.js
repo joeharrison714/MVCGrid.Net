@@ -80,10 +80,14 @@ var MVCGrid = new function () {
     var loadAdditionalQueryOptions = function(){
         $("[data-mvcgrid-type='additionalQueryOption']").each(function () {
             var gridName =  getGridName($(this));
-            var option = $(this).attr('data-mvcgrid-option');
+            var obj = findGridDef(gridName);
+            //Fix mvcgrid bug when grid preload is false but tries to get clientdata when data-addicional-options is set
+            if (!obj.preloaded) { 
+                var option = $(this).attr('data-mvcgrid-option');
 
-            var val = MVCGrid.getAdditionalQueryOptions(gridName)[option];
-            $(this).val(val);
+                var val = MVCGrid.getAdditionalQueryOptions(gridName)[option];
+                $(this).val(val);
+            }
         });
     };
 
